@@ -1,0 +1,92 @@
+html,body {
+	height: 100%;
+}
+
+body {
+	color: #d5d5d8;
+	background: #0a112f;
+}
+
+.divbckg {
+	border: 1px solid #316dcc;
+	background: rgba(13, 28, 68, 0.5);
+}
+.aui-bar-nav {
+  top: 0;
+  background: rgba(10, 15, 23, 0.5);;
+  /*position: fixed;*/
+}
+#footer{
+	padding-top: 0.2rem;
+	background: rgba(10, 15, 23, 0.5);
+	/*border-top: 1px solid #0198ab;*/
+}
+#footer .aui-bar-tab-label{
+	margin-top: -5px;
+}
+#app {
+	/*background-image: url(../image/common/bkgimg.png);
+	background-size: 100% 100%;
+	background-repeat: no-repeat;*/
+	min-height: 100%;
+	overflow: hidden;
+}
+.aui-active {
+	color: #1875ff !important;
+}
+.icon{
+	width:1.3rem;
+}
+.clearfix:before,
+.clearfix:after {
+    content: " ";
+    display: inline-block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+.clearfix {
+    zoom: 1;
+}
+.header_nav{
+	/* height:2rem;  */
+	margin-top:2rem;
+	background-color:#fff;
+	color:#5f646e;
+
+}
+.auitab-active{
+	color: #316DCC;
+	width: 70%;
+    display: inline-block;
+    border-bottom: 2px solid #316DCC;
+    border-top: none;
+}
+.aui-col-xs-4{
+	background-color: transparent!important;
+}
+.aui-list-item-inner {
+    border-bottom: 0.5px solid #316dcc;
+}
+.bottombtn{
+	width: 90%;
+    border-radius: 2rem;
+    line-height: 2.44rem;
+    font-size: 0.9rem;
+    height: 2.44rem;
+    position: fixed;
+    bottom: 3rem;
+    background-color: transparent !important;
+    border: 1px solid #1875ff;
+    color: #1875ff;
+    margin-left: 5%;
+}
+ul li {
+	    background-color: transparent!important;
+}
+span {
+	color: #d5d5d8;
+}
+input {
+	font-size: 0.7rem!important;
+}

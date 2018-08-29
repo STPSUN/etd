@@ -1,0 +1,105 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width"/>
+    <meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../css/aui.css" />
+    <link rel="stylesheet" type="text/css" href="../css/common.css"/>
+</head>
+<body>
+	<div class="header-wrap">
+		<header class="nav-header aui-bar aui-bar-nav" id="home-header">
+			<div class="aui-hide">
+				<div class="aui-title">首页</div>
+				<div class="aui-pull-right aui-btn">
+					<span>签到</span>
+				</div>
+			</div>
+			<div class=""  style="overflow: hidden;">
+				<div class="aui-pull-left">
+					 <select style="color: #FFFFFF;display: inline-block;width: 2.5rem;">
+					  <option value="TM">ETD</option>
+					  <option value="ITTM">USTD</option>
+					</select>
+					<i class="aui-iconfont aui-icon-down" style="color: #1875ff;font-size: 0.7rem;margin-left: -0.7rem;"></i>
+				</div>
+				<div class="aui-title">交易</div>
+				<div class="aui-pull-right aui-btn">
+					<span onclick="location.href='finance/selling.html'">挂卖</span>
+				</div>
+				<div class="aui-tab divbckg" id="tab" style="width: 100%; margin-top: 44px;border-top: none;">
+				    <div class="aui-tab-item"><div class="auitab-active" onclick="tabitemclick(this)">买入</div></div>
+				    <div class="aui-tab-item"><div onclick="tabitemclick(this)">卖出</div></div>
+				    <div class="aui-tab-item"><div onclick="tabitemclick(this)">当前委托</div></div>
+				    <div class="aui-tab-item"><div onclick="tabitemclick(this)">已完成</div></div>
+				</div>
+			</div>
+			<div class="aui-hide">
+				<div class="aui-title">记录</div>
+			</div>
+			<div class="aui-hide">
+				<div class="aui-title">我的</div>
+			</div>
+		</header>
+	</div>
+	<!--<iframe src="./home/index.html" style="height: 100%;width: 100%;"></iframe>-->
+	<footer class="aui-bar aui-bar-tab aui-default-t-border" id="footer">
+	    <div class="aui-bar-tab-item" id="nav_footer_home" onclick="footeronlcik(this)">
+	        <img class="aui-bar-tab-icon footer-bar-icon" src="../image/footer/on_home.png" alt="">
+	        <div class="aui-bar-tab-label aui-active">首页</div>
+	    </div>
+	    <div class="aui-bar-tab-item" id="nav_footer_transaction" onclick="footeronlcik(this)">
+	        <img class="aui-bar-tab-icon footer-bar-icon" src="../image/footer/transaction.png" alt="">
+	        <div class="aui-bar-tab-label">认筹</div>
+	    </div>
+	    <div class="aui-bar-tab-item" id="nav_footer_quotation" onclick="footeronlcik(this)">
+	        <img class="aui-bar-tab-icon footer-bar-icon" src="../image/footer/quotation.png" alt="">
+	        <div class="aui-bar-tab-label">交易</div>
+	    </div>
+	    <div class="aui-bar-tab-item" onclick="footeronlcik(this)">
+	        <img class="aui-bar-tab-icon footer-bar-icon" src="../image/footer/mine.png" alt="">
+	        <div class="aui-bar-tab-label">钱包</div>
+	    </div>
+	</footer>
+</body>
+<script src="../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	//交易tab点击
+	function tabitemclick(el)
+	{
+		if($(el).hasClass('auitab-active'))
+			return;
+		else
+		{
+			$('.auitab-active').removeClass('auitab-active');
+			$(el).addClass('auitab-active')
+		}
+	}
+	//底部栏点击
+	function footeronlcik(el)
+	{
+		var imgpath = $(el).children('img').attr('src').split('/')
+		var length = imgpath.length; 
+		var imgsub = imgpath[imgpath.length-1].substring(0,2);
+//		console.log(imgpath[imgpath.length-1].substring(3));
+		if(imgsub=='on')
+			return;
+		else
+		{
+			var activeimg = $('.aui-active').siblings('img').attr('src').split('/')
+			activeimg[activeimg.length-1] = activeimg[activeimg.length-1].replace('on_','')
+			activeimg = activeimg.join('/')
+			console.log(activeimg)
+			$('.aui-active').siblings('img').attr('src',activeimg)
+			$('.aui-active').removeClass('aui-active')
+			//
+			imgpath[length-1] = 'on_'+imgpath[length-1];
+			imgpath = imgpath.join('/');
+			$(el).children('img').attr('src',imgpath)
+			$(el).children('.aui-bar-tab-label').addClass('aui-active')
+		}
+	}
+</script>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width" />
+		<meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
+		<title>上次凭证</title>
+		<link rel="stylesheet" type="text/css" href="__CSS__/aui.css" />
+		<link rel="stylesheet" type="text/css" href="__CSS__/common.css" />
+		<link rel="stylesheet" type="text/css" href="__CSS__/home.css"/>
+	</head>
+	<style>
+	</style>
+	<body>
+		<div id="app">
+			<form action="/mobile/upload/upload" enctype="multipart/form-data" method="post">
+			<header class="nav-header aui-bar aui-bar-nav" id="aui-header">
+		        <a class="aui-pull-left" >
+		            <span class="aui-iconfont aui-icon-left" onclick="javascript:history.go(-1);" ></span>
+		        </a>
+		        <div class="aui-title">上传凭证</div>
+		    </header>
+		    <div class="aui-content aui-margin-b-15">
+			    <ul class="aui-list aui-list-in">
+			        <li class="aui-list-item">
+			            <div class="aui-list-item-inner">
+			                <div class="aui-list-item-title">
+			                	选择图片
+			                </div>
+			            </div>
+			        </li>
+			    </ul>
+			    <div style="padding: 1rem;" id="js_qrcode_img_pic">
+					<input type="file" name="image">
+					<input style="display: none" type="text" name="order_id" value="{$id}">
+			    	<!--<img type="file" style="width: 4rem;" src="__IMG__/finance/camera.png">-->
+			    </div>
+			</div>
+				<input class="aui-btn bottombtn" type="submit" value="提交">
+			<!--<div class="aui-btn bottombtn" >提交</div>-->
+			</form>
+		</div>
+
+	</body>
+	<script src="__JS__/jquery.min.js"></script>
+	<script type="text/javascript">
+	</script>
+</html>

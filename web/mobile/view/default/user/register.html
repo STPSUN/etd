@@ -1,0 +1,221 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width" />
+		<meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
+		<title>注册</title>
+		<link rel="stylesheet" type="text/css" href="__CSS__/aui.css" />
+		<link rel="stylesheet" type="text/css" href="__CSS__/common.css" />
+		<link rel="stylesheet" type="text/css" href="__CSS__/home.css"/>
+	</head>
+	<style>
+	</style>
+	<body>
+		<div id="app">
+			<header class="nav-header aui-bar aui-bar-nav" id="aui-header">
+		        <a class="aui-pull-left" >
+		            <span class="aui-iconfont aui-icon-left" onclick="javascript:history.go(-1);" ></span>
+		        </a>
+		        <div class="aui-title">注册</div>
+		    </header>
+		    <div class="aui-content aui-margin-b-15">
+			    <ul class="aui-list aui-list-in">
+			        <li class="aui-list-item">
+			            <div class="aui-list-item-inner">
+			                <div class="aui-list-item-title">
+			                	用户名：
+			                	<div class="aui-list-item-input">
+				                    <input type="text" name="username" id="username" placeholder="请输入用户名">
+				                </div>
+			                </div>
+			            </div>
+			        </li>
+			        <li class="aui-list-item">
+			            <div class="aui-list-item-inner">
+			                <div class="aui-list-item-title">
+			                	登录密码：
+			                	<div class="aui-list-item-input">
+				                    <input type="password" name="password" id="password" placeholder="请输入登录密码">
+				                </div>
+			                </div>
+			            </div>
+			        </li>
+			        <li class="aui-list-item">
+			            <div class="aui-list-item-inner">
+			                <div class="aui-list-item-title">
+			                	重复登录密码：
+			                	<div class="aui-list-item-input">
+				                    <input type="password" name="password_confirm" id="password_confirm" placeholder="请再次输入登录密码">
+				                </div>
+			                </div>
+			            </div>
+			        </li>
+			        <li class="aui-list-item">
+			            <div class="aui-list-item-inner">
+			                <div class="aui-list-item-title">
+			                	交易密码：
+			                	<div class="aui-list-item-input">
+				                    <input type="password" id="pay_password" placeholder="请输入交易密码">
+				                </div>
+			                </div>
+			            </div>
+			        </li>
+			        <li class="aui-list-item">
+			            <div class="aui-list-item-inner">
+			                <div class="aui-list-item-title">
+			                	重复交易密码：
+			                	<div class="aui-list-item-input">
+				                    <input type="password" id="pay_password_confirm" placeholder="请再次输入交易密码">
+				                </div>
+			                </div>
+			            </div>
+			        </li>
+			        <li class="aui-list-item">
+			            <div class="aui-list-item-inner">
+			                <div class="aui-list-item-title">
+			                	手机号码：
+			                	<div class="aui-list-item-input">
+				                    <input type="tel" id="phone" placeholder="请输入注册手机号码">
+				                </div>
+			                </div>
+			            </div>
+			        </li>
+			        <li class="aui-list-item">
+			            <div class="aui-list-item-inner">
+			                <div class="aui-list-item-title" style="display: flex;width: 100%;line-height: 2.1rem;">
+			                	验证码：
+			                	<div class="aui-list-item-input" style="width: 7rem;">
+				                    <input type="text" id="verify_code" placeholder="请输入验证码">
+				                </div>
+				                <span style="flex: 1;text-align: right;color: #316DCC;" onclick="getSms(this)">获取验证码</span>
+			                </div>
+			            </div>
+			        </li>
+			        <li class="aui-list-item">
+			            <div class="aui-list-item-inner">
+			                <div class="aui-list-item-title">
+			                	推荐人：
+			                	<div class="aui-list-item-input">
+				                    <input type="text" id="invite_phone" placeholder="请输入推荐人">
+				                </div>
+			                </div>
+			            </div>
+			        </li>
+			    </ul>
+				<div class="aui-btn bottombtn" onclick="register()">注册</div>
+			</div>
+		</div>
+
+	</body>
+	<script src="__JS__/jquery.min.js"></script>
+	<script type="text/javascript" src="__STATIC__/jquery/jquery.form.js"></script>
+	<script type="text/javascript" src="/static/global/js/common.js"></script>
+	<script type="text/javascript" src="/static/global/layer/layer.js"></script>
+	<script type="text/javascript">
+		var isWaiting = false;
+		var time = "{$time}";
+
+		function register() {
+			var data = {
+			    username: $('#username').val(),
+			    password: $('#password').val(),
+				password_confirm:	$('#password_confirm').val(),
+				pay_password:	$('#pay_password').val(),
+				pay_password_confirm:	$('#pay_password_confirm').val(),
+				phone:	$('#phone').val(),
+				verify_code:	$('#verify_code').val(),
+				invite_phone:	$('#invite_phone').val()
+			};
+			$.ajax({
+				url: '/mobile/user/register',
+				data: data,
+				type: 'post',
+				success: function (res) {
+					if(res.success)
+					{
+					    window.location.href = '/mobile/user/login'
+					}else
+					{
+					    return msg(res.message);
+					}
+                },
+				error: function (res) {
+                    return msg(res.message);
+                }
+			})
+        }
+
+        function getSms(el){
+            var phone = $("#phone").val();
+            if ( !isPhone(phone) ) return;
+            if(!verifyPhone(phone))
+                return;
+            if (isWaiting) return;
+            var _el=el;
+
+            telephone = {
+                phone:phone,
+                time:"{$time}"
+            }
+            $.ajax({
+                url :'/mobile/user/sms',
+                data:telephone,
+                type:'POST',
+                success : function(ret){
+                    if (ret.success) {
+                        isWaiting = true;
+                        remainTime(_el);
+                        return msg(ret.message);
+                    }else{
+                        return msg(ret.message);
+                    }
+                },
+                err: function(ret){
+                    return msg(ret.message);
+
+                }
+            })
+        }
+
+        function remainTime(el){
+            var set_time = time;
+            var interval = setInterval(function(){
+                $(el).html(set_time-- +'s后重新获取');
+                if ( set_time < 0 ) {
+                    clearInterval(interval);
+                    $(el).html('获取验证码')
+                    isWaiting = false;
+                }
+            },1000)
+        }
+
+        function verifyPhone(phone){
+            var _data = {'phone':phone};
+            var flag = false;
+            $.ajax({
+                type: "GET",
+                url: '/mobile/user/hasReg',
+                data: _data,
+                async: false,
+                success: function (res) {
+                    if(res.data > 0){
+                        msg('此手机号已被注册')
+                        flag = false;
+                    }
+                    flag = true;
+                }
+            })
+            return flag;
+        }
+
+        function isPhone(phone){
+            var is = true;
+            if ( !/(13\d|14[57]|15[^4,\D]|17[13678]|18\d)\d{8}|170[0589]\d{7}/.test(phone) ) {
+                msg("请输入正确的手机号码");
+                is = false;
+            }
+            return is;
+        }
+	</script>
+</html>

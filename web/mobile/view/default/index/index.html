@@ -1,0 +1,134 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width" />
+		<meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
+		<title>首页</title>
+		<link rel="stylesheet" type="text/css" href="__CSS__/aui.css" />
+		<link rel="stylesheet" type="text/css" href="__CSS__/common.css" />
+		<link rel="stylesheet" type="text/css" href="__CSS__/home.css"/>
+	</head>
+	<style>
+		ul, li{
+			line-height: 1.6rem!important;
+		}
+		#app {
+			background-image: url(__IMG__/common/bkgimg.png);
+			background-size: 100% 100%;
+			background-repeat: no-repeat;
+		}
+	</style>
+	<body>
+		<div id="app">
+			<section class="section-userinfo">
+				<div class="section-bcg">
+					<img src="__IMG__/home/logo.png"/>
+				</div>
+				<div class="section-info">
+					<p style="color: #1875ff;font-size: 0.9rem;">用户名：007</p>
+					<p>等级:普通会员</p>
+					<div class="section-info-detail">
+						<span class="fl">USDT:37.53</span>
+						<span class="fr">ETD:40.69</span>
+					</div>
+				</div>
+			</section>
+			<div class="divbckg" style="margin: 1rem 0.5rem 0rem 0.5rem; height: 1.8rem;overflow: hidden;display: flex;">
+				<img src="__IMG__/home/notice.png" style="width: 1.5rem;height:1.3rem;margin: 0.15rem 0.5rem;"/>
+				<p style="padding-top: 0.3rem;">平台限量发行： <span>1万</span> &nbsp;&nbsp;已发行： <span>5000</span></p>
+			</div>
+			<section class="aui-grid aui-margin-b-15 clearfix">
+			    <div class="aui-row divbckg">
+			        <div class="aui-col-xs-3" onclick="javascript:location.href='withmoney.html';">
+			            <img src="__IMG__/home/assets.png"/>
+			            <div class="aui-grid-label">理财</div>
+			        </div>
+			        <div class="aui-col-xs-3" onclick="">
+			            <img src="__IMG__/home/shopping.png"/>
+			            <div class="aui-grid-label">商城</div>
+			        </div>
+			        <div class="aui-col-xs-3" onclick="javascript:location.href='transaccount.html';">
+			            <img src="__IMG__/home/transaccount.png"/>
+			            <div class="aui-grid-label">转账</div>
+			        </div>
+			        <div class="aui-col-xs-3" onclick="javascript:location.href='team.html';">
+			            <img src="__IMG__/home/team.png"/>
+			            <div class="aui-grid-label">团队</div>
+			        </div>
+			    </div>
+			</section>
+		</div>
+		<footer class="aui-bar aui-bar-tab aui-default-t-border" id="footer">
+			<div class="aui-bar-tab-item" id="nav_footer_home" onclick="footeronlcik(this,1)">
+				<img class="aui-bar-tab-icon footer-bar-icon" src="/footer/on_home.png" alt="">
+				<div class="aui-bar-tab-label aui-active" >首页</div>
+			</div>
+			<div class="aui-bar-tab-item" id="nav_footer_transaction" onclick="footeronlcik(this,2)">
+				<img class="aui-bar-tab-icon footer-bar-icon" src="/footer/transaction.png" alt="">
+				<div class="aui-bar-tab-label">认筹</div>
+			</div>
+			<div class="aui-bar-tab-item" id="nav_footer_quotation" onclick="footeronlcik(this,3)">
+				<img class="aui-bar-tab-icon footer-bar-icon" src="/footer/quotation.png" alt="">
+				<div class="aui-bar-tab-label">交易</div>
+			</div>
+			<div class="aui-bar-tab-item" onclick="footeronlcik(this,4)">
+				<img class="aui-bar-tab-icon footer-bar-icon" src="/footer/mine.png" alt="">
+				<div class="aui-bar-tab-label " >钱包</div>
+			</div>
+		</footer>
+	</body>
+	<script src="__JS__/jquery.min.js"></script>
+	<script type="text/javascript">
+        //交易tab点击
+        function tabitemclick(el)
+        {
+            if($(el).hasClass('auitab-active'))
+                return;
+            else
+            {
+                $('.auitab-active').removeClass('auitab-active');
+                $(el).addClass('auitab-active')
+            }
+        }
+        //底部栏点击
+        function footeronlcik(el,tab)
+        {
+            var imgpath = $(el).children('img').attr('src').split('/');
+            var length = imgpath.length;
+            var imgsub = imgpath[imgpath.length-1].substring(0,2);
+//            if(imgsub=='on')
+//                return;
+//            else
+            {
+                var activeimg = $('.aui-active').siblings('img').attr('src').split('/')
+                activeimg[activeimg.length-1] = activeimg[activeimg.length-1].replace('on_','')
+                activeimg = activeimg.join('/')
+                console.log(activeimg)
+                $('.aui-active').siblings('img').attr('src',activeimg)
+                $('.aui-active').removeClass('aui-active')
+                //
+                imgpath[length-1] = 'on_'+imgpath[length-1];
+                imgpath = imgpath.join('/');
+                $(el).children('img').attr('src',imgpath)
+                $(el).children('.aui-bar-tab-label').addClass('aui-active')
+            }
+
+            switch (tab)
+            {
+                case 1:
+                    window.location.href = '/mobile/index/index';
+                    break;
+                case 2:
+                    window.location.href = '/mobile/recognize/index';
+                    break;
+                case 3:
+                    window.location.href = '/mobile/deal/index';
+                    break;
+                case 4:
+                    window.location.href = '/mobile/wallet/index';
+                    break;
+            }
+        }
+	</script>
+</html>

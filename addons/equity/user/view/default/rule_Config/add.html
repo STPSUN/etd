@@ -1,0 +1,96 @@
+{extend name="$BASE_POPUP_FORM" /}
+{block name="body"}
+
+<div class="box-content">
+    <div class="control-row col-2">
+        <div class="control-group">
+            <label class="control-label">私募数量</label>
+            <div class="controls">
+                <input type="text" name="gross"  class="form-control required" />
+            </div>
+        </div>
+        <div class="control-group" id="bank" >
+            <label class="control-label">名称</label>
+            <div class="controls">
+                <input type="text" name="name" class="form-control required" />
+            </div>
+        </div>
+        <div class="control-group" id="user_limit">
+            <label class="control-label">用户限购次数</label>
+            <div class="controls">
+                <input type="text" name="user_limit"  class="form-control required" />
+            </div>
+        </div>
+        <div class="control-group" id="price">
+            <label class="control-label">单价</label>
+            <div class="controls">
+                <input type="text" name="price"  class="form-control required" />
+            </div>
+        </div>
+        <div class="control-group" id="min_num">
+            <label class="control-label">最小数量</label>
+            <div class="controls">
+                <input type="text" name="min_num"  class="form-control required" />
+            </div>
+        </div>
+        <div class="control-group" id="max_num">
+            <label class="control-label">最大数量</label>
+            <div class="controls">
+                <input type="text" name="max_num"  class="form-control required" />
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">币种类型</label>
+            <div class="controls">
+                <select name="currency_type"  class="form-control">
+                    <option value="0">RMB</option>
+                    <option value="1">ETH</option>
+                </select>
+            </div>
+        </div>
+        <div class="control-group" id="rate">
+            <label class="control-label">比率</label>
+            <div class="controls">
+                <input type="text" name="rate"  class="form-control required" />
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">开始-结束日期</label>
+            <div class="controls" onclick="dateRange()">
+                <input type="text" style="width: 180px"  class="form-control required" id="dateRange" placeholder="开始时间--截止时间" name="date_range">
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+{block name="script"}
+<!--时间日期插件的引入-->
+<link rel="stylesheet" href="__STATIC__/daterangepicker/daterangepicker.css">
+<script src="__STATIC__/daterangepicker/moment.min.js"></script>
+<script src="__STATIC__/daterangepicker/daterangepicker.js"></script>
+<script type="text/javascript">
+    function dateRange() {
+        $('#dateRange').daterangepicker({});
+    }
+</script>
+{/block}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

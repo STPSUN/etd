@@ -1,0 +1,90 @@
+{extend name="$BASE_POPUP_FORM" /}
+{block name="body"}
+<link rel="stylesheet" type="text/css" href="__STATIC__/easyui/themes/custom/easyui.css" />    
+<style type="text/css">
+    .panel-header, .panel-body {
+        border-color: #f2a654;
+    }    
+    .img_upload_wrp .img_upload_box{
+        width:375px;
+        height:175px;
+    }
+    .preview_photo{
+        width:375px !important;
+        height:175px !important;
+    }
+</style>  
+<div class="box-content">
+    <input type="hidden" id="id" name="id" />  
+    <div id="js_main_header">
+        <div class="control-group">
+            <label class="control-label">
+                名称</label>
+            <div class="controls">
+                <input style="width:300px" type="text" name="name" id="name" class="form-control required" />
+            </div>
+        </div>
+        
+        <div class="control-group">
+            <label class="control-label">
+                价格</label>
+            <div class="controls">
+                <input style="width:300px" type="number" name="price" id="price" class="form-control required" />
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label">
+                总产量</label>
+            <div class="controls">
+                <input style="width:300px" type="number" name="total_yield" id="total_yield" class="form-control required" />                       
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label">
+                每日产量</label>
+            <div class="controls">
+                <input style="width:300px" type="number" name="daily_yield" id="daily_yield" class="form-control required" />                       
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label">
+                加速所需矿工数</label>
+            <div class="controls">
+                <input style="width:300px" type="number" name="need_miner" id="need_miner" class="form-control required" />
+            </div>
+        </div>
+
+        
+        <div class="control-group">
+            <label class="control-label">
+                图片
+            </label>
+            <div class="controls">
+                <div id="js_upload_wrp">
+                    <input type="hidden" id="pic" name="pic" value="" class="" />
+                    {:hook('picResource',array('name'=>'pic','folder'=>'miner','tips'=>'建议尺寸：800x600像素。仅支持.jpg .png格式长方形照片。','callback'=>'uploadImgCallback'))}
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+{/block}
+
+{block name="script"}
+<script type="text/javascript">
+/**
+ * 添加图片
+ */
+function uploadImgCallback(path) {
+    $("#pic").val(path);
+}
+function onLoadDataSuccess(data) {
+    setPicValue("pic", data['pic']);
+}
+
+</script>
+{/block}

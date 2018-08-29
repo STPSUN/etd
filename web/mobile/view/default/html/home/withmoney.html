@@ -1,0 +1,161 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width" />
+		<meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
+		<title>理财</title>
+		<link rel="stylesheet" type="text/css" href="../../css/aui.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/common.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/home.css"/>
+	</head>
+	<style>
+		.list-divitem{
+			width: 100%;
+		    border: 0.5px solid #316dcc;
+		    border-top-right-radius: 0.5rem;
+		    border-top-left-radius: 0.5rem;
+		    padding: 0.5rem;
+		    font-size: 0.7rem;
+		    position: relative;
+		    margin-top: 0.5rem;
+		}
+		.list-divitem-first{
+			display: flex;
+   			justify-content: space-between;
+   			border-bottom: 0.5px solid #316dcc;
+   			margin-bottom: 0.5rem;
+   			padding-bottom: 0.5rem;
+		}
+		.list-divitem-first img{
+			width: 1rem;
+		    height: 1rem;
+		}
+		.list-divitem-second{
+			font-size: 0.6rem;
+			color: #fd2054;
+			text-align: right;
+			margin-top: 0.3rem;
+		}
+		.list-divitem-leftline{
+			border: 2px solid #095eff;
+			position: absolute;
+			bottom: -0.1rem;
+			width: 50%;
+			left: 0;
+		}
+		.list-divitem-rightline{
+			border: 2px solid #eae1e1;
+			position: absolute;
+			bottom: -0.1rem;
+			width: 50%;
+			left: 50%;
+		}
+	</style>
+	<body>
+		<div id="app">
+			<header class="nav-header aui-bar aui-bar-nav" id="aui-header">
+		        <a class="aui-pull-left" >
+		            <span class="aui-iconfont aui-icon-left" onclick="javascript:history.go(-1);" ></span>
+		        </a>
+		        <div class="aui-title">理财</div>
+		        <div class="aui-pull-right aui-btn">
+					<span onclick="javascript:location.href='withmoneynotes.html';">理财记录</span>
+				</div>
+		    </header>
+		    <div class="aui-content aui-margin-b-15">
+			    <ul class="aui-list aui-list-in">
+			        <li class="aui-list-item">
+			            <div class="aui-list-item-inner">
+			                <div class="aui-list-item-title">
+			                	<div class="aui-list-item-title">
+				                	投资业务：
+				                	<span>ETD</span>
+				                </div>
+			                </div>
+			            </div>
+			        </li>
+			        <li class="aui-list-item">
+			            <div class="aui-list-item-inner">
+			                <div class="aui-list-item-title">
+			                	投资金额：
+			                	<div class="aui-list-item-input">
+				                    <input type="number" placeholder="请输入">
+				                </div>
+			                </div>
+			            </div>
+			        </li>
+			        <li class="aui-list-item">
+			            <div class="aui-list-item-inner" style="flex-direction: column;align-items: flex-start;border-bottom: none;">
+			                <div class="aui-list-item-title" style="padding-top: 0.5rem;">
+			                	投资组合
+			                </div>
+			                <div class="list-divitem" >
+			                	<div class="list-divitem-first">
+			                		<span>7天（日收益+0.20%）</span>
+			                		<img onclick="checkedclick(this)" src="../../image/home/checked.png"/>
+			                	</div>
+			                	<div class="list-divitem-second">
+			                		当日可认购额度剩余50%
+			                	</div>
+			                	<div class="list-divitem-leftline">
+			                	</div>
+			                	<div class="list-divitem-rightline">
+			                	</div>
+			                </div>
+			                <div class="list-divitem" >
+			                	<div class="list-divitem-first">
+			                		<span>7天（日收益+0.20%）</span>
+			                		<img onclick="checkedclick(this)" src="../../image/home/unchecked.png"/>
+			                	</div>
+			                	<div class="list-divitem-second">
+			                		当日可认购额度剩余50%
+			                	</div>
+			                	<div class="list-divitem-leftline">
+			                	</div>
+			                	<div class="list-divitem-rightline">
+			                	</div>
+			                </div>
+			                <div class="list-divitem" >
+			                	<div class="list-divitem-first">
+			                		<span>7天（日收益+0.20%）</span>
+			                		<img onclick="checkedclick(this)" src="../../image/home/unchecked.png"/>
+			                	</div>
+			                	<div class="list-divitem-second">
+			                		当日可认购额度剩余50%
+			                	</div>
+			                	<div class="list-divitem-leftline">
+			                	</div>
+			                	<div class="list-divitem-rightline">
+			                	</div>
+			                </div>
+			            </div>
+			        </li>
+			        <li class="aui-list-item">
+			            <div class="aui-list-item-inner">
+			                <div class="aui-list-item-title">
+			                	<div class="aui-list-item-title">
+				                	总花费：
+				                	<span><span>1</span>ETD</span>
+				                </div>
+			                </div>
+			            </div>
+			        </li>
+			    </ul>
+			     <div class="aui-btn bottombtn">确定</div>
+			</div>
+		</div>
+	</body>
+	<script src="../../js/jquery.min.js"></script>
+	<script type="text/javascript">
+		function checkedclick(el)
+		{
+			var imgpath = $(el).attr('src').split('/')
+			var imgbool = imgpath[imgpath.length-1].substring(0,2)
+			if(imgbool=='un')
+				$(el).attr('src','../../image/home/checked.png')
+			else
+				$(el).attr('src','../../image/home/unchecked.png')
+		}
+	</script>
+</html>

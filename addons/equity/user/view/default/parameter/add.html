@@ -1,0 +1,130 @@
+{extend name="$BASE_POPUP_FORM" /}
+{block name="body"}
+
+<div class="box-content">
+    <div class="control-row col-2">
+        <div class="control-group">
+            <label class="control-label">收款方式</label>
+            <div class="controls">
+                <select name="pay_type" id="pay_type" class="form-control" onchange="payType()">
+                    <option value="0">微信</option>
+                    <option value="1">支付宝</option>
+                    <option value="2">银行</option>
+                    <option value="3">ETH</option>
+                </select>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">账号</label>
+            <div class="controls">
+                <input type="text" name="account" id="account" class="form-control required" /><span class="tips"></span>
+            </div>
+        </div>
+        <div class="control-group" id="bank" style="display: none">
+            <label class="control-label">开户行</label>
+            <div class="controls">
+                <input type="text" name="open_bank" id="bank_text" class="form-control" />
+            </div>
+        </div>
+        <div class="control-group" id="real_name" style="display: none">
+            <label class="control-label">姓名</label>
+            <div class="controls">
+                <input type="text" name="real_name" id="real_name_text" class="form-control" />
+            </div>
+        </div>
+        <div class="control-group" id="qrcode">
+            <label class="control-label">二维码图片</label>
+            <div class="controls">
+                <div id="js_upload_wrp">
+                    <input type="hidden" id="pic" name="qrcode_img" value="" class="required" />
+                    {:hook('picResource',array('name'=>'qrcode_img','folder'=>'conf','tips'=>'仅支持.jpg .png格式照片。','callback'=>'uploadImgCallback'))}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+{block name="script"}
+<script type="text/javascript">
+
+    /**
+     * 添加图片
+     */
+    function uploadImgCallback(path) {
+        $("#pic").val(path);
+    }
+    function onLoadDataSuccess(data) {
+        setPicValue("pic", data['pic']);
+    }
+
+    function payType() {
+        var pay_type = $('#pay_type option:selected').val();
+        var bank_text = document.getElementById("bank_text").getAttribute("class");
+        var real_name_text = document.getElementById("real_name_text").getAttribute("class");
+        var qrcode_text = document.getElementById("qrcode_text").getAttribute("class");
+        switch (parseInt(pay_type))
+        {
+            case 2:
+                $('#qrcode').hide();
+                $('#bank').show();
+                $('#real_name').show();
+                qrcode_text = qrcode_text.replace("required","");
+                document.getElementById("qrcode_text").setAttribute("class",qrcode_text);
+
+                bank_text = qrcode_text.concat(" required");
+                document.getElementById("bank_text").setAttribute("class",bank_text);
+
+                real_name_text = qrcode_text.concat(" required");
+                document.getElementById("real_name_text").setAttribute("class",real_name_text);
+                break;
+            case 3:
+                $('#bank').hide();
+                $('#real_name').hide();
+                $('#qrcode').hide();
+                qrcode_text = qrcode_text.replace("required","");
+                document.getElementById("qrcode_text").setAttribute("class",qrcode_text);
+
+                bank_text = bank_text.replace("required","");
+                document.getElementById("bank_text").setAttribute("class",bank_text);
+
+                real_name_text = real_name_text.replace("required","");
+                document.getElementById("real_name_text").setAttribute("class",real_name_text);
+                break;
+            default:
+                $('#bank').hide();
+                $('#real_name').hide();
+                $('#qrcode').show();
+                bank_text = bank_text.replace("required","");
+                document.getElementById("bank_text").setAttribute("class",bank_text);
+
+                real_name_text = real_name_text.replace("required","");
+                document.getElementById("real_name_text").setAttribute("class",real_name_text);
+
+                qrcode_text = qrcode_text.concat(" required");
+                document.getElementById("qrcode_text").setAttribute("class",qrcode_text);
+                break;
+        }
+    }
+
+</script>
+{/block}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

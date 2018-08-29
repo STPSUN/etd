@@ -1,0 +1,193 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width" />
+		<meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
+		<title>挂卖</title>
+		<link rel="stylesheet" type="text/css" href="__CSS__/aui.css" />
+		<link rel="stylesheet" type="text/css" href="__CSS__/common.css" />
+		<link rel="stylesheet" type="text/css" href="__CSS__/home.css"/>
+	</head>
+	<style>
+	</style>
+	<body>
+		<div id="app">
+			<header class="nav-header aui-bar aui-bar-nav" id="aui-header">
+		        <a class="aui-pull-left" >
+		            <span class="aui-iconfont aui-icon-left" onclick="javascript:history.go(-1);" ></span>
+		        </a>
+		        <div class="aui-title">挂卖</div>
+		    </header>
+		    <div class="aui-content aui-margin-b-15">
+			    <ul class="aui-list aui-list-in">
+			        <li class="aui-list-item">
+			            <div class="aui-list-item-inner">
+			                <div class="aui-list-item-title">
+			                	<div class="aui-list-item-title">
+				                	交易方式：
+				                	<div class="aui-list-item-input">
+					                    <select style="color: #FFFFFF;display: inline-block;width: 2.5rem;" id="type" onchange="saleType()">
+										  <option value="1">卖出</option>
+										  <option value="2">买入</option>
+										</select>
+										<img src="__IMG__/common/icon-down.png" style="width: 0.7rem;margin-left: -1rem;"/>
+					                </div>
+				                </div>
+			                </div>
+			            </div>
+			        </li>
+			        <li class="aui-list-item">
+			            <div class="aui-list-item-inner">
+			                <div class="aui-list-item-title">
+			                	<span class="aui-list-item-title" id="deal_price">最佳卖价：</span>
+			                	<span style="color: #FFFFFF;"><span id="price">{$price}</span> CNY/TM</span>
+			                </div>
+			            </div>
+			        </li>
+			        <!--<li class="aui-list-item">-->
+			            <!--<div class="aui-list-item-inner">-->
+			                <!--<div class="aui-list-item-title">-->
+			                	<!--卖出范围：-->
+			                	<!--<span style="color: #FFFFFF;"><span>50~300</span> TM</span>-->
+			                <!--</div>-->
+			            <!--</div>-->
+			        <!--</li>-->
+					<li class="aui-list-item">
+						<div class="aui-list-item-inner">
+							<div class="aui-list-item-title">
+								<span class="aui-list-item-title" id="deal_num">卖出数量：</span>
+								<div class="aui-list-item-input">
+									<input type="number" placeholder="请输入100的倍数" onchange="changeTotalPrice()" id="num">
+								</div>
+							</div>
+						</div>
+					</li>
+			        <!--<li class="aui-list-item">-->
+			            <!--<div class="aui-list-item-inner">-->
+			                <!--<div class="aui-list-item-title">-->
+			                	<!--卖出数量：-->
+			                	<!--<input style="color: #FFFFFF;" onchange="changeTotalPrice()" id="num">-->
+			                <!--</div>-->
+			            <!--</div>-->
+			        <!--</li>-->
+			        <li class="aui-list-item">
+			            <div class="aui-list-item-inner">
+			                <div class="aui-list-item-title">
+			                	总价：
+			                	<span style="color: #FFFFFF;"><span id="total"></span></span>
+			                </div>
+			            </div>
+			        </li>
+			        <!--<li class="aui-list-item">-->
+			            <!--<div class="aui-list-item-inner">-->
+			                <!--<div class="aui-list-item-title">-->
+			                	<!--手续费：-->
+			                	<!--<span style="color: #FFFFFF;"><span>0</span> TM</span>-->
+			                <!--</div>-->
+			            <!--</div>-->
+			        <!--</li>-->
+			        <li class="aui-list-item">
+			            <div class="aui-list-item-inner">
+			                <div class="aui-list-item-title">
+			                	交易密码：
+			                	<div class="aui-list-item-input">
+				                    <input type="password" id="pay_password" placeholder="请输入交易密码">
+				                </div>
+			                </div>
+			            </div>
+			        </li>
+			    </ul>
+			</div>
+			<div class="aui-btn bottombtn" onclick="submit()">提交</div>
+		</div>
+	</body>
+	<script src="__JS__/jquery.min.js"></script>
+	<script type="text/javascript" src="/static/global/js/common.js"></script>
+	<script type="text/javascript" src="/static/global/layer/layer.js"></script>
+	<script type="text/javascript">
+		var coin_id = localStorage.getItem('coin_id');
+		
+		function saleType() {
+			var type = $('#type').val();
+			if(type == 1)
+			{
+			    $('#deal_price').text('最佳卖价：');
+			    $('#deal_num').text('卖出数量：');
+			}else
+			{
+			    $('#deal_price').text('最佳买价：');
+			    $('#deal_num').text('买入数量：');
+			}
+        }
+
+		function submit() {
+            var type = $('#type').val();
+            var num = $('#num').val();
+            var data = {
+                type: $('#type').val(),
+				num: num,
+				pay_password: $('#pay_password').val(),
+				coin_id: coin_id
+			}
+            if(!isNumberBy100(num))
+			{
+			    return msg('数量需为100的倍数');
+			}
+
+			if(type == 1)
+			{
+                $.ajax({
+                    url: '/mobile/deal/postSaleOrder',
+                    type: 'post',
+                    data:data,
+                    success: function (res) {
+                        if(res.success)
+                        {
+                            window.location.href = '/mobile/deal/index';
+                        }else
+                        {
+                            return msg(res.message);
+                        }
+                    }
+                })
+			}else
+			{
+                $.ajax({
+                    url: '/mobile/deal/postBuyOrder',
+                    type: 'post',
+                    data:data,
+                    success: function (res) {
+                        if(res.success)
+                        {
+                            window.location.href = '/mobile/deal/index';
+                        }else
+                        {
+                            return msg(res.message);
+                        }
+                    }
+                })
+			}
+
+
+        }
+
+		function changeTotalPrice() {
+			var num = $('#num').val();
+			var price = $('#price').text();
+			var total = num * price;
+			$('#total').text(total.toFixed(2) + ' CNY');
+        }
+
+        function isNumberBy100(ssn) {
+            var re = /^[0-9]*[0-9]$/i; //校验是否为数字
+			if(re.test(ssn) && ssn % 100 === 0)
+			{
+			    return true;
+			}else
+			{
+			    return false;
+			}
+        }
+	</script>
+</html>

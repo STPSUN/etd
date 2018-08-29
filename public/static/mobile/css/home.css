@@ -1,0 +1,111 @@
+li a {
+	color: #0BCBE1;
+}
+img {
+	display: inline-block;
+}
+.aui-row{
+	margin: 0rem 0.5rem;
+}
+.aui-grid {
+	background-color: transparent;
+}
+.aui-col-xs-3 {
+	padding: 0.5rem 0 !important;
+	background: transparent!important;
+}
+.aui-col-xs-3 img {
+	width: 3.5rem;
+}
+.section-userinfo{
+	margin: 5rem 1rem 0rem 1rem;
+	height: 8.5rem;
+	background-image: url(../image/home/homesectionback.png);
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+}
+.section-bcg{
+	height: 3.5rem;
+	position: relative;
+}
+ .section-bcg img {
+    position: absolute;
+    margin-top: -3rem;
+    margin-left: -3rem;
+    left: 50%;
+    width: 6rem;
+ }
+ .section-info p {
+ 	text-align: center;
+ 	font-size: 0.7rem;
+ }
+ .section-info-detail{
+ 	overflow: hidden;
+	padding: 0 1.5rem;
+ 	margin-top: 0.5rem;
+ 	font-size: 0.6rem;
+ }
+/*转账*/
+.aui-list {
+	background: transparent;
+}
+.aui-list-item{
+	background-image : none!important;
+}
+.aui-list-item-inner{
+	border-bottom: 0.5px solid #316dcc;
+}
+.aui-list .aui-list-item-title {
+	color: #316dcc;
+	font-size: 0.7rem;
+}
+.aui-list .aui-list-item-input{
+	display: inline-block;
+	width: auto;
+}
+.aui-list .aui-list-item-input input{
+	color: #d5d5d8;
+}
+.aui-list .aui-list-item-inner{
+	margin-right: 0.75rem;
+	padding-right: 0rem;
+	min-height: 2.5rem;
+}
+ul li input::-webkit-input-placeholder { /* WebKit browsers */ 
+color: #d5d5d8; 
+} 
+ul li input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */ 
+color: #d5d5d8; 
+} 
+ul li input::-moz-placeholder { /* Mozilla Firefox 19+ */ 
+color: #d5d5d8; 
+} 
+ul li input:-ms-input-placeholder { /* Internet Explorer 10+ */ 
+color: #d5d5d8; 
+}
+/*.aui-list-item-input input {
+	color: #FFFFFF;
+}*/
+/*资产*/
+.section-asset{
+	background-image: none;
+	margin-bottom: 0;
+	height: auto;
+}
+.assetinfo{
+	display: flex;
+	margin: 0.8rem 0rem;
+}
+.assetinfo span{
+	color: #0bcbe1;
+	text-align: center;
+	flex: 1;
+}
+.assetgrid{
+	border-top: none;
+	margin-top: 0;
+}
+/*提币记录*/
+.withmoney-info{
+	margin: 0.8rem 0.4rem;
+}

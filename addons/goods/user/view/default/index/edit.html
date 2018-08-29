@@ -1,0 +1,103 @@
+{extend name="$BASE_POPUP_FORM" /}
+{block name="body"}
+<link rel="stylesheet" type="text/css" href="__STATIC__/easyui/themes/custom/easyui.css" />    
+<style type="text/css">
+    .panel-header, .panel-body {
+        border-color: #f2a654;
+    }    
+</style>  
+<div class="box-content">
+    <input type="hidden" id="id" name="id" />  
+    <div id="js_main_header">
+        <div class="control-row col-2">
+            <div class="control-group">
+                <label class="control-label">
+                    礼品名称</label>
+                <div class="controls">
+                    <input type="text" name="goods_name" id="goods_name" class="form-control required" />                       
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">
+                    兑换数量</label>
+                <div class="controls">
+                    <input type="number" placeholder="必须大于0" data-datatype="positive_integer" name="num" id="num" class="form-control required" />                       
+                    <span class="tips">请输入整数</span>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">礼品状态</label>
+                <div class="controls">
+                    <select name="status" id="status" class="form-control required">
+                        <option value="1">上架</option>
+                        <option value="0">待上架</option>
+                        <option value="2">已下架</option>
+                    </select> 
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">
+                    发行总量</label>
+                <div class="controls">
+                    <input type="number" placeholder="必须大于0" data-datatype="positive_integer" name="total_num" id="total_num" class="form-control required" />                       
+                    <span class="tips">请输入整数</span>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">
+                    所需金币数量</label>
+                <div class="controls">
+                    <input type="number" placeholder="必须大于0" data-datatype="positive_integer" name="need_point" id="need_point" class="form-control required" />                       
+                    <span class="tips">请输入整数</span>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">
+                    排列顺序</label>
+                <div class="controls">
+                    <input type="text" data-dataType="positive_integer" id="order_index" name="order_index" value="{$order_index}" class="form-control required" />                                      
+                    <span class="tips">越小越靠前</span>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">选择币种</label>
+                <div class="controls">
+                    <select name="coin_id" id="coin_id" class="form-control required">
+                        {volist name="coin_data" id="vo"}
+                            <option value="{$vo.id}">{$vo.coin_name}</option>
+                        {/volist}
+                    </select>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">
+                    礼品图片
+                </label>
+                <div class="controls">
+                    <div id="js_upload_wrp">
+                        <input type="hidden" id="pic" name="pic" value="" class="" />
+                        {:hook('picResource',array('name'=>'pic','folder'=>'goods','tips'=>'仅支持.jpg .png格式照片。','callback'=>'uploadImgCallback'))}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+{/block}
+
+{block name="script"}
+<script type="text/javascript">
+    /**
+     * 添加图片
+     */
+    function uploadImgCallback(path) {
+        $("#pic").val(path);
+    }
+    function onLoadDataSuccess(data) {
+        setPicValue("pic", data['pic']);
+    }
+
+</script>
+{/block}

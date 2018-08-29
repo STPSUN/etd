@@ -1,0 +1,166 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width" />
+		<meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
+		<title>我的</title>
+		<link rel="stylesheet" type="text/css" href="../../css/aui.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/common.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/home.css"/>
+	</head>
+	<style>
+		.mine-user{
+			margin-top: 2.5rem;
+		}
+		.user-info{
+			text-align: center;
+			padding: 0.5rem 0;
+			color: #0BCBE1;
+		}
+		.aui-list-item-label-icon img {
+			width: 1.5rem;
+		}
+		.aui-list .aui-list-item-arrow:before{
+			/*border: 1px solid #0BCBE1;*/
+		}
+		.recognize-headinfo{
+			height: 8rem;
+			overflow: hidden;
+			background-image: url(../../image/mine/minebkg.png);
+			background-size: 100% 100%;
+			background-repeat: no-repeat;
+			padding-top: 2rem;
+		}
+		.headinfo-list {
+			display: flex;
+			height: 2.5rem;
+			align-items: center;
+			background: #0003;
+		}
+		.headinfo-list-item{
+			border-right: 1.5px solid #fff;
+			height: 1.6rem;
+			flex: 1;
+		}
+		.headinfo-list-item p{
+			text-align: center;
+			font-size: 0.7rem;
+		}
+		.headinfo-title{
+			font-size: 0.9rem;
+			margin: 1rem;
+			text-align: center;
+		}
+		.aui-list-item-inner {
+			border-bottom: none;
+			margin-right: 0rem!important;
+		}
+		.aui-list-item{
+			border-bottom: 0.5px solid #316dcc!important;
+			padding-left: 0!important;
+			margin: 0 0.75rem!important;
+		}
+	</style>
+	<body>
+		<div id="app">
+			<div class="recognize-headinfo">
+				<p class="headinfo-title">累计收益：<span>0.36</span></p>
+				<div class="headinfo-list">
+					<div class="headinfo-list-item">
+						<p>
+							￥22.00
+						</p>
+						<p>
+							佣金钱包
+						</p>
+					</div>
+					<div class="headinfo-list-item">
+						<p>
+							0.00
+						</p>
+						<p>
+							本金
+						</p>
+					</div>
+					<div class="headinfo-list-item" style="border-right: none;">
+						<p>
+							￥188.00
+						</p>
+						<p>
+							数字资产
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class="aui-content aui-margin-b-15">
+			    <ul class="aui-list aui-list-in">
+			        <li class="aui-list-item aui-list-item-middle" onclick="javascript:location.href='costnotes.html'">
+			        	<div class="aui-list-item-label-icon">
+	                		<img src="../../image/mine/costnotes.png"/>
+	                	</div>
+			            <div class="aui-list-item-inner aui-list-item-arrow">
+			                <div class="aui-list-item-title">
+			                	账单记录
+			                </div>
+			            </div>
+			        </li>
+			         <li class="aui-list-item aui-list-item-middle" onclick="javascript:location.href='ETDnotes.html'">
+			        	<div class="aui-list-item-label-icon">
+	                		<img src="../../image/mine/ETDnote.png"/>
+	                	</div>
+			            <div class="aui-list-item-inner aui-list-item-arrow">
+			                <div class="aui-list-item-title">
+			                	ETD记录
+			                </div>
+			            </div>
+			        </li>
+			         <li class="aui-list-item aui-list-item-middle" onclick="javascript:location.href='withmoney.html'">
+			        	<div class="aui-list-item-label-icon">
+	                		<img src="../../image/mine/withmoney.png"/>
+	                	</div>
+			            <div class="aui-list-item-inner aui-list-item-arrow">
+			                <div class="aui-list-item-title">
+			                	提币
+			                </div>
+			            </div>
+			        </li>
+			         <li class="aui-list-item aui-list-item-middle" onclick="javascript:location.href='withforimtoken.html'">
+			        	<div class="aui-list-item-label-icon">
+	                		<img src="../../image/mine/withforimtoken.png"/>
+	                	</div>
+			            <div class="aui-list-item-inner aui-list-item-arrow">
+			                <div class="aui-list-item-title">
+			                	提币到imToken
+			                </div>
+			            </div>
+			        </li>
+			         <li class="aui-list-item aui-list-item-middle" onclick="javascript:location.href='kefu.html'">
+			        	<div class="aui-list-item-label-icon">
+	                		<img src="../../image/mine/kefu.png"/>
+	                	</div>
+			            <div class="aui-list-item-inner aui-list-item-arrow">
+			                <div class="aui-list-item-title">
+			                	联系客服
+			                </div>
+			            </div>
+			        </li>
+			         <li class="aui-list-item aui-list-item-middle" onclick="javascript:location.href='setup.html'">
+			        	<div class="aui-list-item-label-icon">
+	                		<img src="../../image/mine/setup.png"/>
+	                	</div>
+			            <div class="aui-list-item-inner aui-list-item-arrow">
+			                <div class="aui-list-item-title">
+			                	设置
+			                </div>
+			            </div>
+			        </li>
+			    </ul>
+			</div>
+			<div class="aui-btn bottombtn" style="position: relative;bottom: auto;margin-top: 1rem;">退出登录</div>
+		</div>
+	</body>
+	<script src="../../js/jquery.min.js"></script>
+	<script type="text/javascript">
+	</script>
+</html>

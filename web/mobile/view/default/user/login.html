@@ -1,0 +1,140 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>登陆</title>
+    <link rel="stylesheet" type="text/css" href="__CSS__/aui.css"/>
+    <link rel="stylesheet" type="text/css" href="__CSS__/common.css"/>
+    <style>
+		::-webkit-input-placeholder { /* WebKit browsers */
+		color: #cdcdcd;
+		}
+		:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+		color: #cdcdcd;
+		}
+		::-moz-placeholder { /* Mozilla Firefox 19+ */
+		color: #cdcdcd;
+		}
+		:-ms-input-placeholder { /* Internet Explorer 10+ */
+		color: #cdcdcd;
+		}
+    	li,ul {
+    		background-image: -webkit-linear-gradient(transparent,transparent) !important;
+    	}
+    	.aui-list-item.line-b{border-bottom: 1px solid #e2e2e2}
+		html,body{
+			height: 100%;
+		}
+		.login_content{
+			height: 100%;
+			background-image:url('__IMG__/common/bkgimg.png');
+			background-repeat: round;
+			display: flex;
+			align-items: center;
+			justify-content: flex-start;
+			flex-direction: column;
+		}
+		.input_content{
+			padding: 1rem 0.5rem;
+			padding-bottom: 2rem;
+			border-radius: 0.5rem;
+			margin-top: 1rem;
+			width: 94%;
+		}
+		.input_content>div{
+			display: flex;
+			align-items: center;
+			justify-content: flex-start;
+			border-bottom: 1px solid #316DCC;
+			margin-top: 1rem;
+		}
+		.input_content>div input{
+			color: #D5D5D8;
+		}
+		.forget-register span{
+			 color: #316DCC;
+		}
+    </style>
+</head>
+<body class="aui-bg-white">
+	<div id="app" style='padding-top: 20%' class="login_content">
+		<img src="__IMG__/home/logo.png" style="height:6rem; margin-top:3rem;">
+  			<div class="input_content">
+			<div>
+				<img src="__IMG__/login_register/account.png" style="height:1.2rem; margin-right:0.5rem;">
+				<input type="text" placeholder="请输入账号" id="phone">
+			</div>
+			<div>
+				<img src="__IMG__/login_register/psw.png" style="height:1.2rem; margin-right:0.5rem;">
+				<input type="password" placeholder="请输入密码" id="password">
+				<img  style="width: 1.5rem;" src="__IMG__/login_register/closeeye.png" onclick="openorcloseeye(this)"/>
+			</div>
+			<div style="border:none;margin-top:2rem;">
+				<div class="aui-btn aui-btn-block" style="color: #316DCC; background-color: transparent; border: 1.5px solid #316DCC; border-radius:1.5rem;" id="submit_btn" onclick="login()">登录</div>
+			</div>
+
+			<div class="forget-register" style="border:none;margin-top:0.4rem; justify-content: space-between;     font-size: 0.7rem; padding-right:1rem; ">
+				<span id='getPass' style='padding-right: 60%' onclick="javascript:location.href='forget_password.html';">忘记密码?</span><span onclick="register()" id='register'>注册</span>
+
+      </div>
+      <span style="float:right;margin-top:1rem;" id="version"></span>
+		</div>
+
+	</div>
+</body>
+<script src="__JS__/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" src="/static/global/js/common.js"></script>
+<script type="text/javascript" src="/static/global/layer/layer.js"></script>
+<script type="text/javascript">
+
+	function login() {
+	    var data = {
+	        phone: $('#phone').val(),
+			password: $('#password').val()
+		};
+        $.ajax({
+            url: '/mobile/user/login',
+            data: data,
+            type: 'post',
+            success: function (res) {
+                if(res.success)
+                {
+                    window.location.href = '/mobile/index/index'
+                }else
+                {
+                    return msg(res.message);
+                }
+            },
+            error: function (res) {
+                return msg(res.message);
+            }
+        })
+    }
+
+	function openorcloseeye(el)
+	{
+		var list = $(el).attr('src').split('/')
+		var str = list[list.length-1]
+		var inputvalue = $(el).siblings('input').val()
+		if(str.substr(0,5)=='close')
+		{
+			$(el).attr('src','__IMG__/login_register/openeye.png');
+			$(el).siblings('input').remove();
+			$(el).before('<input type="text" placeholder="请输入密码" value='+inputvalue+' id="password_input">')
+		}
+		else
+		{
+			$(el).attr('src','__IMG__/login_register/closeeye.png')
+			$(el).siblings('input').remove();
+			$(el).before('<input type="password" placeholder="请输入密码" value='+inputvalue+' id="password_input">')
+		}
+	}
+
+	function register() {
+        window.location.href = '/mobile/user/register';
+    }
+</script>
+</html>

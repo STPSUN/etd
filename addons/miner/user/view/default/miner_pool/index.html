@@ -1,0 +1,56 @@
+{extend name="$BASE_POPUP_FORM" /}
+{block name="body"}
+<link rel="stylesheet" type="text/css" href="__STATIC__/easyui/themes/custom/easyui.css" />    
+<style type="text/css">
+    .panel-header, .panel-body {
+        border-color: #f2a654;
+    }    
+    .img_upload_wrp .img_upload_box{
+        width:375px;
+        height:175px;
+    }
+    .preview_photo{
+        width:375px !important;
+        height:175px !important;
+    }
+</style>  
+<div class="box-content">
+    <input type="hidden" id="id" name="id" />  
+    <div id="js_main_header">
+        <div class="control-group">
+            <label class="control-label">
+                矿机上限</label>
+            <div class="controls">
+                <input style="width:300px" type="number" name="parameter_val" id="parameter_val" class="form-control required" />
+            </div>
+        </div>
+                
+        <div class="control-group">
+            <label class="control-label">
+                矿产图片
+            </label>
+            <div class="controls">
+                <div id="js_upload_wrp">
+                    <input type="hidden" id="pic" name="pic" value="" class="" />
+                    {:hook('picResource',array('name'=>'pic','folder'=>'minerpool','tips'=>'建议尺寸：800x600像素。仅支持.jpg .png格式长方形照片。','callback'=>'uploadImgCallback'))}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+
+{block name="script"}
+<script type="text/javascript">
+/**
+ * 添加图片
+ */
+function uploadImgCallback(path) {
+    $("#pic").val(path);
+}
+function onLoadDataSuccess(data) {
+    setPicValue("pic", data['pic']);
+}
+
+</script>
+{/block}

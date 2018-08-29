@@ -1,0 +1,44 @@
+img {
+	display: inline-block;
+}
+.finance-item{
+	display: flex;
+	margin: 0.5rem 0.5rem 0rem 0.5rem;
+	padding: 1rem 0.5rem;
+}
+.finance-item .item-img{
+	display: inline-block;
+}
+.item-img img{
+	width: 3rem;
+	margin-top: 0.5rem;
+}
+.item-info{
+	flex: 1;
+	display: inline-block;
+	margin-left: 0.7rem;
+}
+.identify-info {
+	line-height: 2rem;
+}
+.identify-info img{
+	width: 1rem;
+	margin-bottom: -0.2rem;
+	margin-left: 0.2rem;
+}
+.item-button {
+	background-color: transparent;
+    border: 1px solid #316DCC;
+    color: #316DCC;
+    border-radius: 0.5rem;
+    width: 3.5rem;
+    margin-top: 0.6rem;
+	float: right;
+}
+.data-info div{
+	display: inline-block;
+	font-size: 0.7rem;
+}
+.data-info div span{
+	margin-right: 0.2rem;
+}

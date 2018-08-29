@@ -1,0 +1,333 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width"/>
+	<meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="__CSS__/aui.css" />
+	<link rel="stylesheet" type="text/css" href="__CSS__/common.css"/>
+	<link rel="stylesheet" type="text/css" href="__CSS__/finance.css"/>
+</head>
+<style>
+	.aui-col-xs-4 p{
+		text-align: center;
+		font-size: 0.9rem;
+	}
+	.aui-row {
+		width: 100%;
+		border-bottom: 1px solid #0198ab7a;
+		padding-bottom: 0.5rem;
+	}
+	.finish-status .aui-col-xs-4,.aui-col-xs-3,.aui-col-xs-5{
+		text-align: center;
+		font-size: 0.6rem;
+	}
+</style>
+<body>
+<div class="header-wrap">
+	<header class="nav-header aui-bar aui-bar-nav" id="home-header">
+		<div class="aui-hide">
+			<div class="aui-title">首页</div>
+			<div class="aui-pull-right aui-btn">
+				<span>签到</span>
+			</div>
+		</div>
+		<div class=""  style="overflow: hidden;">
+			<div class="aui-pull-left">
+				<span id="coin_id" >ETD</span>
+				<!--<select style="color: #FFFFFF;display: inline-block;width: 2.5rem;" id="coin_id">-->
+					<!--<option value="13">ETD</option>-->
+					<!--&lt;!&ndash;<option value="14">USTD</option>&ndash;&gt;-->
+				<!--</select>-->
+				<i class="aui-iconfont aui-icon-down" style="color: #1875ff;font-size: 0.7rem;margin-left: -0.7rem;"></i>
+			</div>
+			<div class="aui-title">交易</div>
+			<div class="aui-pull-right aui-btn">
+				<span onclick="toSale()">挂卖</span>
+			</div>
+			<div class="aui-tab divbckg" id="tab" style="width: 100%; margin-top: 44px;border-top: none;">
+				<div class="aui-tab-item"><div class="auitab-active" onclick="tabitemclick(this,1)">买入</div></div>
+				<div class="aui-tab-item"><div onclick="tabitemclick(this,0)">卖出</div></div>
+				<div class="aui-tab-item"><div onclick="tabitemclick(this,2)">当前委托</div></div>
+				<div class="aui-tab-item"><div onclick="tabitemclick(this,3)">已完成</div></div>
+			</div>
+		</div>
+		<div class="aui-hide">
+			<div class="aui-title">记录</div>
+		</div>
+		<div class="aui-hide">
+			<div class="aui-title">我的</div>
+		</div>
+	</header>
+</div>
+<div id="deal_list">
+	<!--<div class="finance-item divbckg deal">-->
+		<!--<div class="item-img"><img src="__IMG__/home/logo.png"/></div>-->
+		<!--<div class="item-info">-->
+			<!--<div class="identify-info">-->
+				<!--<span>TM</span>-->
+				<!--<img src="__IMG__/finance/weixin.png"/>-->
+				<!--<img src="__IMG__/finance/yinlian.png"/>-->
+				<!--<img src="__IMG__/finance/zhifubao.png"/>-->
+				<!--<span style="float: right;color: #316DCC;font-size: 0.7rem;">-->
+							<!--3269<span> CNY</span>-->
+				<!--</span>-->
+			<!--</div>-->
+			<!--<div class="data-info">-->
+				<!--<div>交易：<span>4177</span>|</div>-->
+				<!--&lt;!&ndash;<div>好评：<span>99%</span>|</div>&ndash;&gt;-->
+				<!--<div>信任：<span>96</span></div>-->
+			<!--</div>-->
+			<!--<button class="aui-btn item-button" onclick="javascript:location.href='purchase.html';">-->
+				<!--购买-->
+			<!--</button>-->
+		<!--</div>-->
+	<!--</div>-->
+</div>
+
+<div id="finish_list">
+	<!--<div class=" divbckg finish" style="padding: 0.5rem 0.5rem 0rem 0.5rem;">-->
+		<!--<div class="aui-row">-->
+			<!--<div class="aui-col-xs-4">-->
+				<!--<p style="color: #316DCC;">张三</p>-->
+				<!--<p style="font-size: 0.6rem;">买方</p>-->
+			<!--</div>-->
+			<!--<div class="aui-col-xs-4">-->
+				<!--<p style="color: red;">1.00</p>-->
+				<!--<p style="font-size: 0.6rem;">成交价</p>-->
+			<!--</div>-->
+			<!--<div class="aui-col-xs-4">-->
+				<!--<p style="color: #316DCC;">成龙</p>-->
+				<!--<p style="font-size: 0.6rem;">卖方</p>-->
+			<!--</div>-->
+		<!--</div>-->
+		<!--<div class="finish-status clearfix" style="width: 100%;height: 1.5rem;line-height: 1.5rem;">-->
+			<!--<div class="aui-col-xs-4">-->
+				<!--数量：1000-->
+			<!--</div>-->
+			<!--<div class="aui-col-xs-3" style="text-align: right;padding-right: 3%;color: #316DCC;">-->
+				<!--排队中-->
+			<!--</div>-->
+			<!--<div class="aui-col-xs-5">-->
+				<!--提交时间：2018-06-27-->
+			<!--</div>-->
+		<!--</div>-->
+	<!--</div>-->
+</div>
+
+<footer class="aui-bar aui-bar-tab aui-default-t-border" id="footer">
+	<div class="aui-bar-tab-item" id="nav_footer_home" onclick="footeronlcik(this,1)">
+		<img class="aui-bar-tab-icon footer-bar-icon" src="/footer/on_home.png" alt="">
+		<div class="aui-bar-tab-label " >首页</div>
+	</div>
+	<div class="aui-bar-tab-item" id="nav_footer_transaction" onclick="footeronlcik(this,2)">
+		<img class="aui-bar-tab-icon footer-bar-icon" src="/footer/transaction.png" alt="">
+		<div class="aui-bar-tab-label">认筹</div>
+	</div>
+	<div class="aui-bar-tab-item" id="nav_footer_quotation" onclick="footeronlcik(this,3)">
+		<img class="aui-bar-tab-icon footer-bar-icon" src="/footer/quotation.png" alt="">
+		<div class="aui-bar-tab-label aui-active">交易</div>
+	</div>
+	<div class="aui-bar-tab-item" onclick="footeronlcik(this,4)">
+		<img class="aui-bar-tab-icon footer-bar-icon" src="/footer/mine.png" alt="">
+		<div class="aui-bar-tab-label " >钱包</div>
+	</div>
+</footer>
+</body>
+<script src="__JS__/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+    var coin_id = 13;
+	$(function () {
+	    getList(1);
+    });
+
+	function getList(type) {
+	    var data = {
+	        type: type,
+			coin_id: coin_id
+		};
+
+		$.ajax({
+			url: '/mobile/deal/getList',
+            type: 'post',
+			data: data,
+			success: function (res) {
+				if(res.success)
+				{
+				    var data = res.data;
+				    if(data == null || data == '')
+					{
+					    return;
+					}
+
+					if(type == 0 || type == 1)
+					{
+                        forDealList(data);
+					}else
+					{
+                        forFinishlist(data);
+					}
+				}else
+				{
+				    return msg(res.message);
+				}
+            }
+		})
+
+    }
+    
+    function forFinishlist(data) {
+		$('#finish_list').empty();
+		var list = data['list'];
+		for (var i = 0; i < data['list'].length; i++)
+		{
+			var htmls = [];
+			htmls.push('<div class=" divbckg finish" style="padding: 0.5rem 0.5rem 0rem 0.5rem;" onclick="toRemit('+list[i]['id']+','+list[i]['status']+','+list[i]['is_affirm']+')">');
+
+			var buy_username = list[i]['buy_username'];
+			buy_username = (buy_username == 'null' || buy_username == null) ? ' ' : buy_username;
+
+			var username = list[i]['username'];
+			username = (username == 'null' || username == null) ? '' : username;
+			htmls.push('<div class="aui-row">');
+            htmls.push('<div class="aui-col-xs-4"><p style="color: #316DCC;">'+buy_username+'</p><p style="font-size: 0.6rem;">买方</p></div>');
+			htmls.push('<div class="aui-col-xs-4"><p style="color: red;">'+list[i]['price']+'</p> <p style="font-size: 0.6rem;">价格</p> </div>');
+			htmls.push('<div class="aui-col-xs-4"><p style="color: #316DCC;">'+username+'</p><p style="font-size: 0.6rem;">卖方</p></div>');
+			htmls.push('</div>');
+
+			htmls.push('<div class="finish-status clearfix" style="width: 100%;height: 1.5rem;line-height: 1.5rem;">');
+			htmls.push('<div class="aui-col-xs-4">数量：'+list[i]['amount']+'</div>');
+
+            htmls.push('<div class="aui-col-xs-3" style="text-align: right;padding-right: 3%;color: #316DCC;">'+list[i]['status_text']+'</div>');
+			htmls.push('<div class="aui-col-xs-5">提交时间：'+list[i]['add_time']+'</div>');
+			htmls.push('</div>');
+          	htmls.push('</div>');
+
+			htmls.push('</div>');
+
+            $('#finish_list').append(htmls.join(''));
+		}
+    }
+
+    function toRemit(id,status,is_affirm) {
+	    if(status == 1)
+		{
+            window.location.href = '/mobile/deal/remit?id=' + id;
+		}else if(is_affirm)
+		{
+			window.location.href = '/mobile/deal/affirm?id=' + id;
+		}
+    }
+
+    function forDealList(data) {
+        $('#deal_list').empty();
+        for (var i = 0; i < data['list'].length; i++)
+        {
+            var htmls = [];
+            htmls.push('<div class="finance-item divbckg deal">');
+            htmls.push('<div class="item-img"><img src="__IMG__/home/logo.png"/></div>');
+            htmls.push('<div class="item-info">');
+            htmls.push('<div class="identify-info">');
+            htmls.push('<span>TM</span>');
+            htmls.push('<img src="__IMG__/finance/weixin.png"/>');
+            htmls.push('<img src="__IMG__/finance/yinlian.png"/>');
+            htmls.push('<img src="__IMG__/finance/zhifubao.png"/>');
+            htmls.push('<span style="float: right;color: #316DCC;font-size: 0.7rem;">'+data['list'][i]['amount']+ '<span> CNY</span> </span>');
+            htmls.push('<div class="data-info">');
+            var deal_num = data['list'][i]['deal_num'];
+            deal_num = (deal_num == 'null' || deal_num == null) ? 0 : deal_num;
+            var trust_num = data['list'][i]['trust_num'];
+            trust_num = (trust_num == null) ? 0 : trust_num;
+            htmls.push('<div>交易：<span>'+deal_num+'</span></div>');
+            htmls.push('<div>信任：<span>'+trust_num+'</span></div>');
+            if(data['list'][i]['type'] == 1)
+            {
+                htmls.push('<button class="aui-btn item-button" onclick="buy('+data['list'][i]['id']+')">购买</button>');
+            }
+            htmls.push('</div>');
+            htmls.push('</div>');
+            htmls.push('</div>');
+            htmls.push('</div>');
+
+            $('#deal_list').append(htmls.join(''));
+        }
+    }
+
+    function buy(id) {
+	    window.location.href = '/mobile/deal/purchase?id=' + id;
+    }
+	
+	function toSale() {
+	    localStorage.setItem('coin_id',coin_id);
+	    window.location.href = '/mobile/deal/selling?id=' + coin_id;
+    }
+
+    //交易tab点击
+    function tabitemclick(el,tab)
+    {
+        if($(el).hasClass('auitab-active'))
+            return;
+        else
+        {
+            $('.auitab-active').removeClass('auitab-active');
+            $(el).addClass('auitab-active')
+        }
+
+        switch (tab)
+		{
+			case 0:
+			case 1:
+			    $('#deal_list').show();
+			    $('#finish_list').hide();
+			    break;
+			case 2:
+			case 3:
+			    $('#deal_list').hide();
+			    $('#finish_list').show();
+			    break;
+		}
+
+		getList(tab);
+    }
+    //底部栏点击
+    function footeronlcik(el,tab)
+    {
+        var imgpath = $(el).children('img').attr('src').split('/');
+        var length = imgpath.length;
+        var imgsub = imgpath[imgpath.length-1].substring(0,2);
+//            if(imgsub=='on')
+//                return;
+//            else
+        {
+            var activeimg = $('.aui-active').siblings('img').attr('src').split('/')
+            activeimg[activeimg.length-1] = activeimg[activeimg.length-1].replace('on_','')
+            activeimg = activeimg.join('/')
+            console.log(activeimg)
+            $('.aui-active').siblings('img').attr('src',activeimg)
+            $('.aui-active').removeClass('aui-active')
+            //
+            imgpath[length-1] = 'on_'+imgpath[length-1];
+            imgpath = imgpath.join('/');
+            $(el).children('img').attr('src',imgpath)
+            $(el).children('.aui-bar-tab-label').addClass('aui-active')
+        }
+
+        switch (tab)
+        {
+            case 1:
+                window.location.href = '/mobile/index/index';
+                break;
+            case 2:
+                window.location.href = '/mobile/recognize/index';
+                break;
+            case 3:
+                window.location.href = '/mobile/deal/index';
+                break;
+            case 4:
+                window.location.href = '/mobile/wallet/index';
+                break;
+        }
+    }
+</script>
+</html>

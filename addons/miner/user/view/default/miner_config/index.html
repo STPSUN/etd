@@ -1,0 +1,140 @@
+{extend name="$BASE_LIST" /}
+{block name="body"}
+<div class="right-main">
+    <div class="page_nav" id="js_page_nav"><span class="page_title">{$page_nav}</span></div>
+    <div id="js_main_header" class="ui-form main_header">
+        <span class="frm_input_box search append">
+            <a href="javascript:void(0);" id="js_search" class="frm_input_append">
+                <i class="icon wb-search" title="搜索"></i>
+            </a>
+            <input type="text" id="js_keyword" placeholder="请输入矿机名称" value="" class="frm_input" />
+        </span>
+        <button type="button" id="js_addBtn" class="btn btn-primary right"><i class="icon wb-plus"></i> 添加矿机</button>
+    </div>
+    <table id="grid-table">
+        <thead frozen="true">
+        <th data-options="field:'name',width:100,align:'center'">矿机名称</th> 
+        </thead>
+        <thead>
+            <tr>
+                <th data-options="field:'price',width:100, align:'center'">价格</th>
+                <th data-options="field:'total_yield',width:140, align:'center'">总产量</th>
+                <th data-options="field:'daily_yield',width:140, align:'center'">每日产量</th>
+                <th data-options="field:'need_miner',width:120, align:'center'">加速所需矿工数</th>
+                <th data-options="field:'pic',width:300, align:'center',formatter:formatImg">图片</th>
+                <th data-options="field:'is_default',width:100,align:'center',sortable: true, formatter:formatAuth">是否默认</th>
+                <th data-options="field:'update_time',width:140, align:'center'">更新时间</th>
+                <th data-options="field:'_oper',width:250,halign:'center',formatter: formatOper">操作</th>
+            </tr>
+        </thead>
+    </table>
+</div>
+
+{/block}
+{block name="script"}
+<script type="text/javascript">
+    
+    function formatOper(value, row, index) {
+        var html = '<span class="grid-operation">';
+        html += '<button type="button" onclick="edit(' + row['id'] + ')" class="btn btn-xs btn-default edit-btn"><i class="icon wb-edit"></i>修改</button>';
+        if(row['is_default']==1){
+            html += '<button type="button" onclick="change_default(' + row['id'] + ',0)" class="btn btn-xs btn-default edit-btn"><i class="icon wb-edit"></i>默认</button>'
+        }else{
+            html += '<button type="button" onclick="change_default(' + row['id'] + ',1)" class="btn btn-xs btn-default edit-btn"><i class="icon wb-edit"></i>取消默认</button>';
+        }
+        html += '<button type="button" onclick="del(' + row['id'] + ')" class="btn btn-xs btn-default del-btn"><i class="icon wb-close"></i>删除</button>';
+        html += '</span>';
+        return html;
+    }
+    
+    function formatImg(value){
+        var text = '<img width="100" height="100" src="'+value+'">';
+        return text;
+    }
+    
+    $(function () {
+        $('#grid-table').datagrid({
+            url: getURL('loadList'),
+            method: "GET",
+            height: getGridHeight(),
+            rownumbers: true,
+            singleSelect: true,
+            remoteSort: false,
+            multiSort: true,
+            emptyMsg: '<span>无相关数据</span>',
+            pagination: true,
+            pageSize: 20
+        });
+        //设置分页控件 
+        $('#grid-table').datagrid('getPager').pagination({
+            pageSize: 20, //每页显示的记录条数，默认为10 
+            pageList: [20, 30, 50]
+        });
+    });
+    
+    function formatAuth(value,row,index){
+        var text = '<span style="color:green">默认</span>';
+        if(value == '1'){
+            text = '<span style="color:red">未默认</span>';
+        }
+        return text;
+    }
+    
+    function change_default(id,status){
+        var title = '确认要设置矿机为默认吗?';
+        if(status == 0)
+            title = '确认要取消矿机为默认吗?';
+        confirm(title, function () {
+            var url = getURL('change_default');
+            $.getJSON(url, {id: id,status:status}, function (json) {
+                if (json.success)
+                    reload();
+                else
+                    alert(json.message);
+            });
+        });
+    }
+
+    function edit(id) {
+        var url = getURL('edit', 'id=' + id);
+        openBarWin('编辑矿机', 600, 400, url, function () {
+            reload();
+        }, ['保存', '取消']);
+    }
+
+    $("#js_addBtn").click(function () {
+        if ($(this).hasClass("disabled")) {
+            return;
+        }
+        var url = getURL('edit');
+        openBarWin('添加', 600, 400, url, function () {
+            reload();
+        });
+    });
+
+    
+    function del(id) {
+        confirm("确认要删除此矿机吗？", function () {
+            var url = getURL('del');
+            $.getJSON(url, {id: id}, function (json) {
+                if (json.success)
+                    reload();
+                else
+                    alert(json.message);
+            });
+        });
+    }
+
+    $("#js_search").click(function () {
+        reload();
+    });
+    function reload() {
+        var keyword = $("#js_keyword").val();
+        $('#grid-table').datagrid('reload', {keyword: keyword});
+    }
+    $("#type").change(function () {
+        var keyword = $("#js_keyword").val();
+        $('#grid-table').datagrid('reload', {keyword: keyword});
+    });
+</script>
+{/block}

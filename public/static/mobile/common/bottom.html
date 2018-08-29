@@ -1,0 +1,43 @@
+<script src="__JS__/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+    //交易tab点击
+    function tabitemclick(el)
+    {
+        if($(el).hasClass('auitab-active'))
+            return;
+        else
+        {
+            $('.auitab-active').removeClass('auitab-active');
+            $(el).addClass('auitab-active')
+        }
+    }
+    //底部栏点击
+    function footeronlcik(el,tab)
+    {
+        var imgpath = $(el).children('img').attr('src').split('/')
+        var length = imgpath.length;
+        var imgsub = imgpath[imgpath.length-1].substring(0,2);
+//		console.log(imgpath[imgpath.length-1].substring(3));
+        if(imgsub=='on')
+            return;
+        else
+        {
+            var activeimg = $('.aui-active').siblings('img').attr('src').split('/')
+            activeimg[activeimg.length-1] = activeimg[activeimg.length-1].replace('on_','')
+            activeimg = activeimg.join('/')
+            console.log(activeimg)
+            $('.aui-active').siblings('img').attr('src',activeimg)
+            $('.aui-active').removeClass('aui-active')
+            //
+            imgpath[length-1] = 'on_'+imgpath[length-1];
+            imgpath = imgpath.join('/');
+            $(el).children('img').attr('src',imgpath)
+            $(el).children('.aui-bar-tab-label').addClass('aui-active')
+        }
+
+        if(tab === 4)
+        {
+            window.location.href = '/mobile/wallet/index';
+        }
+    }
+</script>

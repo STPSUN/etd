@@ -1,0 +1,180 @@
+{extend name="$BASE_INDEX" /}
+{block name="body"}
+{include file="public/header" /}
+<div class="warpper offers-common-width">
+  <div class="container no-padding page-space">
+    <div class="row">
+      <div class="col-md-9 col-md-push-3">
+        <div class="offers-show">
+          <div class="my-order">
+            <div class="group clearfix">
+              <div id="pc_group_content" class="long-solution-list">
+                <div class="order-title">
+                  您向 {$detail.username} <em class="text-primary">购买</em> ETH
+                  <span>订单编号：{$detail.id}</span>
+                </div>
+                <hr style="margin-bottom: 10px; margin-top: 0;">
+                <ul class="list-head">
+                  <li class="user-name-head">交易金额</li>
+                  <li class="user-trust-head">交易数量</li>
+                  <li class="payment-type-head">单价</li>
+                  <!--<li class="minimum-amount-head">付款期限</li>-->
+                  <!--<li class="price-head">交易方式</li>-->
+                  <li class="buy-button-head">订单状态</li>
+                </ul>
+
+
+                <ul class="list-content">
+                  <li class="user-name">
+                    <strong>{$detail.total_cny} CNY</strong>
+                  </li>
+                  <li class="user-trust">
+                    {$detail.amount} ETH
+                  </li>
+                  <li class="payment-type">
+                    {$detail.price}  CNY
+                  </li>
+                  <!--<li class="minimum-amount">-->
+                  <!--2018-08-06 10:20:20-->
+                  <!--</li>-->
+                  <!--<li class="price">-->
+                  <!--<img src="__IMG__/payment_card.png" height="20">-->
+                  <!--</li>-->
+                  <li class="buy-button">
+                    {if condition ="$detail.status eq 1"} 交易关闭
+                    {elseif condition="$detail.status eq 2 " /}  待付款
+                    {elseif condition="$detail.status eq 3 " /}  已付款
+                    {elseif condition="$detail.status eq 4 " /}  已成交
+                    {elseif condition="$detail.status eq 1 " /}  已撤单
+                    {else / }挂单中
+                    {/if}
+                  </li>
+                </ul>
+              </div>
+              <div class="my-order-tfoot">
+                <div class="tfoot-left">
+                  交易手续费：免费 <i class="glyphicon glyphicon-question-sign service-tips" data-toggle="tooltip" title="手续费介绍"></i>
+                </div>
+                <div class="tfoot-right">
+                  <div>
+                    <p>总额：<span class="text-primary">{$detail.total_cny} CNY</span></p>
+                    <p>兑换：<em>{$detail.amount} ETH</em></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="pay-account">
+            <div class="pay-title">卖家收款账号</div>
+            <div class="pay-list">
+              {switch name="$detail.pay_type" }
+                {case value="3" break=""}
+                  <span>
+                      <img src="__IMG__/payment_card.png"> 银行账号
+                      <div class="popover fade top in my-popover" style=""><div class="arrow" style="left: 50%;"></div><h3 class="popover-title">银行账号</h3><div class="popover-content">
+                          <p>姓名：连欢</p>
+                          <p>开户行：招商银行</p>
+                          <p>开户支行：建国路支行</p>
+                          <p>银行卡号：6227 0019 2405 0098 040</p>
+                      </div></div>
+                  </span>
+                {/case}
+                {case value="2"}
+                  <span>
+                      <img src="__IMG__/payment_wechat.png"> 微信
+                      <div class="popover fade top in my-popover" style=""><div class="arrow" style="left: 50%;"></div><h3 class="popover-title">微信支付</h3><div class="popover-content">
+                          <p>姓名：{$detail.pay_data.name}</p>
+                          <p>账号：{$detail.pay_data.account}</p>
+                          <p><img src="{$detail.pay_data.qrcode}"> </p>
+                      </div></div>
+                  </span>
+                {/case}
+                {case value="3"}
+                <span>
+                        <img src="__IMG__/payment_ali.png"> 支付宝
+                        <div class="popover fade top in my-popover" style=""><div class="arrow" style="left: 50%;"></div><h3 class="popover-title">微信支付</h3><div class="popover-content">
+                            <p>姓名：连欢</p>
+                            <p>账号：150000100223</p>
+                            <p><img src="__IMG__/wechat_pay.png"> </p>
+                        </div></div>
+                    </span>
+                {/case}
+              {default /}
+              {/switch}
+            </div>
+            <hr>
+            <div class="pay-desc">
+              <p>订单数字币已经由系统锁定托管。</p>
+              <p><span>使用微信、银行卡转账时，请<em class="text-second">不要添加任何备注内容</em>！！！否则可能会被支付系统拦截。</span></p>
+            </div>
+            <hr>
+            <div class="confirm-btn">
+              <button type="button" class="btn btn-success btn-lg btn-block" onclick="window.location.href='../home/order.html'">确认购买</button>
+            </div>
+            <div style="padding: 10px 10px 30px; overflow:hidden;">
+              <div class="my-tips">
+                <p>· 您不需要提供钱包地址给卖家，交易完成后数字货币将自动转入您的账户钱包上</p>
+                <p>· 若长时间未收到卖家的回复，或卖家未释放数字货币，您可以联系客服人员协助处理</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 col-md-pull-9">
+        <div class="trade-desc">
+          <h4>交易说明：</h4>
+          <p>1.订单有效期为15分钟，请您及时在有效期内付款并点击[标记付款已完成]按钮，我才可以释放数字币给您</p>
+          <p>2.如果您无法在15分钟内完成付款，请点击[延长订单有效期]按钮</p>
+          <p>3.开始交易后数字币由系统锁定托管，请放心下单</p>
+          <br />
+          <h4>交易备注：</h4>
+          <p>请勿在汇款备注内填写比特币、ETH、OTC等任何数字币有关字眼，防止您的汇款被银行拦截</p>
+          <p>银行账号：XXXX XXXX XXXX XXXX</p>
+          <p>支付宝账号：XXXXXX</p>
+          <p>微信账号：XXXX</p>
+          <p>下单后可以直接加我微信跟我联系，我会尽快回复。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="chat-widget" id="chat-room-modal">
+
+</div>
+
+<div id="modal-from-dom" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal-from-dom-label"
+     aria-hidden="true">
+
+</div>
+{/block}
+{block name="script"}
+<script type="text/javascript" src="__JS__/leftTime.min.js"></script>
+<script type="text/javascript">
+    var bodyWidth = $('body').width(), layerWidth;
+    if (bodyWidth >= 450) {
+        layerWidth = '50%';
+    } else {
+        layerWidth = '80%';
+    }
+
+    $("[data-toggle='popover']").popover();
+
+    {if condition="$username neq ''"}
+    $('#withdraw').on('click', function () {
+        var url = getURL('fomobase/withdraw', {coin_id:coin_id}, 'fomo');
+        openBarWin('提取', layerWidth, 250, url, function (data) {
+            if(data.success){
+                location.reload();
+            }else{
+                msg(data.message)
+            }
+        }, ['提交', '取消']);
+    });
+    {/if}
+
+
+
+</script>
+{/block}

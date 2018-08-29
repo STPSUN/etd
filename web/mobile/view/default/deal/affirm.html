@@ -1,0 +1,61 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width" />
+		<meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
+		<title>已打款</title>
+		<link rel="stylesheet" type="text/css" href="__CSS__/aui.css" />
+		<link rel="stylesheet" type="text/css" href="__CSS__/common.css" />
+		<link rel="stylesheet" type="text/css" href="__CSS__/home.css"/>
+	</head>
+	<style>
+	</style>
+	<body>
+		<div id="app">
+			<header class="nav-header aui-bar aui-bar-nav" id="aui-header">
+		        <a class="aui-pull-left" >
+		            <span class="aui-iconfont aui-icon-left" onclick="javascript:history.go(-1);" ></span>
+		        </a>
+		        <div class="aui-title">已打款</div>
+		    </header>
+		    <div class="aui-content aui-margin-b-15">
+			    <ul class="aui-list aui-list-in">
+			        <li class="aui-list-item">
+			            <div class="aui-list-item-inner">
+			                <div class="aui-list-item-title">
+			                	打款凭证
+			                </div>
+			            </div>
+			        </li>
+			    </ul>
+			    <div style="padding: 2rem 3rem;">
+			    	<img style="width: 100%" src="/uploads/deal/{$pic}"/>
+			    </div>
+			</div>
+			<div class="aui-btn bottombtn" onclick="affirm('{$order_id}')">确认收款</div>
+		</div>
+	</body>
+	<script src="__JS__/jquery.min.js"></script>
+	<script type="text/javascript" src="/static/global/js/common.js"></script>
+	<script type="text/javascript" src="/static/global/layer/layer.js"></script>
+	<script type="text/javascript">
+		function affirm(order_id) {
+			var data = {
+			    order_id: order_id
+			};
+
+			$.ajax({
+				url: '/mobile/deal/isAffirm',
+				type: 'post',
+				data: data,
+				success: function (res) {
+					if(res.success)
+					    window.location.href = '/mobile/deal/index';
+					else
+					    return msg(res.message);
+                }
+			})
+        }
+	</script>
+</html>

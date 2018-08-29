@@ -1,0 +1,30 @@
+{extend name="$BASE_POPUP_FORM" /}
+{block name="body"}
+<link rel="stylesheet" type="text/css" href="__STATIC__/easyui/themes/custom/easyui.css" />    
+<style type="text/css">
+    .panel-header, .panel-body {
+        border-color: #f2a654;
+    }    
+</style>  
+<div class="box-content">
+    <input type="hidden" id="id" name="id" />  
+    <div id="js_main_header">
+            <div class="control-group">
+                <label class="control-label">
+                    库存数量</label>
+                <div class="controls">
+                    <input type="number" placeholder="请填写数量上限" data-datatype="positive_integer" name="stock" id="stock"  class="form-control required" />                       
+                <span class="tips">保留小数点后5位</span>
+                </div>
+            </div>
+    </div>
+
+</div>
+{/block}
+
+{block name="script"}
+<script type="text/javascript">
+
+
+</script>
+{/block}

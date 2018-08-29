@@ -1,0 +1,28 @@
+{extend name="$BASE_POPUP_FORM" /}
+{block name="body"}
+<link rel="stylesheet" type="text/css" href="__STATIC__/easyui/themes/custom/easyui.css" />    
+<style type="text/css">
+    .panel-header, .panel-body {
+        border-color: #f2a654;
+    }    
+</style>  
+<div class="box-content">
+    <input type="hidden" id="id" name="id" />  
+    <div id="js_main_header">
+            <div class="control-group">
+                <label class="control-label">快递单号</label>
+                <div class="controls">
+                    <input style="width:300px" type="text" placeholder="请填写快递单号"  name="tracking_no" id="tracking_no" class="form-control required" />                       
+                </div>
+            </div>
+    </div>
+
+</div>
+{/block}
+
+{block name="script"}
+<script type="text/javascript">
+
+
+</script>
+{/block}

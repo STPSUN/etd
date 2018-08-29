@@ -1,0 +1,127 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width" />
+		<meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
+		<title>购买</title>
+		<link rel="stylesheet" type="text/css" href="__CSS__/aui.css" />
+		<link rel="stylesheet" type="text/css" href="__CSS__/common.css" />
+		<link rel="stylesheet" type="text/css" href="__CSS__/home.css"/>
+	</head>
+	<style>
+		.aui-list-item-title span {
+			color: #FFFFFF;
+		}
+	</style>
+	<body>
+		<div id="app">
+			<header class="nav-header aui-bar aui-bar-nav" id="aui-header">
+		        <a class="aui-pull-left" >
+		            <span class="aui-iconfont aui-icon-left" onclick="javascript:history.go(-1);" ></span>
+		        </a>
+		        <div class="aui-title">购买</div>
+		    </header>
+		    <div class="aui-content aui-margin-b-15">
+			    <ul class="aui-list aui-list-in">
+			        <li class="aui-list-item">
+			            <div class="aui-list-item-inner">
+			                <div class="aui-list-item-title">
+			                	<div class="aui-list-item-title">
+				                	最佳买价：
+				                	<span id="price">{$price}</span><span> CNY/ETD</span>
+				                </div>
+			                </div>
+			            </div>
+			        </li>
+			        <!--<li class="aui-list-item">-->
+			            <!--<div class="aui-list-item-inner">-->
+			                <!--<div class="aui-list-item-title">-->
+			                	<!--<div class="aui-list-item-title">-->
+				                	<!--买入范围：-->
+				                	<!--<span>100-{$amount}ETD</span>-->
+				                <!--</div>-->
+			                <!--</div>-->
+			            <!--</div>-->
+			        <!--</li>-->
+			        <li class="aui-list-item">
+			            <div class="aui-list-item-inner">
+			                <div class="aui-list-item-title">
+			                	买入数量：
+			                	<div class="aui-list-item-input">
+									<span>{$amount}ETD</span>
+				                    <!--<input type="text" placeholder="请输入数量" value="" id="num" onchange="changeTotalPrice()">-->
+				                </div>
+			                </div>
+			            </div>
+			        </li>
+			        <li class="aui-list-item">
+			            <div class="aui-list-item-inner">
+			                <div class="aui-list-item-title">
+			                	<div class="aui-list-item-title">
+				                	总价：
+				                	<span id="total">{$total_amount}</span>
+				                </div>
+			                </div>
+			            </div>
+			        </li>
+			        <!--<li class="aui-list-item">-->
+			            <!--<div class="aui-list-item-inner">-->
+			                <!--<div class="aui-list-item-title">-->
+			                	<!--<div class="aui-list-item-title">-->
+				                	<!--手续费：-->
+				                	<!--<span>0TM</span>-->
+				                <!--</div>-->
+			                <!--</div>-->
+			            <!--</div>-->
+			        <!--</li>-->
+			        <li class="aui-list-item">
+			            <div class="aui-list-item-inner" style="border-bottom: none;">
+			                <div class="aui-list-item-title">
+			                	交易密码：
+			                	<div class="aui-list-item-input">
+				                    <input type="password" placeholder="请输入交易密码">
+				                </div>
+			                </div>
+			            </div>
+			        </li>
+			    </ul>
+			    <div class="aui-btn bottombtn" onclick="buy('{$order_id}')">购买</div>
+			</div>
+		</div>
+	</body>
+	<script src="__JS__/jquery.min.js"></script>
+	<script type="text/javascript" src="/static/global/js/common.js"></script>
+	<script type="text/javascript" src="/static/global/layer/layer.js"></script>
+	<script type="text/javascript">
+
+		function buy(order_id) {
+            var data = {
+				order_id: order_id
+            };
+			$.ajax({
+				url: '/mobile/deal/placeOrder',
+				type: 'post',
+				data: data,
+				success: function (res) {
+					if(res.success)
+					    window.location.href = '/mobile/deal/index';
+					else
+					    return msg(res.message);
+
+                }
+			})
+        }
+	</script>
+</html>
+
+
+
+
+
+
+
+
+
+
+

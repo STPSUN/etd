@@ -1,0 +1,141 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width" />
+		<meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
+		<title>打款信息</title>
+		<link rel="stylesheet" type="text/css" href="__CSS__/aui.css" />
+		<link rel="stylesheet" type="text/css" href="__CSS__/common.css" />
+		<link rel="stylesheet" type="text/css" href="__CSS__/home.css"/>
+	</head>
+	<style>
+	</style>
+	<body>
+		<div id="app">
+			<header class="nav-header aui-bar aui-bar-nav" id="aui-header">
+		        <a class="aui-pull-left" >
+		            <span class="aui-iconfont aui-icon-left" onclick="javascript:history.go(-1);" ></span>
+		        </a>
+		        <div class="aui-title">打款信息</div>
+		    </header>
+		    <div class="aui-content aui-margin-b-15">
+			    <ul class="aui-list aui-list-in">
+			        <li class="aui-list-item">
+			            <div class="aui-list-item-inner">
+			                <div class="aui-list-item-title">
+			                	订单数量：
+			                	<span style="color: #FFFFFF;">{$data.num}</span>
+			                </div>
+			            </div>
+			        </li>
+			        <li class="aui-list-item">
+			            <div class="aui-list-item-inner">
+			                <div class="aui-list-item-title">
+			                	卖家姓名：
+			                	<span style="color: #FFFFFF;">{$data.name}</span>
+			                </div>
+			            </div>
+			        </li>
+			        <li class="aui-list-item">
+			            <div class="aui-list-item-inner">
+			                <div class="aui-list-item-title">
+			                	卖家电话
+			                	<span style="color: #FFFFFF;">{$data.phone}</span>
+			                </div>
+			            </div>
+			        </li>
+			        <li class="aui-list-item">
+			            <div class="aui-list-item-inner">
+			                <div class="aui-list-item-title">
+			                	卖家银行：
+			                	<span style="color: #FFFFFF;">{$data.bank}</span>
+			                </div>
+			            </div>
+			        </li>
+			        <li class="aui-list-item">
+			            <div class="aui-list-item-inner">
+			                <div class="aui-list-item-title">
+			                	卖家银行卡号：
+			                	<span style="color: #FFFFFF;">{$data.account}</span>
+			                </div>
+			            </div>
+			        </li>
+			        <li class="aui-list-item">
+			            <div class="aui-list-item-inner" style="padding: 0.5rem 0;">
+			                <div class="aui-list-item-title">
+			                	卖家支付宝：
+			                	<img style="width: 3rem;" src="__IMG__/finance/code.png"></img>
+			                </div>
+			            </div>
+			        </li>
+			        <li class="aui-list-item">
+			            <div class="aui-list-item-inner">
+			                <div class="aui-list-item-title">
+			                	打款倒计时：
+			                	<span style="color: #FFFFFF;" id="time"></span>
+			                </div>
+			            </div>
+			        </li>
+			        <li class="aui-list-item">
+			            <div class="aui-list-item-inner">
+			                <div class="aui-list-item-title">
+			                	交易状态：
+			                	<span style="color: #FFFFFF;">{$data.status}</span>
+			                </div>
+			            </div>
+			        </li>
+			        <li class="aui-list-item">
+			            <div class="aui-list-item-inner" style="border-bottom:none;">
+			                <div class="aui-list-item-title">
+			                	<span style="color: red;">温馨提示：请在倒计时前完成操作，否则将面临冻结账号风险！</span>
+			                </div>
+			            </div>
+			        </li>
+			    </ul>
+			</div>
+			<div class="aui-btn bottombtn" style="bottom:auto;position: relative;" onclick="toUpload('{$data.order_id}')">上传凭证</div>
+		</div>
+	</body>
+	<script src="__JS__/jquery.min.js"></script>
+	<script type="text/javascript">
+		$(function () {
+            remainTime();
+        });
+
+		function toUpload(id) {
+			window.location.href = '/mobile/deal/upload?id=' + id;
+        }
+
+        function remainTime(){
+            var set_time = 4*60*60;
+            var interval = setInterval(function(){
+				var time = changeTime(set_time);
+                $('#time').html(time);
+                set_time--;
+                if (set_time < 0 ) {
+                    clearInterval(interval);
+                    alert(2);
+                    $('#time').html('00:00:00');
+                }
+            },1000)
+        }
+
+        function changeTime (time) {
+            var hour = parseInt(time / 3600);
+            if (hour < 10) {
+                hour = '0' + hour
+            }
+            var minute = parseInt((time - 3600 * hour) / 60);
+            if (minute < 10) {
+                minute = '0' + minute
+            }
+            var second = parseInt(((time - 3600 * hour) - 60 * minute) % 60);
+            if (second < 10) {
+                second = '0' + second
+            }
+            return hour + ':' + minute + ':' + second;
+        }
+
+	</script>
+</html>
