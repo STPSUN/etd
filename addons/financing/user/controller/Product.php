@@ -59,11 +59,12 @@ class Product extends \web\user\controller\AddonUserBase{
         if(IS_POST){
             $data = $_POST;
             $id = $data['id'];
-            $start_rate_date = $data['start_rate_date'];
-            $data['end_rate_date'] = date('Y-m-d', strtotime($start_rate_date .'+'. $data['duration'].' days'));
+//            $start_rate_date = $data['start_rate_date'];
+//            $data['end_rate_date'] = date('Y-m-d', strtotime($start_rate_date .'+'. $data['duration'].' days'));
             try{
                 $m = new \addons\financing\model\Product();
                 $data['update_time'] = NOW_DATETIME;
+                $data['coin_id'] = 13;
                 
                 if(empty($id)){
                     $data['stock'] = $data['total_stock'];

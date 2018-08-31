@@ -2,67 +2,67 @@
 {block name="body"}
 
 <div class="box-content">
-    <div class="control-row col-2">
+    <div class="control-row ">
         <div class="control-group">
-            <label class="control-label">私募数量</label>
+            <label class="control-label">认筹数量</label>
             <div class="controls">
                 <input type="text" name="gross"  class="form-control required" value="{$data['gross']}"/>
             </div>
         </div>
-        <div class="control-group" id="bank" >
-            <label class="control-label">名称</label>
-            <div class="controls">
-                <input type="text" name="name" class="form-control required" value="{$data['name']}"/>
-            </div>
-        </div>
-        <div class="control-group" id="user_limit">
-            <label class="control-label">用户限购次数</label>
-            <div class="controls">
-                <input type="text" name="user_limit"  class="form-control required" value="{$data['user_limit']}"/>
-            </div>
-        </div>
+        <!--<div class="control-group" id="bank" >-->
+            <!--<label class="control-label">名称</label>-->
+            <!--<div class="controls">-->
+                <!--<input type="text" name="name" class="form-control required" value="{$data['name']}"/>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="control-group" id="user_limit">-->
+            <!--<label class="control-label">用户限购次数</label>-->
+            <!--<div class="controls">-->
+                <!--<input type="text" name="user_limit"  class="form-control required" value="{$data['user_limit']}"/>-->
+            <!--</div>-->
+        <!--</div>-->
         <div class="control-group" id="price">
             <label class="control-label">单价</label>
             <div class="controls">
                 <input type="text" name="price"  class="form-control required" value="{$data['price']}"/>
             </div>
         </div>
-        <div class="control-group" id="min_num">
-            <label class="control-label">最小数量</label>
-            <div class="controls">
-                <input type="text" name="min_num"  class="form-control required" value="{$data['min_num']}"/>
-            </div>
-        </div>
-        <div class="control-group" id="max_num">
-            <label class="control-label">最大数量</label>
-            <div class="controls">
-                <input type="text" name="max_num"  class="form-control required" value="{$data['max_num']}"/>
-            </div>
-        </div>
+        <!--<div class="control-group" id="min_num">-->
+            <!--<label class="control-label">最小数量</label>-->
+            <!--<div class="controls">-->
+                <!--<input type="text" name="min_num"  class="form-control required" value="{$data['min_num']}"/>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="control-group" id="max_num">-->
+            <!--<label class="control-label">最大数量</label>-->
+            <!--<div class="controls">-->
+                <!--<input type="text" name="max_num"  class="form-control required" value="{$data['max_num']}"/>-->
+            <!--</div>-->
+        <!--</div>-->
 
-        <div class="control-group">
-            <label class="control-label">币种类型</label>
-            <div class="controls">
-                <select name="currency_type"  class="form-control">
-                    <option value="0" <?php echo $data['currency_type']=='0'?"seleced='seleced'":null;?>>RMB</option>
-                    <option value="1" <?php echo $data['currency_type']=='1'?"selected='seleced'":null;?>>ETH</option>
-                </select>
-            </div>
-        </div>
+        <!--<div class="control-group">-->
+            <!--<label class="control-label">币种类型</label>-->
+            <!--<div class="controls">-->
+                <!--<select name="currency_type"  class="form-control">-->
+                    <!--<option value="0" <?php echo $data['currency_type']=='0'?"seleced='seleced'":null;?>>RMB</option>-->
+                    <!--<option value="1" <?php echo $data['currency_type']=='1'?"selected='seleced'":null;?>>ETH</option>-->
+                <!--</select>-->
+            <!--</div>-->
+        <!--</div>-->
 
-        <div class="control-group" id="rate">
-            <label class="control-label">比率</label>
-            <div class="controls">
-                <input type="text" name="rate"  class="form-control required" value="{$data['rate']}"/>
-            </div>
-        </div>
+        <!--<div class="control-group" id="rate">-->
+            <!--<label class="control-label">比率</label>-->
+            <!--<div class="controls">-->
+                <!--<input type="text" name="rate"  class="form-control required" value="{$data['rate']}"/>-->
+            <!--</div>-->
+        <!--</div>-->
 
-        <div class="control-group">
-            <label class="control-label">开始-结束日期</label>
-            <div class="controls" onclick="dateRange()">
-                <input type="text" style="width: 180px"  class="form-control required" id="dateRange" placeholder="开始时间--截止时间" name="date_range" value="{$data['begin_date']}-{$data['end_date']}">
-            </div>
-        </div>
+        <!--<div class="control-group">-->
+            <!--<label class="control-label">开始-结束日期</label>-->
+            <!--<div class="controls" onclick="dateRange()">-->
+                <!--<input type="text" style="width: 180px"  class="form-control required" id="dateRange" placeholder="开始时间&#45;&#45;截止时间" name="date_range" value="{$data['begin_date']}-{$data['end_date']}">-->
+            <!--</div>-->
+        <!--</div>-->
 
     </div>
 </div>

@@ -10,7 +10,7 @@
                     <option value="0">微信</option>
                     <option value="1">支付宝</option>
                     <option value="2">银行</option>
-                    <option value="3">ETH</option>
+                    <!--<option value="3">ETH</option>-->
                 </select>
             </div>
         </div>
@@ -57,7 +57,7 @@
         $("#qrcode_text").val(path);
     }
     function onLoadDataSuccess(data) {
-        setPicValue("qrcode_img", data['qrcode_img']);
+        setPicValue("qrcode_img", data['pic']);
     }
 
     function payType() {

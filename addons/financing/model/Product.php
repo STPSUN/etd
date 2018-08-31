@@ -11,6 +11,18 @@ class Product extends \web\common\model\BaseModel{
     protected function _initialize() {
         $this->tableName = 'product';
     }
+
+    public function verifyStock($product_id,$num)
+    {
+        $stock = $this->where('id',$product_id)->column('stock');
+        if($stock[0] >= $num)
+        {
+            return true;
+        }else
+        {
+            return false;
+        }
+    }
     
     /**
      * 获取理财产品列表(带币种名称)

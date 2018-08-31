@@ -1,0 +1,205 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width" />
+		<meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
+		<title>修改资料</title>
+		<link rel="stylesheet" type="text/css" href="__CSS__/aui.css" />
+		<link rel="stylesheet" type="text/css" href="__CSS__/common.css" />
+		<link rel="stylesheet" type="text/css" href="__CSS__/home.css"/>
+	</head>
+	<style>
+	</style>
+	<body>
+		<div id="app">
+			<header class="nav-header aui-bar aui-bar-nav" id="aui-header">
+		        <a class="aui-pull-left" >
+		            <span class="aui-iconfont aui-icon-left" onclick="javascript:history.go(-1);" ></span>
+		        </a>
+		        <div class="aui-title">修改资料</div>
+		    </header>
+		    <div class="aui-content aui-margin-b-15">
+			    <ul class="aui-list aui-list-in">
+			        <li class="aui-list-item">
+			            <div class="aui-list-item-inner">
+			                <div class="aui-list-item-title">
+			                	手机号：
+			                	<div class="aui-list-item-input">
+				                    <input type="tel" value="{$data.phone}" id="phone">
+				                </div>
+			                </div>
+			            </div>
+			        </li>
+			        <li class="aui-list-item">
+			            <div class="aui-list-item-inner">
+			                <div class="aui-list-item-title">
+			                	支付宝：
+			                	<div class="aui-list-item-input">
+				                    <input type="text" value="{$data.alipay}" id="alipay">
+				                </div>
+			                </div>
+			            </div>
+			        </li>
+			        <li class="aui-list-item">
+			            <div class="aui-list-item-inner">
+			                <div class="aui-list-item-title">
+			                	微信：
+			                	<div class="aui-list-item-input">
+				                    <input type="text" value="{$data.wechat}" id="wechat">
+				                </div>
+			                </div>
+			            </div>
+			        </li>
+			        <li class="aui-list-item">
+			            <div class="aui-list-item-inner">
+			                <div class="aui-list-item-title">
+			                	开户银行：
+			                	<div class="aui-list-item-input">
+				                    <input type="text" value="{$data.bank_address}" id="bank_address">
+				                </div>
+			                </div>
+			            </div>
+			        </li>
+			        <!--<li class="aui-list-item">-->
+			            <!--<div class="aui-list-item-inner">-->
+			                <!--<div class="aui-list-item-title">-->
+			                	<!--开户地址：-->
+			                	<!--<div class="aui-list-item-input">-->
+				                    <!--<input type="text" placeholder="请输入">-->
+				                <!--</div>-->
+			                <!--</div>-->
+			            <!--</div>-->
+			        <!--</li>-->
+			        <li class="aui-list-item">
+			            <div class="aui-list-item-inner">
+			                <div class="aui-list-item-title">
+			                	银行卡号：
+			                	<div class="aui-list-item-input">
+				                    <input type="number" value="{$data.bank_code}" id="bank_code">
+				                </div>
+			                </div>
+			            </div>
+			        </li>
+			        <li class="aui-list-item">
+			            <div class="aui-list-item-inner">
+			                <div class="aui-list-item-title">
+			                	真实姓名：
+			                	<div class="aui-list-item-input">
+				                    <input type="text" value="{$data.name}" id="name">
+				                </div>
+			                </div>
+			            </div>
+			        </li>
+			        <!--<li class="aui-list-item">-->
+			            <!--<div class="aui-list-item-inner">-->
+			                <!--<div class="aui-list-item-title">-->
+			                	<!--交易密码：-->
+			                	<!--<div class="aui-list-item-input">-->
+				                    <!--<input type="password" placeholder="请输入">-->
+				                <!--</div>-->
+			                <!--</div>-->
+			            <!--</div>-->
+			        <!--</li>-->
+			        <li class="aui-list-item">
+			            <div class="aui-list-item-inner">
+			                <div class="aui-list-item-title" style="width: 100%;display: flex;align-items: center;">
+			                	验证码：
+			                	<div class="aui-list-item-input" style="flex: 1;">
+				                    <input type="text" placeholder="请输入" id="auth_code">
+				                </div>
+				                <span style="color: #316dcc;" onclick="getSms(this)">获取验证码</span>
+			                </div>
+			            </div>
+			        </li>
+			    </ul>
+			     <div class="aui-btn bottombtn" style="margin-top: 2rem;position: relative;bottom: auto;" onclick="modify()">确定</div>
+			</div>
+		</div>
+	</body>
+	<script src="__JS__/jquery.min.js"></script>
+	<script type="text/javascript" src="/static/global/js/common.js"></script>
+	<script type="text/javascript" src="/static/global/layer/layer.js"></script>
+	<script type="text/javascript">
+
+        var isWaiting = false;
+        var time = 60;
+        var phone = "{$data.phone}";
+
+        function modify() {
+            var data = {
+                phone: $('#phone').val(),
+				alipay: $('#alipay').val(),
+				wechat: $('#wechat').val(),
+				bank_address: $('#bank_address').val(),
+				bank_code: $('#bank_code').val(),
+				name: $('#name').val(),
+				auth_code: $('#auth_code').val(),
+				old_phone:phone
+			}
+
+			$.ajax({
+				url: '/mobile/wallet/modifyData',
+				type: 'post',
+				data: data,
+				success: function (res) {
+				    if(res.success)
+				        window.location.href = '/mobile/wallet/index';
+				    else
+				        return msg(res.message);
+                }
+			})
+        }
+
+        function getSms(el){
+            if ( !isPhone(phone) ) return;
+
+            if (isWaiting) return;
+            var _el=el;
+
+            telephone = {
+                phone:phone,
+                time:time
+            };
+            $.ajax({
+                url :'/mobile/user/sms',
+                data:telephone,
+                type:'POST',
+                success : function(ret){
+                    if (ret.success) {
+                        isWaiting = true;
+                        remainTime(_el);
+                        return msg(ret.message);
+                    }else{
+                        return msg(ret.message);
+                    }
+                },
+                err: function(ret){
+                    return msg(ret.message);
+
+                }
+            })
+        }
+
+        function remainTime(el){
+            var set_time = time;
+            var interval = setInterval(function(){
+                $(el).html(set_time-- +'s后重新获取');
+                if ( set_time < 0 ) {
+                    clearInterval(interval);
+                    $(el).html('获取验证码')
+                    isWaiting = false;
+                }
+            },1000)
+        }
+
+        function isPhone(phone){
+            var is = true;
+            if ( !/(13\d|14[57]|15[^4,\D]|17[13678]|18\d)\d{8}|170[0589]\d{7}/.test(phone) ) {
+                msg("请输入正确的手机号码");
+                is = false;
+            }
+            return is;
+        }
+	</script>
+</html>

@@ -17,16 +17,16 @@
                 <input data-dataType="amount" type="text" name="total_stock" id="total_stock" class="form-control required" />
             </div>
         </div>
-        <div class="control-group">
-            <label class="control-label">币种</label>
-            <div class="controls">
-                <select name="coin_id" id="coin_id" class="required form-control">                
-                    {volist name="coin_list" id="vo"}
-                    <option value="{$vo.id}">{$vo.coin_name}</option>
-                    {/volist}
-                </select>                   
-            </div>       
-        </div>
+        <!--<div class="control-group">-->
+            <!--<label class="control-label">币种</label>-->
+            <!--<div class="controls">-->
+                <!--<select name="coin_id" id="coin_id" class="required form-control">                -->
+                    <!--{volist name="coin_list" id="vo"}-->
+                    <!--<option value="{$vo.id}">{$vo.coin_name}</option>-->
+                    <!--{/volist}-->
+                <!--</select>                   -->
+            <!--</div>       -->
+        <!--</div>-->
         <div class="control-group">
             <label class="control-label">理财时长</label>
             <div class="controls">
@@ -35,34 +35,34 @@
             </div>
         </div>
         
-        <div class="control-group">
-            <label class="control-label">最低投保个数</label>
-            <div class="controls">
-                <input type="number" placeholder="必须大于0" name="min" id="min" class="form-control required" />                       
-            </div>
-        </div>
-        <div class="control-group">
-            <label class="control-label">最高投保个数</label>
-            <div class="controls">
-                <input type="number" placeholder="必须大于0" name="max" id="max" class="form-control required" />                       
-            </div>
-        </div>
-        <div class="control-group">
-            <label class="control-label">
-                时间限制</label>
-            <div class="controls">
-                <span><input data-actionid="0" style="width: 100px" type="text" readonly="readonly" name="start_date" id="start_date" class="Wdate form-control required" /></span>
-                至
-                <span><input data-actionid="0" style="width: 100px" type="text" readonly="readonly" name="end_date" id="end_date" class="Wdate form-control required" /></span>
-            </div>
-        </div> 
-         <div class="control-group">
-            <label class="control-label">
-                起息日</label>
-            <div class="controls">
-                <span><input data-actionid="0" style="width: 100px" type="text" readonly="readonly" name="start_rate_date" id="start_rate_date" class="Wdate form-control required" /></span>
-            </div>
-        </div> 
+        <!--<div class="control-group">-->
+            <!--<label class="control-label">最低投保个数</label>-->
+            <!--<div class="controls">-->
+                <!--<input type="number" placeholder="必须大于0" name="min" id="min" class="form-control required" />                       -->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="control-group">-->
+            <!--<label class="control-label">最高投保个数</label>-->
+            <!--<div class="controls">-->
+                <!--<input type="number" placeholder="必须大于0" name="max" id="max" class="form-control required" />                       -->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="control-group">-->
+            <!--<label class="control-label">-->
+                <!--时间限制</label>-->
+            <!--<div class="controls">-->
+                <!--<span><input data-actionid="0" style="width: 100px" type="text" readonly="readonly" name="start_date" id="start_date" class="Wdate form-control required" /></span>-->
+                <!--至-->
+                <!--<span><input data-actionid="0" style="width: 100px" type="text" readonly="readonly" name="end_date" id="end_date" class="Wdate form-control required" /></span>-->
+            <!--</div>-->
+        <!--</div> -->
+         <!--<div class="control-group">-->
+            <!--<label class="control-label">-->
+                <!--起息日</label>-->
+            <!--<div class="controls">-->
+                <!--<span><input data-actionid="0" style="width: 100px" type="text" readonly="readonly" name="start_rate_date" id="start_rate_date" class="Wdate form-control required" /></span>-->
+            <!--</div>-->
+        <!--</div> -->
         
         <div class="control-group js_tax_parsent">
             <label class="control-label">总收益</label>

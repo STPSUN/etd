@@ -68,7 +68,7 @@
 							认购币价
 						</p>
 						<p>
-							0.20/个
+							{$data.price}/个
 						</p>
 					</div>
 					<div class="headinfo-list-item">
@@ -76,15 +76,15 @@
 							剩余众筹数量
 						</p>
 						<p>
-							0
+							{$data.surplus}
 						</p>
 					</div>
 					<div class="headinfo-list-item" style="border-right: none;">
 						<p>
-							永远ETD
+							ETD
 						</p>
 						<p>
-							1000
+							{$data.etd_num}
 						</p>
 					</div>
 				</div>
@@ -98,15 +98,15 @@
 			        	<div class="aui-list-item-inner">
 			                <div class="aui-list-item-title" style="width:100%;color: #FFFFFF;display: flex;justify-content: space-between;">
 			                	<div class="aui-list-item-input">
-				                    <input type="text" placeholder="请输入认筹个数">
+				                    <input type="text" placeholder="请输入认筹个数" id="num" onkeyup="changeTotalPrice()">
 				                </div>
-			                	<span style="color: #316DCC;display: flex;align-items: center;">折合 0 RMB</span>
+			                	<span style="color: #316DCC;display: flex;align-items: center;" id="total">折合 0 RMB</span>
 			                </div>
 			            </div>
 			        </li>
 			        <li class="aui-list-item">
 			            <div class="aui-list-item-inner" style="border-bottom:none">
-			                <div class="aui-list-item-title" style="font-size: 0.8rem;width: 100%;text-align: center;">提交</div>
+			                <div class="aui-list-item-title" style="font-size: 0.8rem;width: 100%;text-align: center;" onclick="refer()">提交</div>
 			            </div>
 			        </li>
 			    </ul>
@@ -115,7 +115,7 @@
 				<div class="content-title" style="font-size: 0.7rem;">
 					众筹列表
 				</div>
-			    <ul class="aui-list aui-list-in">
+			    <ul class="aui-list aui-list-in" >
 			        <li class="aui-list-item">
 			            <div class="aui-list-item-inner">
 			                <div class="aui-list-item-title" style="display: flex;width: 100%;">
@@ -125,51 +125,54 @@
 			                </div>
 			            </div>
 			        </li>
-			         <li class="aui-list-item">
-			            <div class="aui-list-item-inner">
-			                <div class="aui-list-item-title" style="display: flex;width: 100%;">
-				                	<div >45232</div>
-				                	<div >2000.00</div>
-				                	<div style="white-space: nowrap;">2018-08-12 07:14:43</div>
-			                </div>
-			            </div>
-			        </li>
-			        <li class="aui-list-item">
-			            <div class="aui-list-item-inner">
-			                <div class="aui-list-item-title" style="display: flex;width: 100%;">
-				                	<div >45232</div>
-				                	<div >2000.00</div>
-				                	<div style="white-space: nowrap;">2018-08-12 07:14:43</div>
-			                </div>
-			            </div>
-			        </li>
-			        <li class="aui-list-item">
-			            <div class="aui-list-item-inner">
-			                <div class="aui-list-item-title" style="display: flex;width: 100%;">
-				                	<div >45232</div>
-				                	<div >2000.00</div>
-				                	<div style="white-space: nowrap;">2018-08-12 07:14:43</div>
-			                </div>
-			            </div>
-			        </li>
-			        <li class="aui-list-item">
-			            <div class="aui-list-item-inner">
-			                <div class="aui-list-item-title" style="display: flex;width: 100%;">
-				                	<div >45232</div>
-				                	<div >2000.00</div>
-				                	<div style="white-space: nowrap;">2018-08-12 07:14:43</div>
-			                </div>
-			            </div>
-			        </li>
-			        <li class="aui-list-item">
-			            <div class="aui-list-item-inner">
-			                <div class="aui-list-item-title" style="display: flex;width: 100%;">
-				                	<div >45232</div>
-				                	<div >2000.00</div>
-				                	<div style="white-space: nowrap;">2018-08-12 07:14:43</div>
-			                </div>
-			            </div>
-			        </li>
+					<div id="refer_list">
+						<!--<li class="aui-list-item">-->
+							<!--<div class="aui-list-item-inner">-->
+								<!--<div class="aui-list-item-title" style="display: flex;width: 100%;">-->
+									<!--<div >45232</div>-->
+									<!--<div >2000.00</div>-->
+									<!--<div style="white-space: nowrap;">2018-08-12 07:14:43</div>-->
+								<!--</div>-->
+							<!--</div>-->
+						<!--</li>-->
+						<!--<li class="aui-list-item">-->
+							<!--<div class="aui-list-item-inner">-->
+								<!--<div class="aui-list-item-title" style="display: flex;width: 100%;">-->
+									<!--<div >45232</div>-->
+									<!--<div >2000.00</div>-->
+									<!--<div style="white-space: nowrap;">2018-08-12 07:14:43</div>-->
+								<!--</div>-->
+							<!--</div>-->
+						<!--</li>-->
+						<!--<li class="aui-list-item">-->
+							<!--<div class="aui-list-item-inner">-->
+								<!--<div class="aui-list-item-title" style="display: flex;width: 100%;">-->
+									<!--<div >45232</div>-->
+									<!--<div >2000.00</div>-->
+									<!--<div style="white-space: nowrap;">2018-08-12 07:14:43</div>-->
+								<!--</div>-->
+							<!--</div>-->
+						<!--</li>-->
+						<!--<li class="aui-list-item">-->
+							<!--<div class="aui-list-item-inner">-->
+								<!--<div class="aui-list-item-title" style="display: flex;width: 100%;">-->
+									<!--<div >45232</div>-->
+									<!--<div >2000.00</div>-->
+									<!--<div style="white-space: nowrap;">2018-08-12 07:14:43</div>-->
+								<!--</div>-->
+							<!--</div>-->
+						<!--</li>-->
+						<!--<li class="aui-list-item">-->
+							<!--<div class="aui-list-item-inner">-->
+								<!--<div class="aui-list-item-title" style="display: flex;width: 100%;">-->
+									<!--<div >45232</div>-->
+									<!--<div >2000.00</div>-->
+									<!--<div style="white-space: nowrap;">2018-08-12 07:14:43</div>-->
+								<!--</div>-->
+							<!--</div>-->
+						<!--</li>-->
+					</div>
+
 			    </ul>
 			</div>
 		</div>
@@ -193,7 +196,91 @@
 		</footer>
 	</body>
 	<script src="__JS__/jquery.min.js"></script>
+	<script type="text/javascript" src="/static/global/js/common.js"></script>
+	<script type="text/javascript" src="/static/global/layer/layer.js"></script>
 	<script type="text/javascript">
+
+		$(function () {
+            referList();
+        });
+
+		function referList() {
+		    $.ajax({
+				url: '/mobile/recognize/referList',
+				type: 'get',
+				success: function (res) {
+					if(res.success)
+					    list(res.data);
+                }
+			})
+        }
+
+        function list(list) {
+            var htmls = [];
+            for (var i = 0; i < list.length; i++) {
+                htmls.push('<li class="aui-list-item">');
+                htmls.push('<div class="aui-list-item-inner">');
+                htmls.push('<div class="aui-list-item-title" style="display: flex;width: 100%;">');
+                htmls.push('<div >'+list[i].to_user_id+'</div>');
+                htmls.push('<div >'+list[i].amount+'</div>');
+                htmls.push('<div style="white-space: nowrap;">'+list[i].update_time+'</div>');
+                htmls.push('</div>');
+                htmls.push('</div>');
+                htmls.push('</li>');
+            }
+            $('#refer_list').append(htmls.join(''));
+        }
+		
+		function refer() {
+			var num = $('#num').val();
+
+            if(num < 1000)
+            {
+                return msg('认筹数量需1000起');
+            }else if(!isNumberBy100(num))
+            {
+                return msg('数量需为100的倍数');
+            }
+
+			var data = {
+			    num: num,
+			};
+
+			$.ajax({
+				url: '/mobile/recognize/refer',
+				type: 'post',
+				data: data,
+				success: function (res) {
+					if(res.success)
+					{
+					    msg('认筹成功');
+					    window.location.href = '/mobile/recognize/index';
+					}else
+					{
+					    return msg(res.message);
+					}
+                }
+			})
+        }
+
+        function isNumberBy100(ssn) {
+            var re = /^[0-9]*[0-9]$/i; //校验是否为数字
+            if(re.test(ssn) && ssn % 100 === 0)
+            {
+                return true;
+            }else
+            {
+                return false;
+            }
+        }
+
+        function changeTotalPrice() {
+            var num = $('#num').val();
+            var price = "{$data.price}";
+            var total = num * price;
+            $('#total').text('折合 ' + total.toFixed(2) + ' RMB');
+        }
+
         //交易tab点击
         function tabitemclick(el)
         {

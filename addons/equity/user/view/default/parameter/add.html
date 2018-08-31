@@ -10,7 +10,7 @@
                     <option value="0">微信</option>
                     <option value="1">支付宝</option>
                     <option value="2">银行</option>
-                    <option value="3">ETH</option>
+                    <!--<option value="3">ETH</option>-->
                 </select>
             </div>
         </div>
@@ -36,7 +36,7 @@
             <label class="control-label">二维码图片</label>
             <div class="controls">
                 <div id="js_upload_wrp">
-                    <input type="hidden" id="pic" name="qrcode_img" value="" class="required" />
+                    <input type="hidden" id="qrcode_text" name="qrcode_img" value="" class="required" />
                     {:hook('picResource',array('name'=>'qrcode_img','folder'=>'conf','tips'=>'仅支持.jpg .png格式照片。','callback'=>'uploadImgCallback'))}
                 </div>
             </div>
@@ -51,10 +51,10 @@
      * 添加图片
      */
     function uploadImgCallback(path) {
-        $("#pic").val(path);
+        $("#qrcode_text").val(path);
     }
     function onLoadDataSuccess(data) {
-        setPicValue("pic", data['pic']);
+        setPicValue("qrcode_img", data['pic']);
     }
 
     function payType() {
@@ -71,10 +71,10 @@
                 qrcode_text = qrcode_text.replace("required","");
                 document.getElementById("qrcode_text").setAttribute("class",qrcode_text);
 
-                bank_text = qrcode_text.concat(" required");
+                bank_text = bank_text.concat(" required");
                 document.getElementById("bank_text").setAttribute("class",bank_text);
 
-                real_name_text = qrcode_text.concat(" required");
+                real_name_text = real_name_text.concat(" required");
                 document.getElementById("real_name_text").setAttribute("class",real_name_text);
                 break;
             case 3:

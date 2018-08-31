@@ -1,0 +1,103 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width" />
+		<meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
+		<title>修改交易密码</title>
+		<link rel="stylesheet" type="text/css" href="__CSS__/aui.css" />
+		<link rel="stylesheet" type="text/css" href="__CSS__/common.css" />
+		<link rel="stylesheet" type="text/css" href="__CSS__/home.css"/>
+	</head>
+	<style>
+	</style>
+	<body>
+		<div id="app">
+			<header class="nav-header aui-bar aui-bar-nav" id="aui-header">
+		        <a class="aui-pull-left" >
+		            <span class="aui-iconfont aui-icon-left" onclick="javascript:history.go(-1);" ></span>
+		        </a>
+		        <div class="aui-title">修改交易密码</div>
+		    </header>
+		    <div class="aui-content aui-margin-b-15">
+			    <ul class="aui-list aui-list-in">
+			        <li class="aui-list-item">
+			            <div class="aui-list-item-inner">
+			                <div class="aui-list-item-title">
+			                	原密码：
+			                	<div class="aui-list-item-input">
+				                    <input type="password" id="pay_password" placeholder="请输入原密码">
+				                </div>
+			                </div>
+			            </div>
+			        </li>
+			        <li class="aui-list-item">
+			            <div class="aui-list-item-inner">
+			                <div class="aui-list-item-title">
+			                	新密码：
+			                	<div class="aui-list-item-input">
+				                    <input type="password" id="new_pay_password" placeholder="请输入新密码">
+				                </div>
+			                </div>
+			            </div>
+			        </li>
+			        <li class="aui-list-item">
+			            <div class="aui-list-item-inner">
+			                <div class="aui-list-item-title">
+			                	确认新密码：
+			                	<div class="aui-list-item-input">
+				                    <input type="password" id="new_pay_password_confirm" placeholder="重新输入新密码">
+				                </div>
+			                </div>
+			            </div>
+			        </li>
+			    </ul>
+			     <div class="aui-btn bottombtn" onclick="modify()">确定</div>
+			</div>
+		</div>
+	</body>
+	<script src="__JS__/jquery.min.js"></script>
+	<script type="text/javascript" src="/static/global/js/common.js"></script>
+	<script type="text/javascript" src="/static/global/layer/layer.js"></script>
+	<script type="text/javascript">
+		function modify() {
+		    var data = {
+		        pay_password: $('#pay_password').val(),
+				new_pay_password: $('#new_pay_password').val(),
+				new_pay_password_confirm: $('#new_pay_password_confirm').val()
+			};
+
+		    $.ajax({
+				url: '/mobile/wallet/modifyDealPsw',
+				type: 'post',
+				data: data,
+				success: function (res) {
+				    if(res.success)
+				        window.location.href = '/mobile/wallet/index';
+				    else
+				        return msg(res.message);
+                }
+			})
+
+        }
+	</script>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
