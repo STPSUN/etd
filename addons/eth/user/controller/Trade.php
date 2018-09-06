@@ -4,6 +4,7 @@ namespace addons\eth\user\controller;
 
 class Trade extends \web\user\controller\AddonUserBase{
 
+    private $ETD_ID = 13;
 
     public function index(){
         $status = $this->_get('status');
@@ -30,7 +31,7 @@ class Trade extends \web\user\controller\AddonUserBase{
     /**
      * 审核
      */
-    public function appr(){
+    public function appr2(){
         if(IS_POST){
             $id = $this->_post('id');
             try{
@@ -79,6 +80,23 @@ class Trade extends \web\user\controller\AddonUserBase{
         }
     }
 
+    public function appr()
+    {
+        if(IS_POST)
+        {
+            $id = $this->_post('id');
+            $tradeM = new \addons\eth\model\EthTradingOrder();
+            $data = $tradeM->getDetail($id);
+            if(empty($data)){
+                return $this->failData("订单数据异常");
+            }
+
+            $tradeM->updateStatus($id, 1, NOW_DATETIME, '', '已转账');
+
+            return $this->successData('id:'.$id.' 转出成功。');
+        }
+    }
+
 
     /**
      * 反审核-不通过
@@ -93,23 +111,23 @@ class Trade extends \web\user\controller\AddonUserBase{
                     $user_id = $data['user_id'];
                     $amount = $data['amount'];
                     $candy_id = $data['coin_id'];
-                    $tax = $data['tax'];
+//                    $tax = $data['tax'];
                     $tradeM->startTrans();
-                    $ret = $tradeM->updateStatus($id, 2, NOW_DATETIME, '', '转出审核不通过');
+                    $ret = $tradeM->updateStatus($id, 4, NOW_DATETIME, '', '转出审核不通过');
                     if($ret > 0){
-                        if($data['tax'] > 0) $amount += $data['tax'];
+//                        if($data['tax'] > 0) $amount += $data['tax'];
                         //返还金额
                         $balanceM = new \addons\member\model\Balance();
-                        $balance = $balanceM->updateAsset($user_id, $amount, $candy_id, true);
+                        $balance = $balanceM->updateBalance($user_id, $amount, $candy_id, true);
                         if(!$balance){
                             $tradeM->rollback();
                             return $this->failData('退单失败');
                         }
                         $type = 9;
-                        $before_amount = $balance['before_amount'];
-                        $after_amount = $balance['amount'];
+                        $before_amount = $balance['amount'];
+                        $after_amount = $balance['amount'] + $amount;
                         $change_type = 1; //增加
-                        $remark = '转出可用余额';
+                        $remark = 'USDT提现失败';
 
                         $recordM = new \addons\member\model\TradingRecord();
                         $r_id = $recordM->addRecord($user_id, $candy_id, $amount, $before_amount, $after_amount, $type, $change_type, $user_id, '', '', $remark);

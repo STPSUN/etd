@@ -1,0 +1,89 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width" />
+		<meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
+		<title>团队</title>
+		<link rel="stylesheet" type="text/css" href="__CSS__/aui.css" />
+		<link rel="stylesheet" type="text/css" href="__CSS__/common.css" />
+		<link rel="stylesheet" type="text/css" href="__CSS__/home.css"/>
+	</head>
+	<style>
+		.aui-list-item-title div {
+			display: inline-block;
+			flex: 1;
+			text-align: center;
+			font-size: 0.7rem;
+		}
+		.aui-list .aui-list-item-title div {
+			color: #D5D5D8;
+		}
+		.aui-list-item-title div span {
+			color: #316dcc;
+		}
+	</style>
+	<body>
+		<div id="app">
+			<header class="nav-header aui-bar aui-bar-nav" id="aui-header">
+		        <a class="aui-pull-left" >
+		            <span class="aui-iconfont aui-icon-left" onclick="javascript:history.go(-1);" ></span>
+		        </a>
+		        <div class="aui-title">二维码</div>
+		    </header>
+		    <div class="aui-content aui-margin-b-15">
+				<div class="aui-list-item-label-icon">
+					<div id="qrcode" style="margin-left: 30%;margin-top: 20%;"></div>
+					<!--<img src="__IMG__/mine/qrcode.png" style="margin-left: 35%; margin-top: 45%;max-width: 40%"/>-->
+				</div>
+				<div class="aui-list-item-label-icon" style="margin-top: 20%; margin-left: 10%">
+					<textarea id="text">etd.online/mobile/user/register?username={$username}</textarea>
+				</div>
+				<div class="aui-list-item-label-icon">
+					<button class="aui-btn bottombtn"  onclick="copy()"  value="提交">复制链接</button>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="http://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+	<script type="text/javascript" src="http://static.runoob.com/assets/qrcode/qrcode.min.js"></script>
+	<script type="text/javascript" src="/static/global/js/common.js"></script>
+	<script type="text/javascript" src="/static/global/layer/layer.js"></script>
+	<script type="text/javascript">
+        $(function () {
+            makeCode();
+        });
+
+		var qrcode = new QRCode(document.getElementById("qrcode"),{
+		    width: 200,
+			height: 200
+		});
+		
+		function makeCode() {
+			var text = document.getElementById("text");
+
+			qrcode.makeCode(text.value);
+        }
+
+		function copy() {
+			var text = document.getElementById('text');
+			text.select();
+			document.execCommand("Copy");
+
+			msg('链接已复制');
+        }
+	</script>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+

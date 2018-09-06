@@ -31,8 +31,6 @@ class RuleConfig extends \web\user\controller\AddonUserBase
 //            {
 //                $data['status'] = 1;
 //            }
-            $data['surplus'] = $data['gross'];
-            $data['status'] = 1;
             $res = $m->save($data);
             if($res > 0)
                 return $this->successData();
@@ -83,15 +81,15 @@ class RuleConfig extends \web\user\controller\AddonUserBase
         if(IS_POST)
         {
             $data = $_POST;
-            $dateRange = explode('-',$data['date_range']);
+//            $dateRange = explode('-',$data['date_range']);
             $data['update_time'] = NOW_DATETIME;
-            $data['begin_date'] = $dateRange[0];
-            $data['end_date'] = $dateRange[1];
+//            $data['begin_date'] = $dateRange[0];
+//            $data['end_date'] = $dateRange[1];
             $nowDate = date('Y-m-d');
-            if(strtotime($dateRange[0]) >= strtotime($nowDate))
-            {
-                $data['status'] = 1;
-            }
+//            if(strtotime($dateRange[0]) >= strtotime($nowDate))
+//            {
+//                $data['status'] = 1;
+//            }
             $res = $m->save($data,['id' => $id]);
             if($res > 0)
                 return $this->successData();

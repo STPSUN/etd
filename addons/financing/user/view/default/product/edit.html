@@ -34,19 +34,26 @@
                 <span class="tips">天 请输入整数</span>
             </div>
         </div>
+
+        <div class="control-group js_tax_parsent">
+            <label class="control-label">总收益</label>
+            <div class="controls">
+                <input data-dataType="amount" data-dataTypeMsg="不是有效的比率" type="text" name="rate" id="rate" class="form-control required" size="3" /><span class="tips">%</span>
+            </div>
+        </div>
         
-        <!--<div class="control-group">-->
-            <!--<label class="control-label">最低投保个数</label>-->
-            <!--<div class="controls">-->
-                <!--<input type="number" placeholder="必须大于0" name="min" id="min" class="form-control required" />                       -->
-            <!--</div>-->
-        <!--</div>-->
-        <!--<div class="control-group">-->
-            <!--<label class="control-label">最高投保个数</label>-->
-            <!--<div class="controls">-->
-                <!--<input type="number" placeholder="必须大于0" name="max" id="max" class="form-control required" />                       -->
-            <!--</div>-->
-        <!--</div>-->
+        <div class="control-group">
+            <label class="control-label">最低投保个数</label>
+            <div class="controls">
+                <input type="number" placeholder="必须大于0" name="min" id="min" class="form-control required" />
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">最高投保个数</label>
+            <div class="controls">
+                <input type="number" placeholder="必须大于0" name="max" id="max" class="form-control required" />
+            </div>
+        </div>
         <!--<div class="control-group">-->
             <!--<label class="control-label">-->
                 <!--时间限制</label>-->
@@ -64,12 +71,7 @@
             <!--</div>-->
         <!--</div> -->
         
-        <div class="control-group js_tax_parsent">
-            <label class="control-label">总收益</label>
-            <div class="controls">
-                <input data-dataType="amount" data-dataTypeMsg="不是有效的比率" type="text" name="rate" id="rate" class="form-control required" size="3" /><span class="tips">%</span>
-            </div>
-        </div>
+
     </div>
 </div>
 {/block}

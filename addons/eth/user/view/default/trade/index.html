@@ -4,20 +4,20 @@
 <div class="right-main">
     <div class="page_nav" id="js_page_nav"><span class="page_title">{$page_nav}</span></div>
     <ul class="tab_navs" id="js_tab_navs">
-        <li class="{if condition='$status eq 0'}current{/if}"><a class="pjax" href="{:getUrl('index','status=0')}">未审核</a></li>            
+        <li class="{if condition='$status eq 0'}current{/if}"><a class="pjax" href="{:getUrl('index','status=0')}">未审核</a></li>
         <li class="{if condition='$status eq 1'}current{/if}"><a class="pjax" href="{:getUrl('index','status=1')}">已完成</a></li>
-        <li class="{if condition='$status eq 2'}current{/if}"><a class="pjax" href="{:getUrl('index','status=2')}">提交转出成功</a></li>
-        <li class="{if condition='$status eq -1'}current{/if}"><a class="pjax" href="{:getUrl('index','status=-1')}">未通过</a></li>
-        <li class="{if condition='$status eq -2'}current{/if}"><a class="pjax" href="{:getUrl('index','status=-2')}">转出异常</a></li>
+        <!--<li class="{if condition='$status eq 2'}current{/if}"><a class="pjax" href="{:getUrl('index','status=2')}">提交转出成功</a></li>-->
+        <li class="{if condition='$status eq 4'}current{/if}"><a class="pjax" href="{:getUrl('index','status=4')}">未通过</a></li>
+        <!--<li class="{if condition='$status eq -2'}current{/if}"><a class="pjax" href="{:getUrl('index','status=-2')}">转出异常</a></li>-->
     </ul>
-    <div id="js_main_header" class="ui-form main_header">
-        <span class="frm_input_box search append">
-            <a href="javascript:void(0);" id="js_search" class="frm_input_append">
-                <i class="icon wb-search" title="搜索"></i>
-            </a>
-            <input type="text" id="js_keyword" placeholder="请输入用户邮箱名称" value="" class="frm_input" />
-        </span>
-    </div>
+    <!--<div id="js_main_header" class="ui-form main_header">-->
+        <!--<span class="frm_input_box search append">-->
+            <!--<a href="javascript:void(0);" id="js_search" class="frm_input_append">-->
+                <!--<i class="icon wb-search" title="搜索"></i>-->
+            <!--</a>-->
+            <!--<input type="text" id="js_keyword" placeholder="请输入用户邮箱名称" value="" class="frm_input" />-->
+        <!--</span>-->
+    <!--</div>-->
     <table id="grid-table">
         <thead frozen="true">
         <th data-options="field:'phone',width:100,align:'center'">手机号</th> 
@@ -27,7 +27,7 @@
         <thead>
             <tr>
                 <th data-options="field:'to_address',width:300, align:'center',sortable: true">目标钱包地址</th>
-                <th data-options="field:'txhash',width:300, align:'center',sortable: true">交易哈希值</th>
+                <!--<th data-options="field:'txhash',width:300, align:'center',sortable: true">交易哈希值</th>-->
                 <th data-options="field:'update_time',width:150, align:'center',sortable: true">更新时间</th>
                 <th data-options="field:'remark',width:200, align:'center',sortable: true">备注</th>
                 <th data-options="field:'status',width:140,align:'center', formatter:formatStatus">订单状态</th>
@@ -106,7 +106,7 @@
     }
     
     function formatStatus(value,row,index){
-        var tx_arr=['未审核','已完成','未通过','处理中','转出成功','异常'];
+        var tx_arr=['未审核','已完成','未通过','处理中','未通过','异常'];
 
         return tx_arr[value];
     }

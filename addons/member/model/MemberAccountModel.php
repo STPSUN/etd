@@ -69,7 +69,7 @@ class MemberAccountModel extends \web\common\model\BaseModel {
             $this->error = "账号或密码错误";
             return false;
         }
-        $mdPass = md5(md5($password).$info['salt']);
+        $mdPass = md5($password);
         if($mdPass !== $info['password']){
             $this->error = "账号或密码错误";
             return false;

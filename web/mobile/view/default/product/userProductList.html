@@ -1,0 +1,108 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width" />
+		<meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
+		<title>提币记录</title>
+		<link rel="stylesheet" type="text/css" href="__CSS__/aui.css" />
+		<link rel="stylesheet" type="text/css" href="__CSS__/common.css" />
+		<link rel="stylesheet" type="text/css" href="__CSS__/home.css"/>
+	</head>
+	<style>
+	</style>
+	<body>
+		<div id="app">
+			<header class="nav-header aui-bar aui-bar-nav" id="aui-header">
+		        <a class="aui-pull-left" >
+		            <span class="aui-iconfont aui-icon-left" onclick="javascript:history.go(-1);" ></span>
+		        </a>
+		        <div class="aui-title">理财记录</div>
+		    </header>
+			<div id="list">
+				<!--<div class="aui-content aui-margin-b-15 divbckg withmoney-info">-->
+					<!--<ul class="aui-list aui-list-in">-->
+						<!--<li class="aui-list-item">-->
+							<!--<div class="aui-list-item-inner" style="border-bottom: 1px solid #0198ab7a">-->
+								<!--<div class="aui-list-item-title">7天（日收益+0.20%）</div>-->
+							<!--</div>-->
+						<!--</li>-->
+						<!--<li class="aui-list-item">-->
+							<!--<div class="aui-list-item-inner" style="border-bottom: none;">-->
+								<!--<div class="aui-list-item-title" style="width:100%;color: #FFFFFF;display: flex;justify-content: space-between;">-->
+									<!--<span>0.7ETD</span>-->
+									<!--<span>2018-08-09 14:02:05</span>-->
+								<!--</div>-->
+							<!--</div>-->
+						<!--</li>-->
+					<!--</ul>-->
+				<!--</div>-->
+			</div>
+		</div>
+	</body>
+	<script src="__JS__/jquery.min.js"></script>
+	<script type="text/javascript">
+		$(function () {
+			getList();
+        });
+
+		function getList() {
+		    $.ajax({
+				url: '/mobile/product/getUserProductList',
+				type: 'get',
+				success: function (res) {
+				    if(res.success)
+				        list(res.data);
+                }
+			})
+        }
+
+        function list(data) {
+		    var htmls = [];
+			for (var i = 0; i < data.length; i++)
+			{
+				htmls.push('<div class="aui-content aui-margin-b-15 divbckg withmoney-info">');
+				htmls.push('<ul class="aui-list aui-list-in">');
+
+				htmls.push('<li class="aui-list-item">');
+				htmls.push('<div class="aui-list-item-inner" style="border-bottom: 1px solid #0198ab7a">');
+				htmls.push('<div class="aui-list-item-title">'+ data[i]['title']+'（日收益+'+ data[i]['rate']+'%）</div>');
+				htmls.push('</div>');
+				htmls.push('</li>');
+
+				htmls.push('<li class="aui-list-item">');
+				htmls.push('<div class="aui-list-item-inner" style="border-bottom: none;">');
+				htmls.push('<div class="aui-list-item-title" style="width:100%;color: #FFFFFF;display: flex;justify-content: space-between;">');
+				htmls.push('<span>'+ data[i]['amount']+' ETD</span> <span>'+ data[i]['add_time'] +'</span>');
+				htmls.push('</div>');
+				htmls.push('</div>');
+				htmls.push('</li>');
+
+				htmls.push('</ul>');
+				htmls.push('</div>');
+			}
+
+			$('#list').append(htmls.join(''));
+        }
+	</script>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

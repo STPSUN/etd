@@ -1,0 +1,127 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width" />
+		<meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
+		<title>团队</title>
+		<link rel="stylesheet" type="text/css" href="__CSS__/aui.css" />
+		<link rel="stylesheet" type="text/css" href="__CSS__/common.css" />
+		<link rel="stylesheet" type="text/css" href="__CSS__/home.css"/>
+	</head>
+	<style>
+		.aui-list-item-title div {
+			display: inline-block;
+			flex: 1;
+			text-align: center;
+			font-size: 0.7rem;
+		}
+		.aui-list .aui-list-item-title div {
+			color: #D5D5D8;
+		}
+		.aui-list-item-title div span {
+			color: #316dcc;
+		}
+	</style>
+	<body>
+		<div id="app">
+			<header class="nav-header aui-bar aui-bar-nav" id="aui-header">
+		        <a class="aui-pull-left" >
+		            <span class="aui-iconfont aui-icon-left" onclick="javascript:history.go(-1);" ></span>
+		        </a>
+		        <div class="aui-title">团队</div>
+		    </header>
+		    <div class="aui-content aui-margin-b-15">
+			    <ul class="aui-list aui-list-in">
+			        <li class="aui-list-item">
+			            <div class="aui-list-item-inner">
+			                <div class="aui-list-item-title" style="display: flex;width: 100%;">
+				                	<div ><span>用户名</span></div>
+				                	<div ><span>账号</span></div>
+				                	<div ><span>推荐人</span></div>
+			                </div>
+			            </div>
+			        </li>
+					<div id="list">
+						<!--<li class="aui-list-item">-->
+							<!--<div class="aui-list-item-inner">-->
+								<!--<div class="aui-list-item-title" style="display: flex;width: 100%;">-->
+									<!--<div >李四</div>-->
+									<!--<div >15252634561</div>-->
+									<!--<div >张三</div>-->
+								<!--</div>-->
+							<!--</div>-->
+						<!--</li>-->
+					</div>
+			         <!--<li class="aui-list-item">-->
+			            <!--<div class="aui-list-item-inner">-->
+			                <!--<div class="aui-list-item-title" style="display: flex;width: 100%;">-->
+				                	<!--<div >李四</div>-->
+				                	<!--<div >15252634561</div>-->
+				                	<!--<div >张三</div>-->
+			                <!--</div>-->
+			            <!--</div>-->
+			        <!--</li>-->
+			         <!--<li class="aui-list-item">-->
+			            <!--<div class="aui-list-item-inner">-->
+			                <!--<div class="aui-list-item-title" style="display: flex;width: 100%;">-->
+				                	<!--<div >李四</div>-->
+				                	<!--<div >15252634561</div>-->
+				                	<!--<div >张三</div>-->
+			                <!--</div>-->
+			            <!--</div>-->
+			        <!--</li>-->
+			    </ul>
+			     <!--<div class="aui-btn bottombtn">确定</div>-->
+			</div>
+		</div>
+	</body>
+	<script src="__JS__/jquery.min.js"></script>
+	<script type="text/javascript">
+		$(function () {
+			getList();
+        });
+
+		function getList() {
+		    $.ajax({
+				url: '/mobile/index/team',
+				type: 'get',
+				success: function (res) {
+				    if(res.success)
+				        list(res.data);
+                }
+			})
+		}
+
+		function list(data) {
+			var htmls = [];
+			for (var i = 0; i < data.length; i++)
+			{
+			    htmls.push('<li class="aui-list-item">');
+			    htmls.push('<div class="aui-list-item-inner">');
+			    htmls.push('<div class="aui-list-item-title" style="display: flex;width: 100%;">');
+			    htmls.push('<div >'+ data[i]['username'] +'</div>');
+			    htmls.push('<div >'+ data[i]['phone'] +'</div>');
+			    htmls.push('<div >'+ data[i]['invite']+'</div>');
+			    htmls.push('</div>');
+			    htmls.push('</div>');
+			    htmls.push('</li>');
+			}
+
+			$('#list').append(htmls.join(''));
+        }
+	</script>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -38,6 +38,9 @@ class Balance extends \web\common\model\BaseModel
         $where['coin_id'] = $coid_id;
 
         $amount = $this->where($where)->column('amount');
+        if(empty($amount))
+            return false;
+
         if($amount[0] >= $num)
         {
             return true;
