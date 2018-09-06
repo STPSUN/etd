@@ -53,7 +53,7 @@
 
 		function getList() {
 		    var data = {
-		        coin_id: 1
+		        coin_id: window.localStorage.getItem('coin_id')
 			};
 			$.ajax({
 				url: '/mobile/wallet/withdrawList',
@@ -82,7 +82,7 @@
 			    htmls.push('<li class="aui-list-item">');
 			    htmls.push('<div class="aui-list-item-inner" style="border-bottom: none;">');
 			    htmls.push('<div class="aui-list-item-title" style="color: #FFFFFF;">');
-			    htmls.push('<p>转出USDT：<span>'+data[i]['amount']+'</span></p>');
+			    htmls.push('<p>转出：<span>'+data[i]['amount']+'</span></p>');
 			    htmls.push('<p>转出地址：<span>'+data[i]['to_address']+'</span></p>');
 			    htmls.push('</div>');
                 htmls.push('</div>');

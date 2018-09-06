@@ -170,7 +170,9 @@
 			var htmls = [];
 			for(var i = 0; i < list.length; i++)
 			{
-			    htmls.push('<div class="list-divitem" onclick="detail('+list[i]['id']+')">');
+//			    htmls.push('<div class="list-divitem" onclick="detail('+list[i]['id']+')">');
+				//理财未上线
+                htmls.push('<div class="list-divitem" >');
 
 			    htmls.push('<div class="list-divitem-first">');
 			    htmls.push('<span>'+list[i]['duration']+'天（日收益+'+list[i]['profit']+'%）</span>');

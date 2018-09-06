@@ -3,11 +3,17 @@
  
 <div class="right-main">
     <div class="page_nav" id="js_page_nav"><span class="page_title">{$page_nav}</span></div>
+    <div>
+        <select name="status"  class="form-control" onchange="select(0)">
+        <option value="1" <?php echo $coin_id=='1'?"selected='seleced'":null;?>>USDT</option>
+        <option value="13" <?php echo $coin_id=='13'?"selected='seleced'":null;?>>ETD</option>
+        </select>
+    </div>
     <ul class="tab_navs" id="js_tab_navs">
-        <li class="{if condition='$status eq 0'}current{/if}"><a class="pjax" href="{:getUrl('index','status=0')}">未审核</a></li>
-        <li class="{if condition='$status eq 1'}current{/if}"><a class="pjax" href="{:getUrl('index','status=1')}">已完成</a></li>
+        <li class="{if condition='$status eq 0'}current{/if}"><a class="pjax" onclick="select(0)" >未审核</a></li>
+        <li class="{if condition='$status eq 1'}current{/if}"><a class="pjax" onclick="select(1)">已完成</a></li>
         <!--<li class="{if condition='$status eq 2'}current{/if}"><a class="pjax" href="{:getUrl('index','status=2')}">提交转出成功</a></li>-->
-        <li class="{if condition='$status eq 4'}current{/if}"><a class="pjax" href="{:getUrl('index','status=4')}">未通过</a></li>
+        <li class="{if condition='$status eq 4'}current{/if}"><a class="pjax" onclick="select(4)">未通过</a></li>
         <!--<li class="{if condition='$status eq -2'}current{/if}"><a class="pjax" href="{:getUrl('index','status=-2')}">转出异常</a></li>-->
     </ul>
     <!--<div id="js_main_header" class="ui-form main_header">-->
@@ -21,7 +27,7 @@
     <table id="grid-table">
         <thead frozen="true">
         <th data-options="field:'phone',width:100,align:'center'">手机号</th> 
-        <th data-options="field:'amount',width:120,align:'center'">数量</th>
+        <th data-options="field:'amount',width:120,align:'center',formatter: formatNum">数量</th>
         <th data-options="field:'coin_name',width:100, align:'center'">币种</th>
         </thead>
         <thead>
@@ -41,13 +47,18 @@
 {/block}
 {block name="script"}
 <script type="text/javascript">
-    var status = '{$status}'
+    var status = '{$status}';
+    var coin_id = '{$coin_id}';
     $("#js_search").click(function () {
         reload();
     });
     $(function () {
+        var param = {
+            status: status,
+            coin_id: coin_id,
+        };
         $('#grid-table').datagrid({
-            url: getURL('loadList','status='+status),
+            url: getURL('loadList',param),
             method: "GET",
             height: getGridHeight(),
             rownumbers: true,
@@ -64,6 +75,15 @@
             pageList: [20, 30, 50]
         });
     });
+
+    function select(status) {
+        var coin_id = $('select option:selected').val();
+        var param = {
+            coin_id: coin_id,
+            status: status
+        };
+        window.location.href = getURL('index',param);
+    }
 
     function appr(id){
         confirm("确定要审核所选订单吗？", function () {
@@ -92,6 +112,16 @@
 
             });
         });
+    }
+
+    function formatNum(value,row,index) {
+        var num = '';
+        if(row['coin_id'] == 1)
+            num = row['amount'] - row['tax'];
+        else
+            num = row['amount'];
+
+        return num;
     }
     
     function formatOper(value, row, index) {

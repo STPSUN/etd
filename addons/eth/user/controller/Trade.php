@@ -5,20 +5,27 @@ namespace addons\eth\user\controller;
 class Trade extends \web\user\controller\AddonUserBase{
 
     private $ETD_ID = 13;
+    private $USDT_ID = 1;
 
     public function index(){
         $status = $this->_get('status');
+        $coin_id = $this->_get('coin_id');
         if($status == ''){
             $status = 0; //未确认
         }
+        if($coin_id == '')
+            $coin_id = $this->USDT_ID;
+
         $this->assign('status',$status);
+        $this->assign('coin_id',$coin_id);
         return $this->fetch();
     }
 
     public function loadList(){
         $keyword = $this->_get('keyword');
         $status = $this->_get('status');
-        $filter = 'status='.$status;
+        $coin_id = $this->_get('coin_id');
+        $filter = 'status='.$status . ' and coin_id=' . $coin_id;
         if ($keyword != null) {
             $filter .= ' and b.username like \'%' . $keyword . '%\'';
         }
@@ -127,7 +134,7 @@ class Trade extends \web\user\controller\AddonUserBase{
                         $before_amount = $balance['amount'];
                         $after_amount = $balance['amount'] + $amount;
                         $change_type = 1; //增加
-                        $remark = 'USDT提现失败';
+                        $remark = ($candy_id == $this->ETD_ID) ? 'ETD提现失败' : 'USDT提现失败';
 
                         $recordM = new \addons\member\model\TradingRecord();
                         $r_id = $recordM->addRecord($user_id, $candy_id, $amount, $before_amount, $after_amount, $type, $change_type, $user_id, '', '', $remark);

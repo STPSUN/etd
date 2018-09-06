@@ -98,17 +98,17 @@
 			</div>
 			<div class="aui-content aui-margin-b-15">
 			    <ul class="aui-list aui-list-in">
-			        <li class="aui-list-item aui-list-item-middle" onclick="javascript:location.href=''">
+			        <li class="aui-list-item aui-list-item-middle" onclick="toRecordList(1)">
 			        	<div class="aui-list-item-label-icon">
 	                		<img src="__IMG__/mine/costnotes.png"/>
 	                	</div>
 			            <div class="aui-list-item-inner aui-list-item-arrow">
 			                <div class="aui-list-item-title">
-			                	账单记录
+			                	USDT记录
 			                </div>
 			            </div>
 			        </li>
-			         <li class="aui-list-item aui-list-item-middle" onclick="javascript:location.href=''">
+			         <li class="aui-list-item aui-list-item-middle" onclick="toRecordList(13)">
 			        	<div class="aui-list-item-label-icon">
 	                		<img src="__IMG__/mine/ETDnote.png"/>
 	                	</div>
@@ -128,7 +128,7 @@
 			                </div>
 			            </div>
 			       	 </li>
-			         <li class="aui-list-item aui-list-item-middle" onclick="javascript:location.href=''">
+			         <li class="aui-list-item aui-list-item-middle" onclick="javascript:location.href='toWithdrawETD'">
 			        	<div class="aui-list-item-label-icon">
 	                		<img src="__IMG__/mine/withforimtoken.png"/>
 	                	</div>
@@ -203,6 +203,12 @@
 	</body>
 	<script src="__JS__/jquery.min.js"></script>
 	<script type="text/javascript">
+
+		function toRecordList(record_coin_id) {
+			window.localStorage.setItem('record_coin_id',record_coin_id);
+			window.location.href = '/mobile/wallet/toRecordList';
+        }
+
         function loginOut(){
             $.ajax({
                 url: '/mobile/user/logout',

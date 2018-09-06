@@ -17,7 +17,7 @@
 		        <a class="aui-pull-left" >
 		            <span class="aui-iconfont aui-icon-left" onclick="javascript:history.go(-1);" ></span>
 		        </a>
-		        <div class="aui-title">USDT提币</div>
+		        <div class="aui-title">ETD提币</div>
 		        <div class="aui-pull-right aui-btn">
 					<span style="color: #DDDDDD;" onclick="toWithdrawList()">提币记录</span>
 				</div>
@@ -28,8 +28,8 @@
 			            <div class="aui-list-item-inner">
 			                <div class="aui-list-item-title">
 			                	<div class="aui-list-item-title">
-				                	可转出USDT：
-				                	<span style="color: #FFFFFF;">{$usdt_num}</span>
+				                	可转出ETD：
+				                	<span style="color: #FFFFFF;">{$etd_num}</span>
 				                </div>
 			                </div>
 			            </div>
@@ -54,16 +54,6 @@
 			                </div>
 			            </div>
 			        </li>
-					<li class="aui-list-item">
-						<div class="aui-list-item-inner">
-							<div class="aui-list-item-title">
-								手续费：
-								<div class="aui-list-item-input">
-									<span>3 USDT</span>
-								</div>
-							</div>
-						</div>
-					</li>
 			        <li class="aui-list-item">
 			            <div class="aui-list-item-inner">
 			                <div class="aui-list-item-title">
@@ -83,9 +73,9 @@
 	<script type="text/javascript" src="/static/global/js/common.js"></script>
 	<script type="text/javascript" src="/static/global/layer/layer.js"></script>
 	<script type="text/javascript">
-		function toWithdrawList() {
-			window.localStorage.setItem('coin_id',1);
-			window.location.href = '/mobile/wallet/toWithdrawList';
+        function toWithdrawList() {
+            window.localStorage.setItem('coin_id',13);
+            window.location.href = '/mobile/wallet/toWithdrawList';
         }
 
 		function confirm() {
@@ -96,7 +86,7 @@
 			};
 
 			$.ajax({
-				url: '/mobile/wallet/withdrawUSDT',
+				url: '/mobile/wallet/withdrawETD',
 				type: 'post',
 				data: data,
 				success: function (res) {

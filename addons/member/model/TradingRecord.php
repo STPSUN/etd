@@ -12,6 +12,20 @@ class TradingRecord extends \web\common\model\BaseModel{
     protected function _initialize() {
         $this->tableName = 'trading_record';
     }
+
+    public function getTypeAttr($value)
+    {
+        $type = [
+            0   => '转账',
+            2   => '外网转入',
+            3   => '提现转出',
+            4   => '购买理财',
+            6   => '后台拨币',
+            9   => '提现未通过'
+        ];
+
+        return $type[$value];
+    }
     
     
     /**

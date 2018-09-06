@@ -1,0 +1,122 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width" />
+		<meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
+		<title>账单记录</title>
+		<link rel="stylesheet" type="text/css" href="__CSS__/aui.css" />
+		<link rel="stylesheet" type="text/css" href="__CSS__/common.css" />
+		<link rel="stylesheet" type="text/css" href="__CSS__/home.css"/>
+	</head>
+	<style>
+	</style>
+	<body>
+		<div id="app">
+		    <!--记录-->
+		    <header class="nav-header aui-bar aui-bar-nav" id="aui-header">
+		        <a class="aui-pull-left" >
+		            <span class="aui-iconfont aui-icon-left" onclick="javascript:history.go(-1);" ></span>
+		        </a>
+		        <div class="aui-title">账单记录</div>
+		    </header>
+			<div id="list">
+				<!--<div class="aui-content aui-margin-b-15 divbckg withmoney-info">-->
+					<!--<ul class="aui-list aui-list-in">-->
+						<!--<li class="aui-list-item">-->
+							<!--<div class="aui-list-item-inner" style="border-bottom: 1px solid #0198ab7a">-->
+								<!--<div class="aui-list-item-title">买入</div>-->
+							<!--</div>-->
+						<!--</li>-->
+						<!--<li class="aui-list-item">-->
+							<!--<div class="aui-list-item-inner" style="border-bottom: none;">-->
+								<!--<div class="aui-list-item-title" style="color: #FFFFFF;padding-top: 0.5rem;padding-bottom: 0.5rem;">-->
+									<!--<p>ETD交易值：<span>10000</span></p>-->
+									<!--<p>ETD余额：<span>10000</span></p>-->
+									<!--<p>钱包地址：<span>asdfhjahsdjkfhashfkaskd</span></p>-->
+									<!--<p>交易时间：<span>2018-08-09 14:25:06</span></p>-->
+								<!--</div>-->
+							<!--</div>-->
+						<!--</li>-->
+					<!--</ul>-->
+				<!--</div>-->
+			</div>
+
+		</div>
+	</body>
+	<script src="__JS__/jquery.min.js"></script>
+	<script type="text/javascript">
+        $(function () {
+            getList();
+        });
+
+        function getList() {
+            var coin_id = window.localStorage.getItem('record_coin_id');
+            var data = {
+                coin_id: coin_id
+            };
+            $.ajax({
+                url: '/mobile/wallet/recordList',
+                type: 'post',
+                data: data,
+                success: function (res) {
+                    if(res.success)
+                        list(res.data,coin_id);
+                }
+            })
+        }
+
+        function list(data,coin_id) {
+            var htmls = [];
+            for (var i = 0; i < data.length; i++)
+            {
+                htmls.push('<div class="aui-content aui-margin-b-15 divbckg withmoney-info">');
+                htmls.push('<ul class="aui-list aui-list-in">');
+
+                htmls.push('<li class="aui-list-item">');
+                htmls.push('<div class="aui-list-item-inner" style="border-bottom: 1px solid #0198ab7a">');
+                htmls.push('<div class="aui-list-item-title">'+ data[i]['type']+'</div>');
+                htmls.push('</div>');
+                htmls.push('</li>');
+
+                htmls.push('<li class="aui-list-item">');
+                htmls.push('<div class="aui-list-item-inner" style="border-bottom: none;">');
+                htmls.push('<div class="aui-list-item-title" style="color: #FFFFFF;padding-top: 0.5rem;padding-bottom: 0.5rem;">');
+
+                if(coin_id == 1)
+				{
+                    htmls.push('<p>USDT交易值：<span>'+data[i]['amount']+'</span></p>');
+                    htmls.push('<p>USDT余额：<span>'+data[i]['after_amount']+'</span></p>');
+				}else
+				{
+                    htmls.push('<p>ETD交易值：<span>'+data[i]['amount']+'</span></p>');
+                    htmls.push('<p>ETD余额：<span>'+data[i]['after_amount']+'</span></p>');
+				}
+
+                htmls.push('<p>钱包地址：<span>'+data[i]['to_address']+'</span></p>');
+                htmls.push('<p>交易时间：<span>'+data[i]['update_time']+'</span></p>');
+                htmls.push('</div>');
+                htmls.push('</li>');
+                htmls.push('</li>');
+
+                htmls.push('</ul>');
+                htmls.push('</div>');
+            }
+
+            $('#list').append(htmls.join(''));
+        }
+	</script>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+

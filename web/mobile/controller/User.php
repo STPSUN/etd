@@ -261,11 +261,16 @@ class User extends Base
     {
         $param = Request::instance()->post();
         $validate = new Validate([
-            'password'  => 'require',
-            'password_confirm' => 'require|confirm',
-            'username'  => 'require',
-            'phone'     => 'require',
-            'verify_code'   => 'require',
+            'password|登录密码'  => 'require',
+            'password_confirm|登录密码' => 'require|confirm',
+            'username|用户名'  => 'require',
+            'phone|手机号'     => 'require',
+            'verify_code|验证码'   => 'require',
+            'pay_password|交易密码'  => 'require',
+            'pay_password_confirm|交易密码'  => 'require|confirm',
+        ],[
+            'password_confirm'  => '两次输入的登录密码不一致',
+            'pay_password_confirm' => '两次输入的交易密码不一致',
         ]);
 
         if(!$validate->check($param))
@@ -275,6 +280,7 @@ class User extends Base
         $username = $param['username'];
         $phone = $param['phone'];
         $verify_code = $param['verify_code'];
+        $pay_password = $param['pay_password'];
 
         $user = $this->userM->where('username',$username)->find();
         if(empty($user))
@@ -289,6 +295,7 @@ class User extends Base
 
         $res = $this->userM->save([
             'password' => md5($password),
+            'pay_password' => md5($pay_password),
         ],[
             'username' => $username
         ]);
