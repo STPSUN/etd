@@ -26,6 +26,7 @@ switch ($url){
         define('BIND_MODULE','index');
         break;
 }
+session_start();
 
 // 加载框架引导文件
 require __DIR__ . '/../thinkphp/start.php';
