@@ -33,5 +33,29 @@ class UserProduct extends \web\common\model\BaseModel{
         return $this->query($sql);
         
     }
+
+    /**
+     * 理财记录
+     */
+    public function getList($user_id)
+    {
+        $sql = 'SELECT p.title,p.duration,p.rate, u.amount, u.add_time '
+            . ' FROM  tp_product AS p '
+            . ' LEFT JOIN tp_user_product AS u ON u.product_id = p.id '
+            . ' WHERE u.user_id = "'. $user_id .'"';
+
+        return $this->query($sql);
+    }
     
 }
+
+
+
+
+
+
+
+
+
+
+

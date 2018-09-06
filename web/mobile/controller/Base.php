@@ -142,5 +142,89 @@ class Base extends \web\common\controller\BaseController {
         echo $json;
         exit;
     }
+
+    /**
+     * 外网转入记录获取。
+     * @return type
+     */
+    protected function getEthOrders($user_id) {
+        set_time_limit(200);
+        $ethApi = new \EthApi();
+        $userM = new \addons\member\model\MemberAccountModel();
+        $eth_address = $userM->getUserAddress($user_id);
+        if (!$eth_address)
+            return false;
+
+        $coinM = new \addons\config\model\Coins();
+        $coins = $coinM->select();
+        foreach ($coins as $coin) {
+            $ethApi->set_byte($coin['byte']);
+            if (!empty($coin['contract_address'])) {
+                $ethApi->set_contract($coin['contract_address']);
+            }
+            $transaction_list = $ethApi->erscan_order($eth_address, $coin['is_token']);
+            if (empty($transaction_list)) {
+                continue;
+            }
+            $res = $this->checkOrder($user_id, $eth_address, $coin['id'], $transaction_list);
+        }
+        return true;
+    }
+
+    /**
+     * 外网数据写入
+     * @param type $user_id 用户id
+     * @param type $address 用户地址
+     * @param type $list    抓取到的数据
+     * @param type $coin_id 币种id
+     * @return boolean
+     */
+    private function checkOrder($user_id, $address, $coin_id, $list) {
+        $m = new \addons\eth\model\EthTradingOrder();
+        $balanceM = new \addons\member\model\Balance();
+        $recordM = new \addons\member\model\TradingRecord();
+        foreach ($list as $val) {
+            $txhash = $val['hash'];
+            $block_number = $val['block_number'];
+            $from_address = $val['from'];
+            try {
+                $res = $m->getDetailByTxHash($txhash); //订单匹配
+                if ($res) {
+                    return true;
+                }
+                $m->startTrans();
+                $amount = $val['amount'];
+                $eth_order_id = $m->transactionIn($user_id, $from_address, $address, $coin_id, $amount, $txhash, $block_number, 0, 1, 1, "外网转入");
+                if ($eth_order_id > 0) {
+                    //插入转入eth记录成功
+                    $balance = $balanceM->updateBalance($user_id, $amount, $coin_id, true);
+
+                    if (!$balance) {
+                        $m->rollback();
+                        return false;
+                    }
+
+                    $type = 99;
+                    $before_amount = $balance['before_amount'];
+                    $after_amount = $balance['amount'];
+                    $change_type = 1; //减少
+                    $remark = '外网转入';
+                    $r_id = $recordM->addRecord($user_id, $coin_id, $amount, $before_amount, $after_amount, $type, $change_type, $user_id, $address, '', $remark);
+                    if (!$r_id) {
+                        $m->rollback();
+                        return false;
+                    }
+                    $m->commit();
+                    return true;
+                } else {
+                    $m->rollback();
+                    return false;
+                }
+            } catch (\Exception $ex) {
+                return false;
+            }
+        }
+        return true;
+    }
     
 }

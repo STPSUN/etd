@@ -328,7 +328,7 @@ class ApiBase extends \web\common\controller\Controller {
         set_time_limit(200);
         $ethApi = new \EthApi();
         $userM = new \addons\member\model\MemberAccountModel();
-        $eth_address = $userM->getUserEthAddress($user_id);
+        $eth_address = $userM->getUserAddress($user_id);
         if (!$eth_address)
             return false;
 

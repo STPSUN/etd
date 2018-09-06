@@ -26,18 +26,18 @@
 					<img src="__IMG__/home/logo.png"/>
 				</div>
 				<div class="section-info">
-					<p style="color: #1875ff;font-size: 0.9rem;">用户名：007</p>
-					<p>等级:普通会员</p>
+					<p style="color: #1875ff;font-size: 0.9rem;">用户名：{$data.username}</p>
+					<p>等级:{$data.level}</p>
 					<div class="section-info-detail">
-						<span class="fl">USDT:37.53</span>
-						<span class="fr">ETD:40.69</span>
+						<span class="fl">USDT: {$data.usdt}</span>
+						<span class="fr">ETD: {$data.etd}</span>
 					</div>
 				</div>
 			</section>
-			<div class="divbckg" style="margin: 1rem 0.5rem 0rem 0.5rem; height: 1.8rem;overflow: hidden;display: flex;">
-				<img src="__IMG__/home/notice.png" style="width: 1.5rem;height:1.3rem;margin: 0.15rem 0.5rem;"/>
-				<p style="padding-top: 0.3rem;">平台限量发行： <span>1万</span> &nbsp;&nbsp;已发行： <span>5000</span></p>
-			</div>
+			<!--<div class="divbckg" style="margin: 1rem 0.5rem 0rem 0.5rem; height: 1.8rem;overflow: hidden;display: flex;">-->
+				<!--<img src="__IMG__/home/notice.png" style="width: 1.5rem;height:1.3rem;margin: 0.15rem 0.5rem;"/>-->
+				<!--<p style="padding-top: 0.3rem;">平台限量发行： <span>1万</span> &nbsp;&nbsp;已发行： <span>5000</span></p>-->
+			<!--</div>-->
 			<section class="aui-grid aui-margin-b-15 clearfix">
 			    <div class="aui-row divbckg">
 			        <div class="aui-col-xs-3" onclick="javascript:location.href='/mobile/product/index.html';">
@@ -48,11 +48,11 @@
 			            <img src="__IMG__/home/shopping.png"/>
 			            <div class="aui-grid-label">商城</div>
 			        </div>
-			        <div class="aui-col-xs-3" onclick="javascript:location.href='transaccount.html';">
+			        <div class="aui-col-xs-3" onclick="javascript:location.href='/mobile/index/toTransAccount.html';">
 			            <img src="__IMG__/home/transaccount.png"/>
 			            <div class="aui-grid-label">转账</div>
 			        </div>
-			        <div class="aui-col-xs-3" onclick="javascript:location.href='team.html';">
+			        <div class="aui-col-xs-3" onclick="javascript:location.href='/mobile/index/toTeam.html';">
 			            <img src="__IMG__/home/team.png"/>
 			            <div class="aui-grid-label">团队</div>
 			        </div>
@@ -61,19 +61,19 @@
 		</div>
 		<footer class="aui-bar aui-bar-tab aui-default-t-border" id="footer">
 			<div class="aui-bar-tab-item" id="nav_footer_home" onclick="footeronlcik(this,1)">
-				<img class="aui-bar-tab-icon footer-bar-icon" src="/footer/on_home.png" alt="">
+				<img class="aui-bar-tab-icon footer-bar-icon" src="__IMG__/footer/on_home.png" alt="">
 				<div class="aui-bar-tab-label aui-active" >首页</div>
 			</div>
 			<div class="aui-bar-tab-item" id="nav_footer_transaction" onclick="footeronlcik(this,2)">
-				<img class="aui-bar-tab-icon footer-bar-icon" src="/footer/transaction.png" alt="">
-				<div class="aui-bar-tab-label">认筹</div>
+				<img class="aui-bar-tab-icon footer-bar-icon" src="__IMG__/footer/transaction.png" alt="">
+				<div class="aui-bar-tab-label">认购</div>
 			</div>
 			<div class="aui-bar-tab-item" id="nav_footer_quotation" onclick="footeronlcik(this,3)">
-				<img class="aui-bar-tab-icon footer-bar-icon" src="/footer/quotation.png" alt="">
+				<img class="aui-bar-tab-icon footer-bar-icon" src="__IMG__/footer/quotation.png" alt="">
 				<div class="aui-bar-tab-label">交易</div>
 			</div>
 			<div class="aui-bar-tab-item" onclick="footeronlcik(this,4)">
-				<img class="aui-bar-tab-icon footer-bar-icon" src="/footer/mine.png" alt="">
+				<img class="aui-bar-tab-icon footer-bar-icon" src="__IMG__/footer/mine.png" alt="">
 				<div class="aui-bar-tab-label " >钱包</div>
 			</div>
 		</footer>
@@ -97,9 +97,9 @@
             var imgpath = $(el).children('img').attr('src').split('/');
             var length = imgpath.length;
             var imgsub = imgpath[imgpath.length-1].substring(0,2);
-//            if(imgsub=='on')
-//                return;
-//            else
+            if(imgsub=='on')
+                return;
+            else
             {
                 var activeimg = $('.aui-active').siblings('img').attr('src').split('/')
                 activeimg[activeimg.length-1] = activeimg[activeimg.length-1].replace('on_','')

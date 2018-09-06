@@ -59,9 +59,9 @@
 		            <span class="aui-iconfont aui-icon-left" onclick="javascript:history.go(-1);" ></span>
 		        </a>
 		        <div class="aui-title">理财</div>
-		        <div class="aui-pull-right aui-btn">
-					<span onclick="javascript:location.href='withmoneynotes.html';">理财记录</span>
-				</div>
+		        <!--<div class="aui-pull-right aui-btn">-->
+					<!--<span onclick="javascript:location.href='withmoneynotes.html';">理财记录</span>-->
+				<!--</div>-->
 		    </header>
 		    <div class="aui-content aui-margin-b-15">
 			    <ul class="aui-list aui-list-in">
@@ -147,7 +147,10 @@
 				data: data,
 				success: function (res) {
 					if(res.success)
-					    window.location.href = '/mobile/index/index';
+					{
+						msg('购买成功');
+                        window.location.href = '/mobile/index/index';
+					}
 					else
 					    return msg(res.message);
                 }

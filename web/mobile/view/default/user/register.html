@@ -10,6 +10,9 @@
 		<link rel="stylesheet" type="text/css" href="__CSS__/home.css"/>
 	</head>
 	<style>
+		.bottombtn{
+
+		}
 	</style>
 	<body>
 		<div id="app">
@@ -97,7 +100,7 @@
 			                <div class="aui-list-item-title">
 			                	推荐人：
 			                	<div class="aui-list-item-input">
-				                    <input type="text" id="invite_phone" placeholder="请输入推荐人">
+				                    <input type="text" id="invite_username" placeholder="请输入推荐人用户名" value="{$username}">
 				                </div>
 			                </div>
 			            </div>
@@ -125,7 +128,7 @@
 				pay_password_confirm:	$('#pay_password_confirm').val(),
 				phone:	$('#phone').val(),
 				verify_code:	$('#verify_code').val(),
-				invite_phone:	$('#invite_phone').val()
+                invite_username:	$('#invite_username').val()
 			};
 			$.ajax({
 				url: '/mobile/user/register',
@@ -134,7 +137,7 @@
 				success: function (res) {
 					if(res.success)
 					{
-					    window.location.href = '/mobile/user/login'
+                        window.location.href = '/mobile/index/index'
 					}else
 					{
 					    return msg(res.message);

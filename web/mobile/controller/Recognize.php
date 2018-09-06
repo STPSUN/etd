@@ -20,6 +20,7 @@ class Recognize extends Base
     private $trandRecordM;
     private $ETD = 13;
     private $RMB = 2;
+    private $USDT = 1;
 
     public function _initialize()
     {
@@ -37,8 +38,8 @@ class Recognize extends Base
 
         $data = array(
             'price' => $rule['price'],
-            'surplus'   => $rule['surplus_num'],
-            'etd_num'   => $user['amount'],
+            'surplus'   => $rule['gross'],
+            'etd_num'   => empty($user['amount']) ? 0 : $user['amount'],
         );
 
         $this->assign('data',$data);
@@ -60,25 +61,25 @@ class Recognize extends Base
         $num = $param['num'];
 
         $rule = $this->placementRuleM->find();
-        if($rule['surplus_num'] < $num)
-            return $this->failData('剩余众筹数量不足');
+        if($rule['gross'] < $num)
+            return $this->failData('剩余认购数量不足');
 
         $total_price = $rule['price'] * $num;
-        $verifyStock = $this->balanceM->verifyStock($this->user_id,$this->RMB,$total_price);
+        $verifyStock = $this->balanceM->verifyStock($this->user_id,$this->USDT,$total_price);
         if(!$verifyStock)
-            return $this->failData('余额不足');
+            return $this->failData('USDT余额不足');
 
         $balanceETD = $this->balanceM->where(['user_id' => $this->user_id, 'coin_id' => $this->ETD])->find();
 
         $this->placementRuleM->startTrans();
         try
         {
-            //剩余认筹数量更新
-            $this->placementRuleM->where('id',1)->setDec('surplus_num',$num);
+            //认筹数量更新
+            $this->placementRuleM->where('id',1)->setDec('gross',$num);
 
             //用户余额更新
             $this->balanceM->updateBalance($this->user_id,$num,$this->ETD,true);
-            $this->balanceM->updateBalance($this->user_id,$total_price,$this->RMB,false);
+            $this->balanceM->updateBalance($this->user_id,$total_price,$this->USDT,false);
 
             //添加交易记录
             $after_amount = $balanceETD['amount'] + $num;

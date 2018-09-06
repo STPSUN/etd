@@ -68,37 +68,37 @@
 				<!--<span class="aui-iconfont aui-icon-left" onclick="javascript:history.go(-1);" ></span>-->
 			<!--</a>-->
 			<div class="recognize-headinfo">
-				<p class="headinfo-title">累计收益：<span>0.36</span></p>
+				<p class="headinfo-title">累计收益：<span>0</span></p>
 				<div class="headinfo-list">
 					<div class="headinfo-list-item">
 						<p>
-							22.00
+							{$usdt}
 						</p>
 						<p>
 							USDT
 						</p>
 					</div>
-					<div class="headinfo-list-item">
-						<p>
-							0.00
-						</p>
-						<p>
-							余额
-						</p>
-					</div>
+					<!--<div class="headinfo-list-item">-->
+						<!--<p>-->
+							<!--{$rmb}-->
+						<!--</p>-->
+						<!--<p>-->
+							<!--余额-->
+						<!--</p>-->
+					<!--</div>-->
 					<div class="headinfo-list-item" style="border-right: none;">
 						<p>
-							188.00
+							{$etd}
 						</p>
 						<p>
-							EDT
+							ETD
 						</p>
 					</div>
 				</div>
 			</div>
 			<div class="aui-content aui-margin-b-15">
 			    <ul class="aui-list aui-list-in">
-			        <li class="aui-list-item aui-list-item-middle" onclick="javascript:location.href='costnotes.html'">
+			        <li class="aui-list-item aui-list-item-middle" onclick="javascript:location.href=''">
 			        	<div class="aui-list-item-label-icon">
 	                		<img src="__IMG__/mine/costnotes.png"/>
 	                	</div>
@@ -108,7 +108,7 @@
 			                </div>
 			            </div>
 			        </li>
-			         <li class="aui-list-item aui-list-item-middle" onclick="javascript:location.href='ETDnotes.html'">
+			         <li class="aui-list-item aui-list-item-middle" onclick="javascript:location.href=''">
 			        	<div class="aui-list-item-label-icon">
 	                		<img src="__IMG__/mine/ETDnote.png"/>
 	                	</div>
@@ -118,36 +118,56 @@
 			                </div>
 			            </div>
 			        </li>
-			         <li class="aui-list-item aui-list-item-middle" onclick="javascript:location.href='withmoney.html'">
+			         <li class="aui-list-item aui-list-item-middle" onclick="javascript:location.href='toWithdrawUSDT'">
 			        	<div class="aui-list-item-label-icon">
 	                		<img src="__IMG__/mine/withmoney.png"/>
 	                	</div>
 			            <div class="aui-list-item-inner aui-list-item-arrow">
 			                <div class="aui-list-item-title">
-			                	提币
+			                	USDT提币
 			                </div>
 			            </div>
-			        </li>
-			         <!--<li class="aui-list-item aui-list-item-middle" onclick="javascript:location.href='withforimtoken.html'">-->
-			        	<!--<div class="aui-list-item-label-icon">-->
-	                		<!--<img src="__IMG__/mine/withforimtoken.png"/>-->
-	                	<!--</div>-->
-			            <!--<div class="aui-list-item-inner aui-list-item-arrow">-->
-			                <!--<div class="aui-list-item-title">-->
-			                	<!--提币到imToken-->
-			                <!--</div>-->
-			            <!--</div>-->
-			        <!--</li>-->
-			         <li class="aui-list-item aui-list-item-middle" onclick="javascript:location.href='kefu.html'">
+			       	 </li>
+			         <li class="aui-list-item aui-list-item-middle" onclick="javascript:location.href=''">
 			        	<div class="aui-list-item-label-icon">
-	                		<img src="__IMG__/mine/kefu.png"/>
+	                		<img src="__IMG__/mine/withforimtoken.png"/>
 	                	</div>
 			            <div class="aui-list-item-inner aui-list-item-arrow">
 			                <div class="aui-list-item-title">
-			                	联系客服
+			                	提币到imToken
 			                </div>
 			            </div>
 			        </li>
+			         <!--<li class="aui-list-item aui-list-item-middle" onclick="javascript:location.href=''">-->
+			        	<!--<div class="aui-list-item-label-icon">-->
+	                		<!--<img src="__IMG__/mine/kefu.png"/>-->
+	                	<!--</div>-->
+			            <!--<div class="aui-list-item-inner aui-list-item-arrow">-->
+			                <!--<div class="aui-list-item-title">-->
+			                	<!--联系客服-->
+			                <!--</div>-->
+			            <!--</div>-->
+			        <!--</li>-->
+					<li class="aui-list-item aui-list-item-middle" onclick="javascript:location.href='toAddress'">
+						<div class="aui-list-item-label-icon">
+							<img src="__IMG__/mine/costnotes.png"/>
+						</div>
+						<div class="aui-list-item-inner aui-list-item-arrow">
+							<div class="aui-list-item-title">
+								钱包地址
+							</div>
+						</div>
+					</li>
+					<li class="aui-list-item aui-list-item-middle" onclick="javascript:location.href='toInvite.html'">
+						<div class="aui-list-item-label-icon">
+							<img src="__IMG__/mine/invite.png"/>
+						</div>
+						<div class="aui-list-item-inner aui-list-item-arrow">
+							<div class="aui-list-item-title">
+								邀请
+							</div>
+						</div>
+					</li>
 			         <li class="aui-list-item aui-list-item-middle" onclick="javascript:location.href='toSetup.html'">
 			        	<div class="aui-list-item-label-icon">
 	                		<img src="__IMG__/mine/setup.png"/>
@@ -164,19 +184,19 @@
 		</div>
 		<footer class="aui-bar aui-bar-tab aui-default-t-border" id="footer">
 			<div class="aui-bar-tab-item" id="nav_footer_home" onclick="footeronlcik(this,1)">
-				<img class="aui-bar-tab-icon footer-bar-icon" src="/footer/on_home.png" alt="">
+				<img class="aui-bar-tab-icon footer-bar-icon" src="__IMG__/footer/home.png" alt="">
 				<div class="aui-bar-tab-label " >首页</div>
 			</div>
 			<div class="aui-bar-tab-item" id="nav_footer_transaction" onclick="footeronlcik(this,2)">
-				<img class="aui-bar-tab-icon footer-bar-icon" src="/footer/transaction.png" alt="">
-				<div class="aui-bar-tab-label">认筹</div>
+				<img class="aui-bar-tab-icon footer-bar-icon" src="__IMG__/footer/transaction.png" alt="">
+				<div class="aui-bar-tab-label">认购</div>
 			</div>
 			<div class="aui-bar-tab-item" id="nav_footer_quotation" onclick="footeronlcik(this,3)">
-				<img class="aui-bar-tab-icon footer-bar-icon" src="/footer/quotation.png" alt="">
+				<img class="aui-bar-tab-icon footer-bar-icon" src="__IMG__/footer/quotation.png" alt="">
 				<div class="aui-bar-tab-label">交易</div>
 			</div>
 			<div class="aui-bar-tab-item" onclick="footeronlcik(this,4)">
-				<img class="aui-bar-tab-icon footer-bar-icon" src="/footer/mine.png" alt="">
+				<img class="aui-bar-tab-icon footer-bar-icon aui-active"  src="__IMG__/footer/on_mine.png" alt="">
 				<div class="aui-bar-tab-label aui-active" >钱包</div>
 			</div>
 		</footer>

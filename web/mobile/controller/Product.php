@@ -55,6 +55,9 @@ class Product extends Base
         return $this->successData($data);
     }
 
+    /**
+     * 购买理财
+     */
     public function buyProduct()
     {
         $param = Request::instance()->post();
@@ -69,9 +72,9 @@ class Product extends Base
         $amount = $param['amount'];
 
         $userM = new \addons\member\model\MemberAccountModel();
-        $userAddr = $userM->getUserAddress($this->user_id);
-        if(empty($userAddr))
-            return $this->failData('用户钱包地址不存在');
+//        $userAddr = $userM->getUserAddress($this->user_id);
+//        if(empty($userAddr))
+//            return $this->failData('用户钱包地址不存在');
 
         $balanceM = new \addons\member\model\Balance();
         $verify = $balanceM->verifyStock($this->user_id,$this->ETD_ID,$amount);
@@ -83,11 +86,15 @@ class Product extends Base
         $productM = new \addons\financing\model\Product();
         $verify_product = $productM->verifyStock($product_id,$amount);
         if(!$verify_product)
-            return $this->failData('剩余额度不足');
+            return $this->failData('可认购数量不足');
 
         $product = $productM->getDetail($product_id);
         if(empty($product))
             return $this->failData('所选组合出错，请重新选择');
+
+        if($amount < $product['min'])
+            return $this->failData('最低认购为' . $product['min']);
+
         $release_time = date('Y-m-d H:i:s',strtotime("+".$product['duration']." days"));
 
         $balanceM->startTrans();
@@ -123,6 +130,34 @@ class Product extends Base
             $balanceM->rollback();
             return $this->failData($e->getMessage());
         }
+    }
+
+    public function toUserProductList()
+    {
+        return $this->fetch('userProductList');
+    }
+
+    public function getUserProductList()
+    {
+        $m = new \web\api\model\UserProduct();
+        $data = $m->getList($this->user_id);
+        if(!empty($data))
+        {
+            for ($i = 0; $i < count($data); $i++)
+            {
+                $data[$i]['rate'] = bcdiv($data[$i]['rate'],$data[$i]['duration'],2);
+            }
+        }
+
+        return $this->successData($data);
+    }
+
+    /**
+     * 收益
+     */
+    public function income()
+    {
+
     }
 }
 

@@ -73,7 +73,7 @@
 					</div>
 					<div class="headinfo-list-item">
 						<p>
-							剩余众筹数量
+							剩余认购数量
 						</p>
 						<p>
 							{$data.surplus}
@@ -90,7 +90,7 @@
 				</div>
 			</div>
 			<div class="content-title" style="font-size: 0.7rem;">
-				我要认筹
+				我要认购
 			</div>
 			<div class="aui-content aui-margin-b-15 divbckg withmoney-info">
 			    <ul class="aui-list aui-list-in">
@@ -98,9 +98,9 @@
 			        	<div class="aui-list-item-inner">
 			                <div class="aui-list-item-title" style="width:100%;color: #FFFFFF;display: flex;justify-content: space-between;">
 			                	<div class="aui-list-item-input">
-				                    <input type="text" placeholder="请输入认筹个数" id="num" onkeyup="changeTotalPrice()">
+				                    <input type="text" placeholder="请输入认购个数" id="num" onkeyup="changeTotalPrice()">
 				                </div>
-			                	<span style="color: #316DCC;display: flex;align-items: center;" id="total">折合 0 RMB</span>
+			                	<span style="color: #316DCC;display: flex;align-items: center;" id="total">共计 0 USDT</span>
 			                </div>
 			            </div>
 			        </li>
@@ -113,15 +113,15 @@
 			</div>
 			<div class="aui-content" style="margin-bottom: 4rem">
 				<div class="content-title" style="font-size: 0.7rem;">
-					众筹列表
+					认购列表
 				</div>
 			    <ul class="aui-list aui-list-in" >
 			        <li class="aui-list-item">
 			            <div class="aui-list-item-inner">
 			                <div class="aui-list-item-title" style="display: flex;width: 100%;">
 				                	<div ><span>会员ID</span></div>
-				                	<div ><span>众筹金额</span></div>
-				                	<div ><span>众筹时间</span></div>
+				                	<div ><span>认购金额</span></div>
+				                	<div ><span>认购时间</span></div>
 			                </div>
 			            </div>
 			        </li>
@@ -178,19 +178,19 @@
 		</div>
 		<footer class="aui-bar aui-bar-tab aui-default-t-border" id="footer">
 			<div class="aui-bar-tab-item" id="nav_footer_home" onclick="footeronlcik(this,1)">
-				<img class="aui-bar-tab-icon footer-bar-icon" src="/footer/on_home.png" alt="">
+				<img class="aui-bar-tab-icon footer-bar-icon" src="__IMG__/footer/home.png" alt="">
 				<div class="aui-bar-tab-label " >首页</div>
 			</div>
 			<div class="aui-bar-tab-item" id="nav_footer_transaction" onclick="footeronlcik(this,2)">
-				<img class="aui-bar-tab-icon footer-bar-icon" src="/footer/transaction.png" alt="">
-				<div class="aui-bar-tab-label aui-active">认筹</div>
+				<img class="aui-bar-tab-icon footer-bar-icon" src="__IMG__/footer/on_transaction.png" alt="">
+				<div class="aui-bar-tab-label aui-active">认购</div>
 			</div>
 			<div class="aui-bar-tab-item" id="nav_footer_quotation" onclick="footeronlcik(this,3)">
-				<img class="aui-bar-tab-icon footer-bar-icon" src="/footer/quotation.png" alt="">
+				<img class="aui-bar-tab-icon footer-bar-icon" src="__IMG__/footer/quotation.png" alt="">
 				<div class="aui-bar-tab-label">交易</div>
 			</div>
 			<div class="aui-bar-tab-item" onclick="footeronlcik(this,4)">
-				<img class="aui-bar-tab-icon footer-bar-icon" src="/footer/mine.png" alt="">
+				<img class="aui-bar-tab-icon footer-bar-icon" src="__IMG__/footer/mine.png" alt="">
 				<div class="aui-bar-tab-label " >钱包</div>
 			</div>
 		</footer>
@@ -236,7 +236,7 @@
 
             if(num < 1000)
             {
-                return msg('认筹数量需1000起');
+                return msg('认购数量需1000起');
             }else if(!isNumberBy100(num))
             {
                 return msg('数量需为100的倍数');
@@ -253,7 +253,7 @@
 				success: function (res) {
 					if(res.success)
 					{
-					    msg('认筹成功');
+					    msg('认购成功');
 					    window.location.href = '/mobile/recognize/index';
 					}else
 					{
@@ -278,7 +278,7 @@
             var num = $('#num').val();
             var price = "{$data.price}";
             var total = num * price;
-            $('#total').text('折合 ' + total.toFixed(2) + ' RMB');
+            $('#total').text('共计 ' + total.toFixed(2) + ' USDT');
         }
 
         //交易tab点击
