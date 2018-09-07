@@ -35,7 +35,7 @@ class TradingRecord extends \web\common\model\BaseModel{
      * @param type $amount 数量
      * @param type $before_amount  更新前数量
      * @param type $after_amount   更新后数量
-     * @param type $type        记录类型：0=转账，1=OTC交易，2=外网转入，3=提现转出，4=购买理财，5=购买矿机,6=后台拨币，7=私募可用，8=私募冻结释放
+     * @param type $type        记录类型：0=转账，1=OTC交易，2=外网转入，3=提现转出，4=购买理财，5=购买矿机,6=后台拨币，7=私募可用，8=私募冻结释放, 9 提现未通过，10 推荐奖励
      * @param type $change_type 0 = 减少 ；1 = 增加
      * @param type $to_user_id      目标用户
      * @param type $to_address      转入地址

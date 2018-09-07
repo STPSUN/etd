@@ -67,7 +67,7 @@ class Product extends \web\user\controller\AddonUserBase{
                 $data['coin_id'] = 13;
                 
                 if(empty($id)){
-                    $data['stock'] = $data['total_stock'];
+//                    $data['stock'] = $data['total_stock'];
                     $m->add($data); 
                 }else{
                    $m->save($data);

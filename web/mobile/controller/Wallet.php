@@ -460,6 +460,8 @@ class Wallet extends Base
                     case 4: $data[$i]['type'] = '购买理财'; break;
                     case 6: $data[$i]['type'] = '后台拨币'; break;
                     case 9: $data[$i]['type'] = '提现未通过'; break;
+                    case 10: $data[$i]['type'] = '推荐奖励'; break;
+                    case 11: $data[$i]['type'] = '理财收益'; break;
                 }
             }
         }
