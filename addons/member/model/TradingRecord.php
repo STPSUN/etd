@@ -99,5 +99,18 @@ class TradingRecord extends \web\common\model\BaseModel{
         else
             return 0;
     }
-    
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

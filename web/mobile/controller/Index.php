@@ -56,6 +56,7 @@ class Index extends Base {
     }
 
     /**
+     * 自上而下
      * 递归团队成员
      */
     private function recursionTeam($id,&$result=array())

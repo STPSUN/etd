@@ -137,7 +137,6 @@ class User extends Base
                     $data['pid'] = $invite_user_id;
                     $data['register_time'] = NOW_DATETIME;
                     $res = $this->getEthAddr($param['phone']);
-//                    $res = true;
                     if($res)
                     {
                         $data['address'] = $this->_address;
