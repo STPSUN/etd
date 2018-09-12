@@ -11,4 +11,5 @@
 
 return [
     'web\common\command\Eth',
+    'web\common\command\Console',
 ];

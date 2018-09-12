@@ -19,8 +19,8 @@ class Recognize extends Base
     private $balanceM;
     private $trandRecordM;
     private $ETD = 13;
-    private $RMB = 2;
     private $USDT = 1;
+    private $memberBuyM;
 
     public function _initialize()
     {
@@ -29,6 +29,7 @@ class Recognize extends Base
         $this->userM = new \addons\member\model\MemberAccountModel();
         $this->balanceM = new \addons\member\model\Balance();
         $this->trandRecordM = new \addons\member\model\TradingRecord();
+        $this->memberBuyM = new \addons\member\model\MemberBuy();
     }
 
     public function index()
@@ -80,6 +81,10 @@ class Recognize extends Base
             //用户余额更新
             $this->balanceM->updateBalance($this->user_id,$num,$this->ETD,true);
             $this->balanceM->updateBalance($this->user_id,$total_price,$this->USDT,false);
+
+            //
+//            $this->memberBuyM->
+
 
             //添加交易记录
             $after_amount = $balanceETD['amount'] + $num;

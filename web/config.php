@@ -306,5 +306,6 @@ return [
         'account'    => '40675315',
         'access_key' => 'cae4fb09-8f611149-b67040ab-56558',
         'secret_key' => 'd8d2de9c-edddb63e-733d4811-89c4a'
-    ]
+    ],
+
 ];
