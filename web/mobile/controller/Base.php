@@ -204,7 +204,7 @@ class Base extends \web\common\controller\BaseController {
                         return false;
                     }
 
-                    $type = 99;
+                    $type = 2;
                     $before_amount = $balance['before_amount'];
                     $after_amount = $balance['amount'];
                     $change_type = 1; //减少

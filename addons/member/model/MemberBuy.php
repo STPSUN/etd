@@ -15,4 +15,18 @@ class MemberBuy extends \web\common\model\BaseModel
     {
         $this->tableName = 'member_buy';
     }
+
+    public function addRecord($userId,$amount,$releaseTime)
+    {
+        $data = array(
+            'user_id'   => $userId,
+            'amount'    => $amount,
+            'release_time'  => $releaseTime,
+            'create_time'   => NOW_DATETIME,
+            'update_time'   => NOW_DATETIME,
+            'status'    => 1,
+        );
+
+        return $this->save($data);
+    }
 }

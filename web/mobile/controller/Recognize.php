@@ -79,16 +79,16 @@ class Recognize extends Base
             $this->placementRuleM->where('id',1)->setDec('gross',$num);
 
             //用户余额更新
-            $this->balanceM->updateBalance($this->user_id,$num,$this->ETD,true);
+//            $this->balanceM->updateBalance($this->user_id,$num,$this->ETD,true);
             $this->balanceM->updateBalance($this->user_id,$total_price,$this->USDT,false);
 
-            //
-//            $this->memberBuyM->
-
+            //添加认购记录
+            $release_time = time() + 45*24*60*60;
+            $this->memberBuyM->addRecord($this->user_id,$num,$release_time);
 
             //添加交易记录
             $after_amount = $balanceETD['amount'] + $num;
-            $this->trandRecordM->addRecord(0,$this->ETD,$num,$balanceETD['amount'],$after_amount,6,1,$this->user_id);
+            $this->trandRecordM->addRecord(0,$this->ETD,$num,$balanceETD['amount'],$after_amount,13,1,$this->user_id,'','','认购');
 
             $this->placementRuleM->commit();
             return $this->successData();
@@ -105,11 +105,50 @@ class Recognize extends Base
     {
         $where = array(
             'change_type' => 1,
-            'type'  => 6,
+            'type'  => 13,
         );
         $list = $this->trandRecordM->where($where)->field('to_user_id,amount,update_time')->select();
 
         return $this->successData($list);
+    }
+
+    /**
+     * 释放认购的ETD
+     */
+    public function releaseBuy()
+    {
+        $where['release_time'] = array('<=',time());
+        $where['status'] = 1;
+        $data = $this->memberBuyM->where($where)->select();
+
+        $this->balanceM->startTrans();
+        try
+        {
+            foreach ($data as $v)
+            {
+                //用户余额更新
+                $this->balanceM->updateBalance($this->user_id,$v['amount'],$this->ETD,true);
+
+                //更改认购状态
+                $this->memberBuyM->save([
+                    'status' => 2,
+                    'update_time'   => NOW_DATETIME,
+                ],[
+                    'id' => $v['id']
+                ]);
+
+                //添加交易记录
+                $balanceETD = $this->balanceM->where(['user_id' => $v['user_id'], 'coin_id' => $this->ETD])->find();
+                $after_amount = $balanceETD['amount'] + $v['amount'];
+                $this->trandRecordM->addRecord(0,$this->ETD,$v['amount'],$balanceETD['amount'],$after_amount,8,1,$this->user_id,'','','认购冻结释放');
+            }
+
+            $this->balanceM->commit();
+        }catch (\Exception $e)
+        {
+            $this->balanceM->rollback();
+            return $this->failData($e->getMessage());
+        }
     }
 }
 

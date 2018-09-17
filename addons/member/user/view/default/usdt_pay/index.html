@@ -1,0 +1,148 @@
+{extend name="$BASE_LIST" /}
+{block name="body"}
+ 
+<div class="right-main">
+    <div class="page_nav" id="js_page_nav"><span class="page_title">{$page_nav}</span></div>
+
+    <ul class="tab_navs" id="js_tab_navs">
+        <li class="{if condition='$status eq 1'}current{/if}"><a class="pjax" onclick="select(1)" >未审核</a></li>
+        <li class="{if condition='$status eq 2'}current{/if}"><a class="pjax" onclick="select(2)">已完成</a></li>
+        <!--<li class="{if condition='$status eq 2'}current{/if}"><a class="pjax" href="{:getUrl('index','status=2')}">提交转出成功</a></li>-->
+        <li class="{if condition='$status eq 3'}current{/if}"><a class="pjax" onclick="select(3)">未通过</a></li>
+        <!--<li class="{if condition='$status eq -2'}current{/if}"><a class="pjax" href="{:getUrl('index','status=-2')}">转出异常</a></li>-->
+    </ul>
+    <!--<div id="js_main_header" class="ui-form main_header">-->
+        <!--<span class="frm_input_box search append">-->
+            <!--<a href="javascript:void(0);" id="js_search" class="frm_input_append">-->
+                <!--<i class="icon wb-search" title="搜索"></i>-->
+            <!--</a>-->
+            <!--<input type="text" id="js_keyword" placeholder="请输入用户邮箱名称" value="" class="frm_input" />-->
+        <!--</span>-->
+    <!--</div>-->
+    <table id="grid-table">
+        <thead frozen="true">
+        <th data-options="field:'username',width:100,align:'center'">用户名</th>
+        <th data-options="field:'amount',width:120,align:'center',formatter: formatNum">数量</th>
+        <th data-options="field:'image_url',width:300, align:'center',formatter:formatImg">凭证</th>
+        </thead>
+        <thead>
+            <tr>
+                <!--<th data-options="field:'to_address',width:300, align:'center',sortable: true">目标钱包地址</th>-->
+                <th data-options="field:'create_time',width:300, align:'center',sortable: true">提交时间</th>
+                <th data-options="field:'update_time',width:150, align:'center',sortable: true">更新时间</th>
+                
+                <th data-options="field:'_oper',width:140,halign:'center',formatter: formatOper">操作</th>
+            </tr>
+        </thead>
+    </table>
+</div>
+
+{/block}
+{block name="script"}
+<script type="text/javascript">
+    var status = '{$status}';
+
+    function formatImg(value){
+        value = '/uploads/usdtbuy/' + value;
+        var text = '<img width="250" height="250" src="'+value+'">';
+        return text;
+    }
+
+    $("#js_search").click(function () {
+        reload();
+    });
+    $(function () {
+        var param = {
+            status: status,
+        };
+        $('#grid-table').datagrid({
+            url: getURL('loadList',param),
+            method: "GET",
+            height: getGridHeight(),
+            rownumbers: true,
+            singleSelect: true,
+            remoteSort: false,
+            multiSort: true,
+            emptyMsg: '<span>无相关数据</span>',
+            pagination: true,
+            pageSize: 10
+        });
+        //设置分页控件 
+        $('#grid-table').datagrid('getPager').pagination({
+            pageSize: 20, //每页显示的记录条数，默认为10
+            pageList: [20, 30, 50]
+        });
+    });
+
+    function select(status) {
+        var param = {
+            status: status
+        };
+        window.location.href = getURL('index',param);
+    }
+
+    function appr(id){
+        confirm("确定要审核所选订单吗？", function () {
+            var url = getURL('appr');
+            showLoading('处理转账中...');
+            $.post(url, {id:id}, function (json) {
+                hideLoading();
+                if (json.success)
+                    reload();
+                else{
+                     msg(json.message);
+                }
+            });
+        });
+    }
+    
+    function cancelAppr(id){
+        confirm("确定要驳回选中的订单吗?", function () {
+            var url = getURL('cancel_appr');
+            $.post(url, {id:id}, function (json) {
+                if (json.success)
+                    reload();
+                else{
+                   msg(json.message);
+                }
+
+            });
+        });
+    }
+
+    function formatNum(value,row,index) {
+        var num = '';
+        if(row['coin_id'] == 1)
+            num = row['amount'] - row['tax'];
+        else
+            num = row['amount'];
+
+        return num;
+    }
+    
+    function formatOper(value, row, index) {
+        var html = '<span class="grid-operation">';
+        if(row['status'] == 1){
+            html += '<button type="button" onclick="appr(' + row['id'] + ')" class="btn btn-xs btn-default edit-btn"><i class="icon wb-edit"></i>通过</button>';
+            html += '<button type="button" onclick="cancelAppr(' + row['id'] + ')" class="btn btn-xs btn-default edit-btn"><i class="icon wb-edit"></i>不通过</button>';
+        }
+//        html += '<button type="button" onclick="del(' + row['id'] + ')" class="btn btn-xs btn-default del-btn"><i class="icon wb-close"></i>删除</button>';
+        html += '</span>';
+        return html;
+    }
+    
+    function formatStatus(value,row,index){
+        var tx_arr=['未审核','已完成','未通过','处理中','未通过','异常'];
+
+        return tx_arr[value];
+    }
+    
+    function reload() {
+        var keyword = $("#js_keyword").val();
+        $('#grid-table').datagrid('reload', {
+            keyword: keyword,
+        });
+    }
+
+</script>
+{/block}

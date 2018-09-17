@@ -462,12 +462,50 @@ class Wallet extends Base
                     case 9: $data[$i]['type'] = '提现未通过'; break;
                     case 10: $data[$i]['type'] = '推荐奖励'; break;
                     case 11: $data[$i]['type'] = '理财收益'; break;
+                    case 12: $data[$i]['type'] = '团队理财收益'; break;
+                    case 14: $data[$i]['type'] = '充值'; break;
                 }
             }
         }
 
         return $this->successData($data);
     }
+
+    public function toPayUSDT()
+    {
+        return $this->fetch('payUSDT');
+    }
+
+    public function payUSDT()
+    {
+        $file = request()->file('image');
+        $amount = request()->param('amount');
+
+        if(empty($file) || empty($amount))
+            return $this->fetch('payUSDT');
+
+        $info = $file->move(ROOT_PATH . 'public' . DS . 'uploads/usdtbuy');
+        if($info)
+        {
+            $savename = $info->getSaveName();
+
+            $m = new \addons\member\model\MemberUsdtpay();
+            $data = array(
+                'image_url' => $savename,
+                'user_id'   => $this->user_id,
+                'amount'    => $amount,
+                'status'    => 1,
+                'create_time' => NOW_DATETIME,
+                'update_time' => NOW_DATETIME,
+            );
+            $m->save($data);
+            $this->redirect('/mobile/wallet/index');
+        }else
+        {
+            return $this->failData($file->getError());
+        }
+    }
+
 }
 
 

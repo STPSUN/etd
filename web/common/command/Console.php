@@ -23,7 +23,22 @@ class Console extends Command
     protected function execute(Input $input, Output $output)
     {
         $output->write('begin scheduled task:');
-        $productM = new \web\mobile\controller\Product();
-        $productM->teamIncome();
+
+//        $productM = new \web\mobile\controller\Product();
+//        $productM->teamIncome();    //团队理财收益
+//        $productM->income();        //个人理财收益
+
+        $recognizeM = new \web\mobile\controller\Recognize();
+        $recognizeM->releaseBuy();  //认购冻结释放
     }
 }
+
+
+
+
+
+
+
+
+
+

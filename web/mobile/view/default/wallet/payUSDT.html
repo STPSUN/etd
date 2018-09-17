@@ -1,0 +1,120 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width" />
+		<meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
+		<title>提币</title>
+		<link rel="stylesheet" type="text/css" href="__CSS__/aui.css" />
+		<link rel="stylesheet" type="text/css" href="__CSS__/common.css" />
+		<link rel="stylesheet" type="text/css" href="__CSS__/home.css"/>
+	</head>
+	<style>
+	</style>
+	<body>
+		<div id="app">
+			<header class="nav-header aui-bar aui-bar-nav" id="aui-header">
+		        <a class="aui-pull-left" >
+		            <span class="aui-iconfont aui-icon-left" onclick="javascript:history.go(-1);" ></span>
+		        </a>
+		        <div class="aui-title">USDT充值</div>
+		    </header>
+			<form action="/mobile/wallet/payUSDT" enctype="multipart/form-data" method="post">
+		    <div class="aui-content aui-margin-b-15">
+			    <ul class="aui-list aui-list-in">
+					<li class="aui-list-item">
+						<div class="aui-list-item-inner">
+							<div class="aui-list-item-title">
+								转入地址：
+								<div class="aui-list-item-label-icon">
+									<textarea style="height: 1.2rem;color: white;width: 340px" id="text">1EpghDzZvH6H67MUxsc8itUdMfCscz7vU1</textarea>
+								</div>
+							</div>
+						</div>
+					</li>
+			        <li class="aui-list-item">
+			            <div class="aui-list-item-inner">
+			                <div class="aui-list-item-title">
+			                	数量：
+			                	<div class="aui-list-item-input">
+				                    <input type="number" name="amount" id="amount" placeholder="请输入数量">
+				                </div>
+			                </div>
+			            </div>
+			        </li>
+					<div class="aui-content aui-margin-b-15">
+						<!--<button class="aui-btn bottombtn" style="font-size:0.8rem;margin-left: 30%;margin-top:20%;width: 40%"  onclick="copy()"  value="提交">复制转入地址</button>-->
+
+						<ul class="aui-list aui-list-in">
+							<li class="aui-list-item">
+								<div class="aui-list-item-inner">
+									<div class="aui-list-item-title">
+										上传凭证
+										<!--<div class="aui-btn" onclick="javascript:location.href='toUpload'">上传</div>-->
+									</div>
+								</div>
+							</li>
+						</ul>
+						<div style="padding: 1rem;" id="js_qrcode_img_pic">
+							<input type="file" name="image">
+							<!--<img type="file" style="width: 4rem;" src="__IMG__/finance/camera.png">-->
+						</div>
+					</div>
+			    </ul>
+				<button class="aui-btn bottombtn" style="font-size:0.8rem;margin-left: 30%;margin-top:20%;width: 40%"  onclick="copy()"  value="提交">复制转入地址</button>
+				<input class="aui-btn bottombtn" type="submit" value="提交">
+			</div>
+			</form>
+		</div>
+
+	</body>
+	<script src="__JS__/jquery.min.js"></script>
+	<script type="text/javascript" src="/static/global/js/common.js"></script>
+	<script type="text/javascript" src="/static/global/layer/layer.js"></script>
+	<script type="text/javascript">
+
+        function copy() {
+            var text = document.getElementById('text');
+            text.select();
+            document.execCommand("Copy");
+
+            msg('地址已复制');
+        }
+
+        function toWithdrawList() {
+            window.localStorage.setItem('coin_id',13);
+            window.location.href = '/mobile/wallet/toWithdrawList';
+        }
+
+		function confirm() {
+			var data = {
+			    address: $('#address').val(),
+				pay_password: $('#pay_password').val(),
+				num: $('#num').val(),
+			};
+
+			$.ajax({
+				url: '/mobile/wallet/withdrawETD',
+				type: 'post',
+				data: data,
+				success: function (res) {
+					if(res.success)
+					{
+					    msg('已提交，请耐心等待');
+					    window.location.href = '/mobile/wallet/index';
+					}else
+					    return msg(res.message);
+                }
+			})
+        }
+	</script>
+</html>
+
+
+
+
+
+
+
+
+
