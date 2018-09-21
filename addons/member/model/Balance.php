@@ -9,6 +9,7 @@ namespace addons\member\model;
  */
 class Balance extends \web\common\model\BaseModel
 {
+    private $ETD_ID = 13;
 
     protected function _initialize()
     {
@@ -83,6 +84,7 @@ class Balance extends \web\common\model\BaseModel
             $userAsset['amount'] = 0;
             $userAsset['total_amount'] = 0;
             $userAsset['coin_id'] = $coin_id;
+            $userAsset['buy_amount'] = 0;
         }
         $userAsset['update_time'] = NOW_DATETIME;
         if ($type) {
@@ -98,6 +100,47 @@ class Balance extends \web\common\model\BaseModel
         if (!$res) {
             return false;
         }
+        return $userAsset;
+    }
+
+    /**
+     * 更新冻结ETD
+     * @param $user_id
+     * @param $amount
+     * @param $coin_id
+     * @param bool $type
+     * @return bool
+     */
+    public function updateBuyAmount($user_id,$amount,$type = false)
+    {
+        $map = array();
+        $map['user_id'] = $user_id;
+        $map['coin_id'] = $this->ETD_ID;
+        $userAsset = $this->where($map)->find();
+        if(!$userAsset)
+        {
+            $userAsset['user_id'] = $user_id;
+            $userAsset['before_amount'] = 0;
+            $userAsset['amount'] = 0;
+            $userAsset['total_amount'] = 0;
+            $userAsset['coin_id'] = $this->ETD_ID;
+            $userAsset['buy_amount'] = 0;
+        }
+        $userAsset['update_time'] = NOW_DATETIME;
+        if($type)
+        {
+            $userAsset['buy_amount'] = $userAsset['buy_amount'] + $amount;
+        }else
+        {
+            $userAsset['buy_amount'] = $userAsset['buy_amount'] - $amount;
+        }
+
+        $res = $this->save($userAsset);
+        if(!$res)
+        {
+            return false;
+        }
+
         return $userAsset;
     }
 
