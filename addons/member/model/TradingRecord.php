@@ -100,6 +100,15 @@ class TradingRecord extends \web\common\model\BaseModel{
             return 0;
     }
 
+    public function getRecordList($coin_id,$user_id)
+    {
+        $sql = "SELECT * FROM tp_trading_record "
+            . " WHERE coin_id = $coin_id AND (user_id = $user_id OR to_user_id = $user_id)"
+            . " ORDER BY update_time DESC";
+
+        return $this->query($sql);
+    }
+
 }
 
 

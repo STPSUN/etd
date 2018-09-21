@@ -25,6 +25,7 @@ class MemberBuy extends \web\common\model\BaseModel
             'create_time'   => NOW_DATETIME,
             'update_time'   => NOW_DATETIME,
             'status'    => 1,
+            'accrual_status' => 1,
         );
 
         return $this->save($data);
