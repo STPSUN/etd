@@ -47,6 +47,7 @@ class User extends Base
                     return $this->failData('用户名号或密码有误');
                 }
 
+                //获取外网转入的ETH
                 $this->getEthOrders($res['id']);
 
                 $memberData['user_id']  = $res['id'];

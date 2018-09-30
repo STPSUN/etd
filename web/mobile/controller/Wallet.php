@@ -38,14 +38,13 @@ class Wallet extends Base
     public function index()
     {
         $balanceUSDT = $this->balanceM->where(['user_id' => $this->user_id, 'coin_id' => $this->USDT])->find();
-        $balanceRMB = $this->balanceM->where(['user_id' => $this->user_id, 'coin_id' => $this->RMB])->find();
         $balanceETD = $this->balanceM->where(['user_id' => $this->user_id, 'coin_id' => $this->ETD])->find();
 
-        $usdt = empty($balanceUSDT['amount']) ? 0 : $balanceUSDT['amount'];
-        $rmb = empty($balanceRMB['amount']) ? 0 : bcmul($balanceRMB['amount'],1,2);
-        $etd = empty($balanceETD['amount']) ? 0 : $balanceETD['amount'];
+        $usdt = empty($balanceUSDT['amount']) ? 0 : bcmul($balanceUSDT['amount'],1,4);
+        $frost_etd = empty($balanceETD['amount']) ? 0 : bcmul($balanceETD['buy_amount'],1,4);
+        $etd = empty($balanceETD['amount']) ? 0 : bcmul($balanceETD['amount'],1,4);
         $this->assign('usdt', $usdt);
-        $this->assign('rmb', $rmb);
+        $this->assign('frost_etd', $frost_etd);
         $this->assign('etd',$etd);
         return $this->fetch();
     }
@@ -207,32 +206,34 @@ class Wallet extends Base
         $verfyM->startTrans();
         try
         {
-            $this->userM->save([
-                'phone' => $phone,
-            ],['id' => $this->user_id]);
+            $user = $this->userM->where('id',$this->user_id)->find();
+            $user['phone'] = $phone;
+            $user['id'] = $this->user_id;
+            $this->userM->save($user);
 
-            $this->payConfM->save([
-                'account' => $wechat,
-            ],[
-                'user_id'   => $this->user_id,
-                'type'      => 1
-            ]);
+            $wechat_data= $this->payConfM->where(['type' => 1, 'user_id' => $this->user_id])->find();
+            $wechat_data['account'] = $wechat;
+            $wechat_data['user_id'] = $this->user_id;
+            $wechat_data['type'] = 1;
+            $wechat_data['update_time'] = NOW_DATETIME;
+            $this->payConfM->save($wechat_data);
 
-            $this->payConfM->save([
-                'account'   => $alipay,
-            ],[
-                'user_id'   => $this->user_id,
-                'type'      => 2
-            ]);
+            $alipay_data = $this->payConfM->where(['user_id' => $this->user_id, 'type' => 2])->find();
+            $alipay_data['account'] = $alipay;
+            $alipay_data['user_id'] = $this->user_id;
+            $alipay_data['type'] = 2;
+            $alipay_data['update_time'] = NOW_DATETIME;
+            $this->payConfM->save($alipay_data);
 
-            $this->payConfM->save([
-                'bank_address'  => $bank_address,
-                'account'   => $bank_code,
-                'name'      => $name,
-            ],[
-                'user_id'   => $this->user_id,
-                'type'  => 3
-            ]);
+            $bank_data = $this->payConfM->where(['user_id' => $this->user_id, 'type' => 3])->find();
+            $bank_data['bank_address'] = $bank_address;
+            $bank_data['account'] = $bank_code;
+            $bank_data['name'] = $name;
+            $bank_data['user_id'] = $this->user_id;
+            $bank_data['type'] = 3;
+            $bank_data['update_time'] = NOW_DATETIME;
+            $this->payConfM->save($alipay_data);
+            $this->payConfM->save($bank_data);
 
             $verfyM->commit();
             return $this->successData();
@@ -445,13 +446,16 @@ class Wallet extends Base
     public function recordList()
     {
         $coin_id = Request::instance()->post('coin_id');
+        $where['coin_id'] = $coin_id;
 
-        $data = $this->recordM->where(['user_id' => $this->user_id, 'coin_id' => $coin_id])->order('update_time desc')->select();
+        $data = $this->recordM->getRecordList($coin_id,$this->user_id);
+//        $data = $this->recordM->where(['coin_id' => $coin_id])->where('user_id',$this->user_id)->whereor('to_user_id',$this->user_id)->order('update_time desc')->select();
 
         if(!empty($data))
         {
             for($i = 0; $i < count($data); $i++)
             {
+                $data[$i]['money_name'] = 'ETD余额';
                 switch ($data[$i]['type'])
                 {
                     case 0: $data[$i]['type'] = '转账';   break;
@@ -459,11 +463,24 @@ class Wallet extends Base
                     case 3: $data[$i]['type'] = '提现转出'; break;
                     case 4: $data[$i]['type'] = '购买理财'; break;
                     case 6: $data[$i]['type'] = '后台拨币'; break;
+                    case 8: $data[$i]['type'] = '冻结释放'; break;
                     case 9: $data[$i]['type'] = '提现未通过'; break;
                     case 10: $data[$i]['type'] = '推荐奖励'; break;
                     case 11: $data[$i]['type'] = '理财收益'; break;
                     case 12: $data[$i]['type'] = '团队理财收益'; break;
+                    case 13:
+                    {
+                        $data[$i]['type'] = '认购冻结';
+                        $data[$i]['money_name'] = '冻结ETD余额';
+                        break;
+                    }
                     case 14: $data[$i]['type'] = '充值'; break;
+                    case 15:
+                    {
+                        $data[$i]['type'] = '持币生息';
+                        $data[$i]['money_name'] = '冻结ETD余额';
+                        break;
+                    }
                 }
             }
         }
@@ -504,6 +521,35 @@ class Wallet extends Base
         {
             return $this->failData($file->getError());
         }
+    }
+
+    public function toPayUSDTList()
+    {
+        return $this->fetch('payUSDTList');
+    }
+
+    public function payUSDTList()
+    {
+        $m = new \addons\member\model\MemberUsdtpay();
+        $data = $m->field('amount,status,create_time')->where('user_id',$this->user_id)->select();
+
+        if(empty($data))
+            return $this->failData();
+
+        foreach ($data as &$v)
+        {
+            switch ($v['status'])
+            {
+                case 1:
+                    $v['status'] = '未审核';   break;
+                case 2:
+                    $v['status'] = '审核通过';  break;
+                case 3:
+                    $v['status'] = '审核不通过'; break;
+            }
+        }
+
+        return $this->successData($data);
     }
 
 }

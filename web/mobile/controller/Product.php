@@ -71,14 +71,14 @@ class Product extends Base
     }
 
     /**
-     * 购买理财
+     * 用户购买理财
      */
     public function buyProduct()
     {
         $param = Request::instance()->post();
         $validate = new Validate([
             'product_id'    => 'require',
-            'amount|数量'        => 'require|integer'
+            'amount|数量'        => 'require|integer',
         ]);
         if(!$validate->check($param))
             return $this->failData($validate->getError());
@@ -86,11 +86,17 @@ class Product extends Base
         $product_id = $param['product_id'];
         $amount = $param['amount'];
 
-        $userM = new \addons\member\model\MemberAccountModel();
-//        $userAddr = $userM->getUserAddress($this->user_id);
-//        if(empty($userAddr))
-//            return $this->failData('用户钱包地址不存在');
+        return $this->memberBuyProduct($product_id,$amount);
+    }
 
+    /**
+     * 购买理财
+     * @param $product_id
+     * @param $amount
+     * @return array
+     */
+    private function memberBuyProduct($product_id,$amount)
+    {
         $balanceM = new \addons\member\model\Balance();
         $verify = $balanceM->verifyStock($this->user_id,$this->ETD_ID,$amount);
         if(!$verify)
@@ -139,7 +145,7 @@ class Product extends Base
             $recordM->addRecord($this->user_id,$this->ETD_ID,$amount,$balance['amount'],$after_amount,4,0,0);
 
             //推荐奖励
-            $this->recommendAward($amount);
+            $this->recommendAward($this->user_id,$amount);
 
             $balanceM->commit();
             return $this->successData();
@@ -153,9 +159,9 @@ class Product extends Base
     /**
      * 推荐奖励
      */
-    private function recommendAward($amount)
+    private function recommendAward($user_id,$amount)
     {
-        $user = $this->userM->getDetail($this->user_id);
+        $user = $this->userM->getDetail($user_id);
         $pOne = $this->userM->getDetail($user['pid']);
         $pTwo = $this->userM->getDetail($pOne['pid']);
         $pThree = $this->userM->getDetail($pTwo['pid']);
@@ -226,6 +232,10 @@ class Product extends Base
         return $this->fetch('userProductList');
     }
 
+    /**
+     * 理财记录列表
+     * @return array
+     */
     public function getUserProductList()
     {
         $m = new \web\api\model\UserProduct();
@@ -243,6 +253,7 @@ class Product extends Base
 
     /**
      * 个人理财收益
+     * 定时
      */
     public function income()
     {
@@ -319,7 +330,6 @@ class Product extends Base
      */
     private function updateTeamAward()
     {
-
         $user_data = $this->userM->select();
 
         $this->memberTeamM->startTrans();
@@ -351,33 +361,41 @@ class Product extends Base
 
     /**
      * 团队理财收益
+     * 定时
      */
     public function teamIncome()
     {
+        //更新团队社区
         $this->updateTeamAward();
 
         $level_one = $this->memberTeamM->field('user_id,amount')
-            ->where('recommend_num','>=',8)
-            ->where('recommend_num','<',10)
+            ->where('recommend_num','>=',8) //8
+            ->where('recommend_num','<',10) //10
             ->where('amount','>=',300000)
             ->where('amount','<',1000000)
             ->select();
 
         $level_two = $this->memberTeamM->field('user_id,amount')
-            ->where('recommend_num','>=',10)
-            ->where('recommend_num','<',12)
+            ->where('recommend_num','>=',10)    //10
+            ->where('recommend_num','<',12)     //12
             ->where('amount','>=',1000000)
             ->where('amount','<',8000000)
             ->select();
 
         $level_three = $this->memberTeamM->field('user_id,amount')
-            ->where('recommend_num','>=',12)
+            ->where('recommend_num','>=',12)    //12
             ->where('amount','>=',8000000)
             ->select();
 
         $this->memberTeamM->startTrans();
         try
         {
+            //更新用户等级：1 白银社区 | 2 黄金社区 | 3 钻石社区
+            $this->updateMemberLevel($level_one,1);
+            $this->updateMemberLevel($level_two,2);
+            $this->updateMemberLevel($level_three,3);
+
+            //团队收益发放
             $this->addTeamIncome($level_one,0.03);
             $this->addTeamIncome($level_two,0.02);
             $this->addTeamIncome($level_three,0.01);
@@ -404,8 +422,11 @@ class Product extends Base
             $max_num = bcmul($v['amount'],$rate,8);
             //用户理财数量
             $user_amount = $this->recordM->where(['user_id' => $v['user_id'], 'type' => 4])->sum('amount');
+
             //可得收益数量
             $num = ($user_amount >= $max_num) ? $max_num : $user_amount;
+            //扣除给父级的20%收益
+            $num = $this->pIncome($v['user_id'],$num);
             $balance = $this->balanceM->getBalanceByCoinID($v['user_id'],$this->ETD_ID);
 
             //更新余额
@@ -413,6 +434,179 @@ class Product extends Base
             //添加交易记录
             $after_amount = $balance['amount'] + $num;
             $this->recordM->addRecord($v['user_id'],$this->ETD_ID,$num,$balance['amount'],$after_amount,12,1);
+        }
+    }
+
+    /**
+     * 更新用户社区等级
+     */
+    private function updateMemberLevel($data,$level)
+    {
+        $accountM = new \addons\member\model\MemberAccountModel();
+        foreach ($data as $v)
+        {
+            $accountM->save([
+                'level' => $level,
+            ],[
+                'id'    => $v['user_id'],
+            ]);
+        }
+    }
+
+    /**
+     * 父级收益
+     * @param $user_id
+     * @param $num
+     * @return array|string
+     */
+    private function pIncome($user_id,$num)
+    {
+        $account = new \addons\member\model\MemberAccountModel();
+        $member = $account->getDetail($user_id);
+        $pMember = $account->getDetail($member['pid']);
+        if(empty($pMember))
+            return $num;
+
+        if($pMember['level'] != $member['level'])
+            return $num;
+
+        $pNum = bcmul($num,0.2,8);
+        $num = bcmul($num,0.8,8);
+
+        $balance = $this->balanceM->getBalanceByCoinID($pMember['id'],$this->ETD_ID);
+
+        try
+        {
+            //更新余额
+            $this->balanceM->updateBalance($pMember['id'],$pNum,$this->ETD_ID,true);
+            //添加交易记录
+            $recordM = new \addons\member\model\TradingRecord();
+            $after_amount = $balance['amount'] + $pNum;
+            $recordM->addRecord($pMember['id'],$this->ETD_ID,$pNum,$balance['amount'],$after_amount,12,1,'','','','社区同级收益');
+
+            return $num;
+        }catch (\Exception $e)
+        {
+            return $this->failData($e->getMessage());
+        }
+
+    }
+
+    /**
+     * 提取本金
+     */
+    public function extractCapital()
+    {
+        $param = Request::instance()->post();
+        $validate = new Validate([
+            'user_product_id'   => 'require',
+        ]);
+        if(!$validate->check($param))
+            return $this->failData($validate);
+
+        $user_product_id = $param['user_product_id'];
+        $userProductM = new \web\api\model\UserProduct();
+        $data = $userProductM->getDetail($user_product_id);
+        if(empty($data))
+            return $this->failData('未找到该理财记录');
+
+        if($data['release_time'] > time())
+            return $this->failData('未到期，不能提取本金');
+
+        $amount = $data['amount'];
+        $userProductM->startTrans();
+        try
+        {
+            //更新用户理财状态
+            $userProductM->save([
+                'status' => 2,
+            ],[
+                'id'    => $user_product_id,
+            ]);
+
+            //更新用户余额
+            $balanceM = new \addons\member\model\Balance();
+            $balance = $balanceM->getBalanceByCoinID($data['user_id'],$this->ETD_ID);
+            $balanceM->updateBalance($data['user_id'],$amount,$this->ETD_ID,true);
+
+            //添加流水记录
+            $recordM = new \addons\member\model\TradingRecord();
+            $after_amount = $balance['amount'] + $amount;
+            $recordM->addRecord(0,$this->ETD_ID,$amount,$data['amount'],$after_amount,16,1,$data['user_id'],'','','提取理财本金');
+
+            $userProductM->commit();
+        }catch (\Exception $e)
+        {
+            $userProductM->rollback();
+            return $this->failData($e->getMessage());
+        }
+    }
+
+    /**
+     * 到期第二天，理财复投
+     * 定时
+     */
+    public function repeatBuyProduct()
+    {
+        $m = new \web\api\model\UserProduct();
+        $time = NOW_DATETIME;
+        $where['release_time'] = array('<=',date('Y-m-d H:i:s',strtotime("$time - 1 day")));
+        $where['status'] = 1;
+        $data = $m->where($where)->select();
+
+        $productM = new \addons\financing\model\Product();
+        $balanceM = new \addons\member\model\Balance();
+        $recordM = new \addons\member\model\TradingRecord();
+        foreach ($data as $v)
+        {
+            $product_id = $v['product_id'];
+            $amount = $v['amount'];
+            $user_id = $v['user_id'];
+            $product = $productM->getDetail($product_id);
+            $release_time = date('Y-m-d H:i:s',strtotime("+".$product['duration']." days"));
+
+            $verify_product = $productM->verifyStock($product_id,$amount);
+            if(!$verify_product)
+                break;
+
+            $productM->startTrans();
+            try
+            {
+                $m->save([
+                    'status' => 2,
+                ],[
+                    'id' => $v['id'],
+                ]);
+
+                //更新理财库存
+                $productM->where('id',$product_id)->setDec('stock',$amount);
+
+                //添加理财记录
+                $data = array(
+                    'user_id'   => $user_id,
+                    'coin_id'   => $this->ETD_ID,
+                    'product_id'    => $product_id,
+                    'amount'    => $amount,
+                    'release_time'  => $release_time,
+                    'add_time'  => NOW_DATETIME,
+                );
+                $userProductM = new \web\api\model\UserProduct();
+                $userProductM->save($data);
+
+                //添加交易记录
+                $balance = $balanceM->getBalanceByCoinID($user_id,$this->ETD_ID);
+                $recordM->addRecord($user_id,$this->ETD_ID,$amount,$balance['amount'],$balance['amount'],4,0,0,'','','理财复投');
+
+                //推荐奖励
+                $this->recommendAward($user_id,$amount);
+
+                $productM->commit();
+            }catch (\Exception $e)
+            {
+                $productM->rollback();
+                return $this->failData($e->getMessage());
+            }
+
         }
     }
 }

@@ -41,7 +41,7 @@ class UserProduct extends \web\common\model\BaseModel{
     {
         $sql = 'SELECT p.title,p.duration,p.rate, u.amount, u.add_time '
             . ' FROM  tp_product AS p '
-            . ' LEFT JOIN tp_user_product AS u ON u.product_id = p.id '
+            . ' LEFT JOIN tp_user_product AS u ON u.product_id = p.id and u.status = 1'
             . ' WHERE u.user_id = "'. $user_id .'"';
 
         return $this->query($sql);

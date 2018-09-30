@@ -18,6 +18,9 @@
 		            <span class="aui-iconfont aui-icon-left" onclick="javascript:history.go(-1);" ></span>
 		        </a>
 		        <div class="aui-title">USDT充值</div>
+				<div class="aui-pull-right aui-btn">
+					<span style="color: #DDDDDD;" onclick="javascript:location.href='toPayUSDTList'">充值记录</span>
+				</div>
 		    </header>
 			<form action="/mobile/wallet/payUSDT" enctype="multipart/form-data" method="post">
 		    <div class="aui-content aui-margin-b-15">
@@ -79,11 +82,6 @@
             document.execCommand("Copy");
 
             msg('地址已复制');
-        }
-
-        function toWithdrawList() {
-            window.localStorage.setItem('coin_id',13);
-            window.location.href = '/mobile/wallet/toWithdrawList';
         }
 
 		function confirm() {
