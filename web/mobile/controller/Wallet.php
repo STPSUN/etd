@@ -481,6 +481,8 @@ class Wallet extends Base
                         $data[$i]['money_name'] = '冻结ETD余额';
                         break;
                     }
+                    case 16: $data[$i]['type'] = '提取理财本金'; break;
+                    case 17: $data[$i]['type'] = '后台扣币'; break;
                 }
             }
         }

@@ -48,7 +48,7 @@ class User extends Base
                 }
 
                 //获取外网转入的ETH
-                $this->getEthOrders($res['id']);
+//                $this->getEthOrders($res['id']);
 
                 $memberData['user_id']  = $res['id'];
                 $memberData['username'] = $res['username'];

@@ -43,6 +43,7 @@
     function formatOper(value, row, index) {
         var html = '<span class="grid-operation">';
         html += '<button type="button" onclick="edit(' + row['id'] + ')" class="btn btn-xs btn-default edit-btn"><i class="icon wb-edit"></i>拨币</button>';
+        html += '<button type="button" onclick="reduceCoin(' + row['id'] + ')" class="btn btn-xs btn-default edit-btn"><i class="icon wb-edit"></i>扣币</button>';
 //        if(row['is_frozen'] == 1)
 //            html += '<button type="button" onclick="change_frozen(' + row['id'] + ',0)" class="btn btn-xs btn-default edit-btn"><i class="icon wb-edit"></i>解冻</button>';
 //        else
@@ -112,6 +113,13 @@
     function edit(id) {
         var url = getURL('add_coin_stock', 'id=' + id);
         openBarWin('拨币', 400, 200, url, function () {
+            reload();
+        }, ['确定','取消']);
+    }
+
+    function reduceCoin(id) {
+        var url = getURL('reduce_coin_stock', 'id=' + id);
+        openBarWin('扣币', 400, 200, url, function () {
             reload();
         }, ['确定','取消']);
     }

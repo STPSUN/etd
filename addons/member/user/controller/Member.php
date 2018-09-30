@@ -89,7 +89,6 @@ class Member extends \web\user\controller\AddonUserBase{
                     $balance['before_amount'] = $before_amount;
                     $balance['update_time'] = NOW_DATETIME;
                     $m->save($balance);
-
                 }else{
                     $balance['user_id'] = $user_id;
                     $balance['coin_id'] = $coin_id;
@@ -166,7 +165,56 @@ class Member extends \web\user\controller\AddonUserBase{
             return $this->failData($ex->getMessage());
         }
     }
-    
+
+    /**
+     * 扣币
+     * @return type
+     */
+    public function reduce_coin_stock(){
+        if(IS_POST){
+            $user_id = $this->_post('id');
+            $coin_id = $this->_post('coin_id');
+            $amount = $this->_post('amount');
+
+            $m = new \addons\member\model\Balance();
+            $m->startTrans();
+            $balance = $m->getBalanceByCoinID($user_id,$coin_id);
+            if($balance['amount'] < $amount)
+                return $this->failData('会员余额不足');
+
+            try{
+                $before_amount = 0;
+                $res = $m->updateBalance($user_id,$amount,$coin_id,false);
+
+                if(!$res)
+                {
+                    $m->rollback();
+                    return $this->failData('扣币失败');
+                }
+
+                $rm = new \addons\member\model\TradingRecord();
+                $after_amount = $balance['amount'];
+                $change_type = 0; //减少
+                $type = 17;//后台拨币
+                $remark = '系统后台扣币';
+                $r_id = $rm->addRecord($user_id, $coin_id, $amount, $before_amount, $after_amount, $type, $change_type, 0, '', '', $remark);
+                if($r_id > 0){
+                    $m->commit();
+                    return $this->successData();
+                }
+            } catch (\Exception $ex) {
+                $m->rollback();
+                return $this->failData($ex->getMessage());
+            }
+
+        }else{
+            $m = new \addons\config\model\Coins();
+            $list = $m->getDataList(-1,-1,'','id,coin_name','id asc');
+            $this->assign('coins',$list);
+            $this->assign('id',$this->_get('id'));
+            return $this->fetch();
+        }
+    }
 
 }
 

@@ -226,5 +226,9 @@ class Base extends \web\common\controller\BaseController {
         }
         return true;
     }
+
+    protected function countRate($total_price, $rate){
+        return $total_price * $rate / 100;
+    }
     
 }

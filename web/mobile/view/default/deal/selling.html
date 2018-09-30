@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html>
+<html xmlns="http://www.w3.org/1999/html">
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width" />
@@ -41,7 +41,11 @@
 			            <div class="aui-list-item-inner">
 			                <div class="aui-list-item-title">
 			                	<span class="aui-list-item-title" id="deal_price">最佳卖价：</span>
-			                	<span style="color: #FFFFFF;"><span id="price">{$price}</span> CNY/TM</span>
+								<div class="aui-list-item-input">
+									<!--<input style="color: #FFFFFF;"><span id="price">{$price}</span> CNY/TM</input>-->
+									<input type="number" id="price" value="{$price}"/>
+								</div>
+			                	<!--<input style="color: #FFFFFF;"><span id="price">{$price}</span> CNY/TM</input>-->
 			                </div>
 			            </div>
 			        </li>
@@ -128,7 +132,8 @@
                 type: $('#type').val(),
 				num: num,
 				pay_password: $('#pay_password').val(),
-				coin_id: coin_id
+				coin_id: coin_id,
+				price: $('#price').val()
 			}
             if(!isNumberBy100(num))
 			{
@@ -168,13 +173,11 @@
                     }
                 })
 			}
-
-
         }
 
 		function changeTotalPrice() {
 			var num = $('#num').val();
-			var price = $('#price').text();
+			var price = $('#price').val();
 			var total = num * price;
 			$('#total').text(total.toFixed(2) + ' CNY');
         }

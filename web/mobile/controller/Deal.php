@@ -128,13 +128,15 @@ class Deal extends Base
         $velivade = new Validate([
             'num|卖出数量'   => 'require|number|>=:100',
             'pay_password'  => 'require',
-            'coin_id'   => 'require|in:13,14'
+            'coin_id'   => 'require|in:13,14',
+            'price'     => 'require',
         ]);
         if(!$velivade->check($param))
             return $this->failData($velivade->getError());
 
         $coin_id = $param['coin_id'];
         $num = $param['num'];
+        $price = $param['price'];
         $pay_password = md5($param['pay_password']);
         $userM = new \addons\member\model\MemberAccountModel();
         $user = $userM->getDetail($this->user_id);
@@ -148,6 +150,16 @@ class Deal extends Base
         if(empty($pay_data))
             return $this->failData('未设置收款方式');
 
+        $paramM = new \web\common\model\sys\SysParameterModel();
+        $usdt_cny = $paramM->getValByName('usdt_cny');
+        $float_rate = $paramM->getValByName('deal_float_rate');
+        $price_float = $this->countRate($usdt_cny,$float_rate);
+        $price_min = $usdt_cny - $price_float;
+        $price_max = $usdt_cny + $price_float;
+
+        if(($price < $price_min) || ($price > $price_max))
+            return $this->failData('价格上下浮动不能超过' . $float_rate . '%');
+
         $pay_detail_json = json_encode($pay_data,JSON_UNESCAPED_UNICODE);
 
         try
@@ -159,7 +171,7 @@ class Deal extends Base
                 return $this->failData('余额不足');
 
             $coinConfM = new \addons\config\model\CoinConf();
-            $price = $coinConfM->getPriceByCoinId($coin_id);
+//            $price = $coinConfM->getPriceByCoinId($coin_id);
             $pay_amount = $num * $price;   //需支付金额
             $m = new \addons\otc\model\OtcOrder();
             $id = $m->addOrder($this->user_id,$coin_id,$type,$num,0,$num,$price,$pay_amount,0,$pay_detail_json,'');
@@ -207,9 +219,12 @@ class Deal extends Base
         $coin_id = $param['id'];
 
         $coinConfM = new \addons\config\model\CoinConf();
-        $price = $coinConfM->getPriceByCoinId($coin_id);
+//        $price = $coinConfM->getPriceByCoinId($coin_id);
 
-        $this->assign('price',$price);
+        $paramM = new \web\common\model\sys\SysParameterModel();
+        $usdt_cny = $paramM->getValByName('usdt_cny');
+
+        $this->assign('price',$usdt_cny);
         return $this->fetch();
     }
 
@@ -232,6 +247,7 @@ class Deal extends Base
         $type = 1;
         $coin_id = $param['coin_id'];
         $num = $param['num'];
+        $price = $param['price'];
 
         if(!$validate->check($param))
             return $this->failData($validate->getError());
@@ -243,8 +259,18 @@ class Deal extends Base
         if($user['pay_password'] != $pay_password)
             return $this->failData('支付密码错误');
 
+        $paramM = new \web\common\model\sys\SysParameterModel();
+        $usdt_cny = $paramM->getValByName('usdt_cny');
+        $float_rate = $paramM->getValByName('deal_float_rate');
+        $price_float = $this->countRate($usdt_cny,$float_rate);
+        $price_min = $usdt_cny - $price_float;
+        $price_max = $usdt_cny + $price_float;
+
+        if(($price < $price_min) || ($price > $price_max))
+            return $this->failData('价格上下浮动不能超过' . $float_rate . '%');
+
         $coinConfM = new \addons\config\model\CoinConf();
-        $price = $coinConfM->getPriceByCoinId($coin_id);
+//        $price = $coinConfM->getPriceByCoinId($coin_id);
         $pay_amount = $num * $price;
         try
         {
@@ -366,7 +392,10 @@ class Deal extends Base
         $coinConfM = new \addons\config\model\CoinConf();
         $orderM = new \addons\otc\model\OtcOrder();
         $amount = $orderM->where('id',$order_id)->column('amount');
-        $price = $coinConfM->getPriceByCoinId($coin_id);
+
+        $paramM = new \web\common\model\sys\SysParameterModel();
+        $price = $paramM->getValByName('usdt_cny');
+//        $price = $coinConfM->getPriceByCoinId($coin_id);
         $total_amount = bcmul($amount[0],$price,2);
 
         $this->assign('order_id',$order_id);
