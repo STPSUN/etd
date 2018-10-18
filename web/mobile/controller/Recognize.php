@@ -9,6 +9,8 @@
 namespace web\mobile\controller;
 
 
+use think\console\Output;
+use think\Log;
 use think\Request;
 use think\Validate;
 
