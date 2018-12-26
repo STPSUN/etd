@@ -10,11 +10,11 @@ return [
     'database'        => 'etd',
 //    'database'        => 'qqq',
     // 用户名
-    'username'        => 'root',
-//    'username'        => 'qqq',
+//    'username'        => 'root',
+    'username'        => 'etd',
     // 密码
-    'password'        => 'root',
-//    'password'        => 'SmwEmFNwiR',
+//    'password'        => 'root',
+    'password'        => 'YrM4edXRE2',
     // 端口
     'hostport'        => '3306',
     // 连接dsn
